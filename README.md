@@ -18,18 +18,12 @@
             --text-light: #ffffff;
             --text-muted: #a0aab5;
             --border-color: rgba(255, 255, 255, 0.15);
-            --panel-bg: rgba(20, 22, 28, 0.75);
+            --panel-bg: rgba(10, 12, 16, 0.85);
         }
 
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--primary-bg);
-            background-image: 
-                linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.95)), 
-                url('https://imgd.aeplcdn.com/1280x720/n/cw/ec/123185/grand-vitara-exterior-right-front-three-quarter-4.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             color: var(--text-light);
             min-height: 100vh;
             display: flex;
@@ -40,6 +34,7 @@
             position: relative;
         }
 
+        /* --- BACKGROUND VIDEO & OVERLAY --- */
         .bg-video {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             object-fit: cover; z-index: -2; pointer-events: none;
@@ -47,7 +42,7 @@
 
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.95));
+            background: linear-gradient(rgba(10, 12, 16, 0.75), rgba(10, 12, 16, 0.95));
             z-index: -1; pointer-events: none;
         }
 
@@ -69,14 +64,15 @@
             font-weight: 500; letter-spacing: 1px;
         }
 
+        /* TABS */
         .tabs {
-            display: flex; gap: 10px; margin-bottom: 20px; width: 100%; max-width: 1350px;
+            display: flex; gap: 10px; margin-bottom: 20px; width: 100%; max-width: 1200px;
             background: rgba(0,0,0,0.5); padding: 10px; border-radius: 16px; border: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
         }
         .tab-btn {
             flex: 1; padding: 15px; background: transparent; border: none;
-            color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: clamp(0.9rem, 1.5vw, 1.1rem);
             cursor: pointer; border-radius: 10px; transition: all 0.3s;
             text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
         }
@@ -84,25 +80,25 @@
             background: rgba(0, 229, 255, 0.15); color: var(--accent-blue);
             box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.2); border: 1px solid rgba(0, 229, 255, 0.3);
         }
-        .tab-content { display: none; width: 100%; max-width: 1350px; animation: fadeIn 0.4s ease; }
+        .tab-content { display: none; width: 100%; max-width: 1200px; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .dashboard-container {
             background: var(--panel-bg); border: 1px solid var(--border-color);
             border-radius: 24px; padding: clamp(20px, 4vw, 40px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         }
 
-        /* Diagnostic Form Styles */
+        /* --- DIAGNOSTIC TOOL STYLES --- */
         .diag-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;
         }
         .diag-item {
             background: rgba(0,0,0,0.4); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
         }
-        .diag-item label {
+        .diag-item label.q-title {
             display: block; font-family: 'Orbitron', sans-serif; color: var(--accent-gold);
             margin-bottom: 15px; font-size: 1rem;
         }
@@ -115,23 +111,29 @@
         .diag-option:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
         .diag-option input { margin-right: 15px; transform: scale(1.3); accent-color: var(--accent-blue); }
 
-        .diag-btn-container { text-align: center; }
-        .calc-btn {
-            background: linear-gradient(135deg, var(--accent-blue), #0088ff); color: #000;
-            border: none; padding: 15px 40px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
-            font-weight: bold; border-radius: 12px; cursor: pointer; text-transform: uppercase;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); transition: transform 0.2s, box-shadow 0.2s;
+        .meter-container {
+            background: rgba(0,0,0,0.6); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 30px; text-align: center; margin-top: 20px;
         }
-        .calc-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 229, 255, 0.6); }
-
-        .result-box {
-            margin-top: 30px; background: rgba(0,0,0,0.6); border: 1px solid var(--accent-blue);
-            border-radius: 16px; padding: 30px; text-align: center; display: none;
+        .meter-bar-bg {
+            width: 100%; height: 35px; background: rgba(255,255,255,0.1); border-radius: 20px;
+            overflow: hidden; display: flex; margin: 20px 0; border: 1px solid rgba(255,255,255,0.2);
         }
-        .result-score { font-family: 'Orbitron', sans-serif; font-size: 3rem; margin-bottom: 10px; }
-        .result-desc { font-size: 1.4rem; color: var(--text-light); line-height: 1.6; }
+        .meter-fill-cng {
+            background: linear-gradient(90deg, #00b09b, var(--accent-green));
+            height: 100%; display: flex; align-items: center; justify-content: flex-start;
+            padding-left: 15px; font-family: 'Orbitron', sans-serif; color: #000; font-weight: bold;
+            transition: width 0.5s ease-in-out; white-space: nowrap;
+        }
+        .meter-fill-petrol {
+            background: linear-gradient(90deg, var(--accent-blue), #0055ff);
+            height: 100%; display: flex; align-items: center; justify-content: flex-end;
+            padding-right: 15px; font-family: 'Orbitron', sans-serif; color: #000; font-weight: bold;
+            transition: width 0.5s ease-in-out; white-space: nowrap;
+        }
+        .result-desc { font-size: 1.2rem; color: var(--text-light); line-height: 1.6; }
 
-        /* Comparison Styles */
+        /* --- FINANCIAL CALCULATOR STYLES --- */
         .control-panel {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
             margin-bottom: 30px; background: rgba(0, 0, 0, 0.4); padding: 25px; border-radius: 16px;
@@ -139,13 +141,13 @@
         }
         .input-group { display: flex; flex-direction: column; width: 100%; }
         .input-group label {
-            font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--text-muted);
-            margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--text-muted);
+            margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;
         }
         .input-group select, .input-group input {
             background: rgba(10, 10, 10, 0.8); color: var(--accent-blue); border: 1px solid var(--border-color);
             padding: 15px; border-radius: 10px; font-family: 'Orbitron', sans-serif; font-size: 1rem;
-            outline: none; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); width: 100%;
+            outline: none; width: 100%;
         }
         .input-group select {
             appearance: none; cursor: pointer; padding-right: 40px;
@@ -158,71 +160,63 @@
         }
         
         .variant-card {
-            background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
-        }
-        .variant-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3); }
-
-        .odometer-display {
-            background: rgba(10, 10, 10, 0.8); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px; padding: 15px; margin-bottom: 25px; text-align: center;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column; justify-content: center;
         }
         .variant-card h3 {
-            font-family: 'Orbitron', sans-serif; color: var(--text-light); font-size: 1.3rem; margin: 0;
+            font-family: 'Orbitron', sans-serif; color: var(--text-light); font-size: 1.3rem; 
+            margin-bottom: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;
         }
 
         .data-row {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
-            padding-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 1.1rem;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+            font-size: 1.1rem;
         }
         .data-row span:first-child { color: var(--text-muted); font-weight: 500; }
         .data-row span:last-child { font-family: 'Orbitron', sans-serif; color: var(--text-light); font-weight: 700; }
-        .spec-highlight span:last-child { color: var(--accent-blue); }
 
-        .total-cost { margin-top: 20px; padding-top: 20px; border-top: 2px solid rgba(255, 77, 121, 0.5); font-size: 1.3rem; }
-        .total-cost span:last-child { color: var(--accent-red); text-shadow: 0 0 10px rgba(255, 77, 121, 0.4); }
+        .total-cost { margin-top: 10px; padding-top: 20px; border-top: 2px dashed rgba(255,255,255,0.2); font-size: 1.3rem; }
+        .total-cost span:last-child { color: var(--accent-blue); text-shadow: 0 0 10px rgba(0, 229, 255, 0.4); font-size: 1.5rem;}
 
-        /* Break Even Meter */
+        /* --- BREAK EVEN METER --- */
         .breakeven-meter {
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(0, 0, 0, 0.8));
-            border: 1px solid var(--accent-blue); padding: 25px; border-radius: 16px;
-            margin-bottom: 30px; text-align: center; display: none;
-            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1), inset 0 0 20px rgba(0, 229, 255, 0.05);
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(0, 0, 0, 0.8));
+            border: 1px solid var(--accent-blue); padding: 30px; border-radius: 16px;
+            margin-bottom: 30px; display: none; box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
         }
-        .be-title { font-family: 'Orbitron', sans-serif; color: var(--accent-blue); font-size: 1.4rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;}
-        .be-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .be-box { background: rgba(0,0,0,0.6); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
-        .be-label { display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
-        .be-val { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: bold; color: var(--text-light); }
+        .be-title { font-family: 'Orbitron', sans-serif; color: var(--accent-blue); font-size: 1.5rem; margin-bottom: 20px; text-align: center; letter-spacing: 1px;}
+        .be-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .be-box { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center;}
+        .be-label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; font-family: 'Orbitron', sans-serif;}
+        .be-val { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: bold; color: var(--text-light); }
         .be-final {
-            background: rgba(0, 229, 255, 0.15); padding: 20px; border-radius: 12px;
-            border: 1px dashed var(--accent-blue); display: inline-block; width: 100%;
+            background: rgba(0, 229, 255, 0.1); padding: 25px; border-radius: 12px;
+            border: 1px dashed var(--accent-blue); text-align: center;
         }
-        .be-final-val { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--accent-blue); text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
+        .be-final-val { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent-blue); text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); margin-top: 5px; }
 
-        .savings-box {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 0, 0, 0.8));
-            border: 1px solid var(--accent-green); color: var(--accent-green); padding: 30px;
-            border-radius: 16px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 1.6rem;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+        .btn-proceed {
+            display: inline-block; margin-top: 20px; padding: 12px 25px; background: rgba(0, 229, 255, 0.15);
+            border: 1px solid var(--accent-blue); color: var(--accent-blue); font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: 0.3s;
         }
-        .savings-amount { font-size: 1.5em; display: block; margin-top: 8px; color: #ffffff; font-weight: bold; }
-        .savings-neutral { border-color: rgba(255,255,255,0.2); color: var(--text-light); background: rgba(0, 0, 0, 0.6); }
+        .btn-proceed:hover { background: var(--accent-blue); color: #000; }
 
         @media (max-width: 900px) {
             .dashboard-grid { grid-template-columns: 1fr; gap: 20px; }
             .tabs { flex-direction: column; }
             .header h1 { font-size: 2.2rem; }
             .top-logo-container { position: relative; top: 0; left: 0; text-align: center; display: flex; justify-content: center; width: 100%; margin-bottom: 10px; }
+            .meter-fill-cng, .meter-fill-petrol { font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Video Background -->
     <video class="bg-video" autoplay loop muted playsinline>
-        <source src="video_c58f00.mp4" type="video/mp4">
+        <source src="Something stunning is about to pull in and missing it is not an option. #NEXA #THESTUNNINGNEWBAL.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
 
@@ -238,76 +232,77 @@
     <!-- TABS -->
     <div class="tabs">
         <button class="tab-btn active" onclick="openTab('diagnostic')">1. Suitability Score</button>
-        <button class="tab-btn" onclick="openTab('financial')">2. Financial Calculator</button>
+        <button class="tab-btn" onclick="openTab('financial')">2. Financial Break-Even</button>
     </div>
 
     <!-- TAB 1: DIAGNOSTIC TOOL -->
     <div id="diagnostic" class="tab-content active">
         <div class="dashboard-container">
             <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="font-family: 'Orbitron', sans-serif; color: var(--text-light); font-size: 1.8rem; margin-bottom: 10px;">CNG Suitability Score</h2>
-                <p style="color: var(--text-muted); font-size: 1.1rem;">Let's find out which powertrain matches your lifestyle.</p>
+                <h2 style="font-family: 'Orbitron', sans-serif; color: var(--text-light); font-size: 1.8rem; margin-bottom: 10px;">CNG Suitability Meter</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Select your preferences to see which powertrain matches your lifestyle.</p>
             </div>
 
             <div class="diag-grid">
                 <div class="diag-item">
-                    <label>1. Average Monthly Running</label>
+                    <label class="q-title">1. Average Monthly Running</label>
                     <div class="diag-options">
-                        <label class="diag-option"><input type="radio" name="q1" value="p" checked> Less than 1,000 km</label>
-                        <label class="diag-option"><input type="radio" name="q1" value="e"> 1,000 km to 2,000 km</label>
-                        <label class="diag-option"><input type="radio" name="q1" value="c"> More than 2,000 km</label>
+                        <label class="diag-option"><input type="radio" name="q1" value="p" checked onchange="calculateScore()"> Less than 1,000 km</label>
+                        <label class="diag-option"><input type="radio" name="q1" value="e" onchange="calculateScore()"> 1,000 km to 2,000 km</label>
+                        <label class="diag-option"><input type="radio" name="q1" value="c" onchange="calculateScore()"> More than 2,000 km</label>
                     </div>
                 </div>
                 <div class="diag-item">
-                    <label>2. Expected Ownership Period</label>
+                    <label class="q-title">2. Expected Ownership Period</label>
                     <div class="diag-options">
-                        <label class="diag-option"><input type="radio" name="q2" value="p" checked> Short (1 - 3 Years)</label>
-                        <label class="diag-option"><input type="radio" name="q2" value="e"> Medium (3 - 5 Years)</label>
-                        <label class="diag-option"><input type="radio" name="q2" value="c"> Long (5+ Years)</label>
+                        <label class="diag-option"><input type="radio" name="q2" value="p" checked onchange="calculateScore()"> Short (1 - 3 Years)</label>
+                        <label class="diag-option"><input type="radio" name="q2" value="e" onchange="calculateScore()"> Medium (3 - 5 Years)</label>
+                        <label class="diag-option"><input type="radio" name="q2" value="c" onchange="calculateScore()"> Long (5+ Years)</label>
                     </div>
                 </div>
                 <div class="diag-item">
-                    <label>3. Boot Space Requirement</label>
+                    <label class="q-title">3. Boot Space Requirement</label>
                     <div class="diag-options">
-                        <label class="diag-option"><input type="radio" name="q3" value="p" checked> Essential (Full Boot Needed)</label>
-                        <label class="diag-option"><input type="radio" name="q3" value="e"> Neutral (Occasional Use)</label>
-                        <label class="diag-option"><input type="radio" name="q3" value="c"> Unimportant (Rarely Used)</label>
+                        <label class="diag-option"><input type="radio" name="q3" value="p" checked onchange="calculateScore()"> Essential (Full Boot Needed)</label>
+                        <label class="diag-option"><input type="radio" name="q3" value="e" onchange="calculateScore()"> Neutral (Occasional Use)</label>
+                        <label class="diag-option"><input type="radio" name="q3" value="c" onchange="calculateScore()"> Unimportant (Rarely Used)</label>
                     </div>
                 </div>
                 <div class="diag-item">
-                    <label>4. Frequency of Long Highway Trips</label>
+                    <label class="q-title">4. Frequency of Long Highway Trips</label>
                     <div class="diag-options">
-                        <label class="diag-option"><input type="radio" name="q4" value="p" checked> Frequently</label>
-                        <label class="diag-option"><input type="radio" name="q4" value="e"> Occasionally</label>
-                        <label class="diag-option"><input type="radio" name="q4" value="c"> Rarely (Mostly City)</label>
+                        <label class="diag-option"><input type="radio" name="q4" value="p" checked onchange="calculateScore()"> Frequently</label>
+                        <label class="diag-option"><input type="radio" name="q4" value="e" onchange="calculateScore()"> Occasionally</label>
+                        <label class="diag-option"><input type="radio" name="q4" value="c" onchange="calculateScore()"> Rarely (Mostly City)</label>
                     </div>
                 </div>
                 <div class="diag-item">
-                    <label>5. CNG Station Accessibility Near You</label>
+                    <label class="q-title">5. CNG Station Accessibility Near You</label>
                     <div class="diag-options">
-                        <label class="diag-option"><input type="radio" name="q5" value="p" checked> Poor / Long Queues</label>
-                        <label class="diag-option"><input type="radio" name="q5" value="e"> Average</label>
-                        <label class="diag-option"><input type="radio" name="q5" value="c"> Good / Easily Accessible</label>
+                        <label class="diag-option"><input type="radio" name="q5" value="p" checked onchange="calculateScore()"> Poor / Long Queues</label>
+                        <label class="diag-option"><input type="radio" name="q5" value="e" onchange="calculateScore()"> Average</label>
+                        <label class="diag-option"><input type="radio" name="q5" value="c" onchange="calculateScore()"> Good / Easily Accessible</label>
                     </div>
                 </div>
                 <div class="diag-item">
-                    <label>6. Primary Driving Focus</label>
+                    <label class="q-title">6. Primary Driving Focus</label>
                     <div class="diag-options">
-                        <label class="diag-option"><input type="radio" name="q6" value="p" checked> Max Performance & Pick-up</label>
-                        <label class="diag-option"><input type="radio" name="q6" value="e"> Balanced</label>
-                        <label class="diag-option"><input type="radio" name="q6" value="c"> Maximum Fuel Economy</label>
+                        <label class="diag-option"><input type="radio" name="q6" value="p" checked onchange="calculateScore()"> Max Performance & Pick-up</label>
+                        <label class="diag-option"><input type="radio" name="q6" value="e" onchange="calculateScore()"> Balanced</label>
+                        <label class="diag-option"><input type="radio" name="q6" value="c" onchange="calculateScore()"> Maximum Fuel Economy</label>
                     </div>
                 </div>
             </div>
 
-            <div class="diag-btn-container">
-                <button class="calc-btn" onclick="calculateScore()">Generate Suitability Score</button>
-            </div>
-
-            <div id="scoreResult" class="result-box">
-                <div class="result-score" id="resScoreText">PETROL FIT: 0/100</div>
+            <!-- LIVE METER -->
+            <div class="meter-container">
+                <h3 style="font-family: 'Orbitron', sans-serif; color: var(--text-light); margin-bottom: 10px;">Live Recommendation</h3>
+                <div class="meter-bar-bg">
+                    <div class="meter-fill-cng" id="barCng" style="width: 50%;">CNG 50%</div>
+                    <div class="meter-fill-petrol" id="barPetrol" style="width: 50%;">PETROL 50%</div>
+                </div>
                 <div class="result-desc" id="resDescText">-</div>
-                <button class="calc-btn" style="margin-top:20px; font-size:1rem; padding: 10px 20px; background: rgba(255,255,255,0.1); border: 1px solid #fff; color:#fff;" onclick="openTab('financial')">Proceed to Financial Comparison →</button>
+                <button class="btn-proceed" onclick="openTab('financial')">View Break-Even Financials →</button>
             </div>
         </div>
     </div>
@@ -325,7 +320,8 @@
                     <select id="variantB"></select>
                 </div>
                 <div class="input-group">
-                    <label>Est. Running (Km/Month)</label>
+                    <label>Monthly Running (Km)</label>
+                    <!-- Default to 1000, updated by script dynamically -->
                     <input type="number" id="monthlyKm" value="1000" min="100" step="100">
                 </div>
                 <div class="input-group">
@@ -342,54 +338,47 @@
                 </div>
             </div>
 
-            <!-- Break Even Meter -->
+            <!-- BREAK EVEN METER (Only visible if applicable) -->
             <div class="breakeven-meter" id="breakEvenMeter">
-                <div class="be-title">⚡ Your Investment Break-Even Meter</div>
+                <div class="be-title">⚡ The Break-Even Distance Calculator</div>
+                <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem;">See exactly how many KMs you need to drive to recover the extra cost of the premium variant through fuel savings.</p>
+                
                 <div class="be-grid">
                     <div class="be-box">
-                        <span class="be-label">Your Driving</span>
-                        <span class="be-val" id="be-driving">-</span>
-                    </div>
-                    <div class="be-box">
-                        <span class="be-label">Extra Upfront Investment</span>
+                        <span class="be-label">Extra Capital & Interest Cost</span>
                         <span class="be-val" id="be-invest" style="color: var(--accent-red);">-</span>
                     </div>
                     <div class="be-box">
-                        <span class="be-label">Estimated Fuel Saving</span>
-                        <span class="be-val" id="be-saving" style="color: var(--accent-green);">-</span>
+                        <span class="be-label">Savings Per Kilometer</span>
+                        <span class="be-val" id="be-saving-km" style="color: var(--accent-green);">-</span>
+                    </div>
+                    <div class="be-box">
+                        <span class="be-label">Break-Even Distance</span>
+                        <span class="be-val" id="be-km" style="color: var(--accent-gold);">-</span>
                     </div>
                 </div>
                 <div class="be-final">
-                    <span class="be-label" style="margin-bottom: 10px;">Investment Recovered In</span>
-                    <div class="be-final-val" id="be-result">-</div>
+                    <span class="be-label" style="margin-bottom: 10px; color: var(--text-light);">Based on your running, Investment is Recovered In:</span>
+                    <div class="be-final-val" id="be-months">-</div>
                 </div>
             </div>
 
+            <!-- SIMPLIFIED FINANCE CARDS -->
             <div class="dashboard-grid">
                 <div class="variant-card" id="cardA">
-                    <div class="odometer-display"><h3 id="nameA">LOADING...</h3></div>
-                    <div class="data-row"><span>On-Road Valuation</span><span id="priceA">-</span></div>
-                    <div class="data-row spec-highlight"><span>Mileage</span><span id="mileageA">-</span></div>
-                    <div class="data-row spec-highlight"><span>Fuel Rate</span><span id="fuelRateA">-</span></div>
-                    <div class="data-row"><span>Financed Amount (80%)</span><span id="loanA">-</span></div>
-                    <div class="data-row"><span>Monthly Instalment (<span class="dyn-tenure">5</span>Y)</span><span id="emiA">-</span></div>
-                    <div class="data-row"><span>Total Fuel Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelA">-</span></div>
+                    <h3 id="nameA">LOADING...</h3>
+                    <div class="data-row"><span>Total Vehicle Cost (Downpayment + EMIs)</span><span id="vehCostA">-</span></div>
+                    <div class="data-row"><span>Total Fuel Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelCostA">-</span></div>
                     <div class="data-row total-cost"><span>Total System Cost</span><span id="totalCostA">-</span></div>
                 </div>
                 
                 <div class="variant-card" id="cardB">
-                    <div class="odometer-display"><h3 id="nameB">LOADING...</h3></div>
-                    <div class="data-row"><span>On-Road Valuation</span><span id="priceB">-</span></div>
-                    <div class="data-row spec-highlight"><span>Mileage</span><span id="mileageB">-</span></div>
-                    <div class="data-row spec-highlight"><span>Fuel Rate</span><span id="fuelRateB">-</span></div>
-                    <div class="data-row"><span>Financed Amount (80%)</span><span id="loanB">-</span></div>
-                    <div class="data-row"><span>Monthly Instalment (<span class="dyn-tenure">5</span>Y)</span><span id="emiB">-</span></div>
-                    <div class="data-row"><span>Total Fuel Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelB">-</span></div>
+                    <h3 id="nameB">LOADING...</h3>
+                    <div class="data-row"><span>Total Vehicle Cost (Downpayment + EMIs)</span><span id="vehCostB">-</span></div>
+                    <div class="data-row"><span>Total Fuel Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelCostB">-</span></div>
                     <div class="data-row total-cost"><span>Total System Cost</span><span id="totalCostB">-</span></div>
                 </div>
             </div>
-
-            <div class="savings-box" id="savingsBox">AWAITING INPUT...</div>
         </div>
     </div>
 
@@ -398,7 +387,7 @@
 
         const formatCurrency = (val) => '₹ ' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val);
 
-        // Tab System
+        // Tab Switching Logic
         function openTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -406,7 +395,7 @@
             event.currentTarget.classList.add('active');
         }
 
-        // Diagnostic Logic
+        // Live Diagnostic Score Logic
         function calculateScore() {
             let cngScore = 0; let petrolScore = 0;
             
@@ -432,13 +421,16 @@
             const cngPercent = Math.round((cngScore / total) * 100);
             const petrolPercent = Math.round((petrolScore / total) * 100);
 
-            const resBox = document.getElementById('scoreResult');
-            const resScore = document.getElementById('resScoreText');
+            // Update UI Meter
+            document.getElementById('barCng').style.width = cngPercent + '%';
+            document.getElementById('barCng').innerText = `CNG ${cngPercent}%`;
+            
+            document.getElementById('barPetrol').style.width = petrolPercent + '%';
+            document.getElementById('barPetrol').innerText = `PETROL ${petrolPercent}%`;
+
             const resDesc = document.getElementById('resDescText');
 
-            resBox.style.display = 'block';
-
-            // Sync Monthly Km input to financial tab based on Q1
+            // Soft-sync Monthly Km input to financial tab based on Q1
             const mKmInput = document.getElementById('monthlyKm');
             if(q1==='p') mKmInput.value = 800;
             if(q1==='e') mKmInput.value = 1500;
@@ -446,15 +438,11 @@
             updateDashboard();
 
             if (cngPercent > petrolPercent) {
-                resBox.style.borderColor = 'var(--accent-green)';
-                resScore.style.color = 'var(--accent-green)';
-                resScore.innerText = `CNG FIT: ${cngPercent}/100`;
-                resDesc.innerText = `With your profile, CNG deserves serious consideration. It perfectly aligns with your usage and will deliver maximum long-term value.`;
+                resDesc.innerHTML = `<strong>CNG Wins:</strong> With your profile, CNG deserves serious consideration. It perfectly aligns with your usage and will deliver maximum long-term value.`;
+                resDesc.style.color = 'var(--accent-green)';
             } else {
-                resBox.style.borderColor = 'var(--accent-blue)';
-                resScore.style.color = 'var(--accent-blue)';
-                resScore.innerText = `PETROL FIT: ${petrolPercent}/100`;
-                resDesc.innerText = `Based on your usage, Petrol may be the more suitable choice. It offers the right blend of convenience, space, and performance for your needs.`;
+                resDesc.innerHTML = `<strong>Petrol Wins:</strong> Based on your usage, Petrol is the clear winner. It offers the right blend of convenience, boot space, and performance for your needs.`;
+                resDesc.style.color = 'var(--accent-blue)';
             }
         }
 
@@ -477,30 +465,19 @@
             
             const totalKm = monthlyKm * 12 * tenureYears; 
             const fuelCost = (totalKm / variant.mileage) * variant.fuel_price;
-            const monthlyFuelCost = fuelCost / tenureMonths;
+            const perKmCost = variant.fuel_price / variant.mileage;
 
-            const vehicleCapitalCost = downpayment + totalEmi;
+            const vehicleCapitalCost = downpayment + totalEmi; // Real cost out of pocket for the car + loan interest
             const totalCost = vehicleCapitalCost + fuelCost;
             
-            return { onRoadPrice, loanAmount, downpayment, emi, totalEmi, vehicleCapitalCost, fuelCost, monthlyFuelCost, totalCost };
-        }
-
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const easeProgress = 1 - Math.pow(1 - progress, 4);
-                obj.innerHTML = formatCurrency(Math.floor(easeProgress * (end - start) + start));
-                if (progress < 1) window.requestAnimationFrame(step);
-            };
-            window.requestAnimationFrame(step);
+            return { vehicleCapitalCost, fuelCost, perKmCost, totalCost };
         }
 
         function updateDashboard() {
             const idxA = document.getElementById('variantA').value;
             const idxB = document.getElementById('variantB').value;
-            const monthlyKm = parseFloat(document.getElementById('monthlyKm').value) || 0;
+            // Prevent Division by Zero
+            const monthlyKm = Math.max(parseFloat(document.getElementById('monthlyKm').value) || 1000, 1);
             const tenureYears = parseInt(document.getElementById('tenure').value) || 5;
 
             if (idxA === "" || idxB === "") return;
@@ -512,82 +489,46 @@
             const costA = computeCosts(varA, monthlyKm, tenureYears);
             const costB = computeCosts(varB, monthlyKm, tenureYears);
 
-            // Populate Specs A
-            const isCngA = varA.variant.includes('CNG');
-            document.getElementById('mileageA').innerText = `${varA.mileage} ${isCngA ? 'Km/Kg' : 'Km/L'}`;
-            document.getElementById('fuelRateA').innerText = `${formatCurrency(varA.fuel_price)} ${isCngA ? '/ Kg' : '/ L'}`;
+            // Update Clean Cards A
             document.getElementById('nameA').innerText = varA.variant;
-            document.getElementById('priceA').innerText = formatCurrency(costA.onRoadPrice);
-            document.getElementById('loanA').innerText = formatCurrency(costA.loanAmount);
-            document.getElementById('downA').innerText = formatCurrency(costA.downpayment);
-            document.getElementById('emiA').innerText = formatCurrency(costA.emi);
-            document.getElementById('totalEmiA').innerText = formatCurrency(costA.totalEmi);
-            document.getElementById('fuelA').innerText = formatCurrency(costA.fuelCost);
-            animateValue(document.getElementById('totalCostA'), 0, costA.totalCost, 1000);
+            document.getElementById('vehCostA').innerText = formatCurrency(costA.vehicleCapitalCost);
+            document.getElementById('fuelCostA').innerText = formatCurrency(costA.fuelCost);
+            document.getElementById('totalCostA').innerText = formatCurrency(costA.totalCost);
 
-            // Populate Specs B
-            const isCngB = varB.variant.includes('CNG');
-            document.getElementById('mileageB').innerText = `${varB.mileage} ${isCngB ? 'Km/Kg' : 'Km/L'}`;
-            document.getElementById('fuelRateB').innerText = `${formatCurrency(varB.fuel_price)} ${isCngB ? '/ Kg' : '/ L'}`;
+            // Update Clean Cards B
             document.getElementById('nameB').innerText = varB.variant;
-            document.getElementById('priceB').innerText = formatCurrency(costB.onRoadPrice);
-            document.getElementById('loanB').innerText = formatCurrency(costB.loanAmount);
-            document.getElementById('downB').innerText = formatCurrency(costB.downpayment);
-            document.getElementById('emiB').innerText = formatCurrency(costB.emi);
-            document.getElementById('totalEmiB').innerText = formatCurrency(costB.totalEmi);
-            document.getElementById('fuelB').innerText = formatCurrency(costB.fuelCost);
-            animateValue(document.getElementById('totalCostB'), 0, costB.totalCost, 1000);
+            document.getElementById('vehCostB').innerText = formatCurrency(costB.vehicleCapitalCost);
+            document.getElementById('fuelCostB').innerText = formatCurrency(costB.fuelCost);
+            document.getElementById('totalCostB').innerText = formatCurrency(costB.totalCost);
 
             // Break-Even Meter Logic
             const beMeter = document.getElementById('breakEvenMeter');
-            document.getElementById('be-driving').innerText = `${monthlyKm} km/month`;
-
-            // Identify which car is more expensive to buy (Investment) but cheaper to run
             let invCar = null, baseCar = null;
-            if (costA.onRoadPrice > costB.onRoadPrice && costA.monthlyFuelCost < costB.monthlyFuelCost) {
+
+            // Identify which car requires more Capital (Downpayment + Interest) but saves money on Fuel per KM
+            if (costA.vehicleCapitalCost > costB.vehicleCapitalCost && costA.perKmCost < costB.perKmCost) {
                 invCar = {name: varA.variant, cost: costA}; baseCar = {name: varB.variant, cost: costB};
-            } else if (costB.onRoadPrice > costA.onRoadPrice && costB.monthlyFuelCost < costA.monthlyFuelCost) {
+            } else if (costB.vehicleCapitalCost > costA.vehicleCapitalCost && costB.perKmCost < costA.perKmCost) {
                 invCar = {name: varB.variant, cost: costB}; baseCar = {name: varA.variant, cost: costA};
             }
 
             if (invCar && baseCar) {
-                const extraInvest = invCar.cost.onRoadPrice - baseCar.cost.onRoadPrice;
-                const monthlySave = baseCar.cost.monthlyFuelCost - invCar.cost.monthlyFuelCost;
-                const beMonths = Math.ceil(extraInvest / monthlySave);
-                const beKm = Math.ceil(beMonths * monthlyKm);
-
-                document.getElementById('be-invest').innerText = formatCurrency(extraInvest);
-                document.getElementById('be-saving').innerText = `${formatCurrency(monthlySave)} / month`;
+                const capitalDiff = invCar.cost.vehicleCapitalCost - baseCar.cost.vehicleCapitalCost;
+                const savingPerKm = baseCar.cost.perKmCost - invCar.cost.perKmCost;
                 
-                let timeStr = beMonths > 12 ? `${Math.floor(beMonths/12)} Yrs & ${beMonths%12} Mos` : `${beMonths} Months`;
-                document.getElementById('be-result').innerText = `${timeStr} (${beKm.toLocaleString('en-IN')} km)`;
+                const breakEvenKms = capitalDiff / savingPerKm;
+                const breakEvenMonths = breakEvenKms / monthlyKm;
+
+                document.getElementById('be-invest').innerText = formatCurrency(capitalDiff);
+                document.getElementById('be-saving-km').innerText = `₹ ${savingPerKm.toFixed(2)} / km`;
+                document.getElementById('be-km').innerText = Math.ceil(breakEvenKms).toLocaleString('en-IN') + ' KMs';
+                
+                let timeStr = breakEvenMonths > 12 ? `${Math.floor(breakEvenMonths/12)} Yrs & ${Math.ceil(breakEvenMonths%12)} Mos` : `${Math.ceil(breakEvenMonths)} Months`;
+                document.getElementById('be-months').innerText = timeStr;
+                
                 beMeter.style.display = 'block';
             } else {
-                beMeter.style.display = 'none'; // Hide if no valid break-even scenario exists
-            }
-
-            // Total System Difference & FD calculation
-            const diff = costA.totalCost - costB.totalCost;
-            const absDiff = Math.abs(diff);
-            const fdPrincipal = Math.abs(costA.vehicleCapitalCost - costB.vehicleCapitalCost);
-            const fdMaturity = fdPrincipal * Math.pow(1 + (0.07 / 4), 4 * tenureYears);
-
-            const savingsBox = document.getElementById('savingsBox');
-            savingsBox.classList.remove('savings-neutral');
-            
-            if (diff !== 0) {
-                let winner = diff > 0 ? varB.variant : varA.variant;
-                savingsBox.innerHTML = `
-                    <span style="font-family: 'Rajdhani', sans-serif; font-size: 0.6em; color: var(--text-light); text-transform: uppercase;">Most Cost-Effective Choice:</span><br>
-                    <span style="color:#ffffff;">${winner}</span><br>
-                    <span style="font-family: 'Rajdhani', sans-serif; font-size: 0.6em; color:var(--text-light); letter-spacing: 2px; margin-top: 15px; display: inline-block;">NET SAVINGS OVER ${tenureYears} YEARS</span>
-                    <span class="savings-amount">${formatCurrency(absDiff)}</span>
-                `;
-                savingsBox.style.borderColor = 'var(--accent-green)';
-                savingsBox.style.color = 'var(--accent-green)';
-            } else {
-                savingsBox.innerHTML = `EQUAL VALUE<br><span style="font-family: 'Rajdhani', sans-serif; font-size:0.6em; color:#ffffff;">No cost difference over ${tenureYears} years</span>`;
-                savingsBox.classList.add('savings-neutral');
+                beMeter.style.display = 'none'; // Hide if no valid break-even scenario exists (e.g., comparing two identical petrols)
             }
         }
 
@@ -600,10 +541,14 @@
             });
             if(variantsData.length > 1) { selectA.selectedIndex = 0; selectB.selectedIndex = 7; }
 
+            // Financial Event Listeners
             selectA.addEventListener('change', updateDashboard);
             selectB.addEventListener('change', updateDashboard);
             document.getElementById('monthlyKm').addEventListener('input', updateDashboard);
             document.getElementById('tenure').addEventListener('change', updateDashboard);
+            
+            // Initial calculations
+            calculateScore(); 
             updateDashboard(); 
         };
     </script>
