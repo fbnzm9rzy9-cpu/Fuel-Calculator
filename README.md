@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -5,6 +6,13 @@
     <title>Sahi Chuna Kya - NEXA Comparison</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap');
+
+        /* Global Reset and Box Sizing for absolute responsiveness */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         :root {
             --primary-bg: #0a0a0a;
@@ -21,7 +29,7 @@
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--primary-bg);
-            /* Grand Vitara Background with dark overlay for readability */
+            /* Grand Vitara Background with dark overlay */
             background-image: 
                 linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.92)), 
                 url('https://imgd.aeplcdn.com/1280x720/n/cw/ec/123185/grand-vitara-exterior-right-front-three-quarter-4.jpeg');
@@ -29,35 +37,38 @@
             background-position: center;
             background-attachment: fixed;
             color: var(--text-light);
-            margin: 0;
-            padding: 30px 20px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: clamp(15px, 3vw, 40px) clamp(10px, 2vw, 20px);
+            overflow-x: hidden;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: clamp(20px, 4vw, 40px);
             width: 100%;
         }
 
+        /* Fluid Typography: Scales smoothly between mobile and desktop */
         .header h1 {
             font-family: 'Orbitron', sans-serif;
             color: var(--accent-blue);
-            font-size: 4em;
+            font-size: clamp(2.2rem, 5vw, 4rem); 
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: clamp(1px, 1vw, 4px);
             text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+            line-height: 1.2;
         }
 
         .header p {
             color: var(--text-muted);
-            font-size: 1.5em;
+            font-size: clamp(1rem, 2vw, 1.5rem);
             font-weight: 500;
             letter-spacing: 1px;
+            padding: 0 10px;
         }
 
         .dashboard-container {
@@ -66,19 +77,20 @@
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 24px;
-            padding: 40px;
+            padding: clamp(20px, 4vw, 40px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
         }
 
+        /* CSS Grid with Auto-Fit creates equal columns that wrap perfectly on all screens */
         .control-panel {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+            gap: 20px;
+            margin-bottom: clamp(25px, 4vw, 40px);
             background: rgba(0, 0, 0, 0.4);
-            padding: 30px;
+            padding: clamp(15px, 3vw, 30px);
             border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.1);
             position: relative;
@@ -86,17 +98,16 @@
         }
 
         .input-group {
-            flex: 1;
-            min-width: 220px;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         .input-group label {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.1em;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -105,16 +116,17 @@
             background: rgba(10, 10, 10, 0.8);
             color: var(--accent-blue);
             border: 1px solid var(--border-color);
-            padding: 16px;
+            padding: 14px 16px;
             border-radius: 10px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.15em;
+            font-size: clamp(0.95rem, 1.5vw, 1.15rem);
             transition: all 0.3s ease;
             outline: none;
             touch-action: manipulation;
             position: relative;
             z-index: 20;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            width: 100%;
         }
 
         /* Mobile specific fixes for Select Dropdowns */
@@ -126,7 +138,7 @@
             background-repeat: no-repeat;
             background-position: right 15px center;
             background-size: 14px;
-            padding-right: 45px;
+            padding-right: 40px;
             cursor: pointer;
         }
 
@@ -144,20 +156,21 @@
 
         .comparison-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+            gap: clamp(20px, 4vw, 40px);
+            margin-bottom: clamp(25px, 4vw, 40px);
         }
 
         .variant-card {
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px;
-            padding: 35px;
+            padding: clamp(20px, 4vw, 35px);
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             transition: transform 0.3s ease, border-color 0.3s ease;
+            width: 100%;
         }
 
         .variant-card:hover {
@@ -169,8 +182,8 @@
             background: rgba(10, 10, 10, 0.8);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
+            padding: 15px;
+            margin-bottom: clamp(20px, 4vw, 30px);
             text-align: center;
             position: relative;
             box-shadow: inset 0 5px 15px rgba(0,0,0,0.8);
@@ -179,19 +192,22 @@
         .variant-card h3 {
             font-family: 'Orbitron', sans-serif;
             color: var(--text-light);
-            font-size: 1.6em;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
             margin: 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            word-wrap: break-word;
         }
 
         .data-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 1.2em;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            flex-wrap: wrap; /* Allows text to drop down on extremely tiny screens */
+            gap: 5px;
         }
 
         .data-row span:first-child {
@@ -203,6 +219,8 @@
             font-family: 'Orbitron', sans-serif;
             color: var(--text-light);
             font-weight: 700;
+            text-align: right;
+            flex-grow: 1;
         }
 
         .spec-highlight span:last-child {
@@ -210,31 +228,31 @@
         }
 
         .total-cost {
-            margin-top: 30px;
-            padding-top: 25px;
+            margin-top: 25px;
+            padding-top: 20px;
             border-top: 2px solid rgba(255, 77, 121, 0.5);
-            font-size: 1.4em;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
         }
         
         .total-cost span:last-child {
             color: var(--accent-red);
             text-shadow: 0 0 10px rgba(255, 77, 121, 0.4);
-            font-size: 1.3em;
         }
 
         .savings-box {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 0, 0, 0.8));
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
-            padding: 35px;
+            padding: clamp(20px, 4vw, 35px);
             border-radius: 20px;
             text-align: center;
             font-family: 'Orbitron', sans-serif;
-            font-size: 2em;
+            font-size: clamp(1.2rem, 3vw, 2em);
             text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
             box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1), inset 0 0 20px rgba(0, 255, 136, 0.05);
             position: relative;
             overflow: hidden;
+            width: 100%;
         }
         
         .savings-box::after {
@@ -256,7 +274,7 @@
         }
 
         .savings-amount {
-            font-size: 1.6em;
+            font-size: clamp(1.2em, 4vw, 1.6em);
             display: block;
             margin-top: 8px;
             color: #ffffff;
@@ -279,23 +297,28 @@
         .breakdown-panel {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 12px;
-            padding: 20px;
+            padding: clamp(10px, 3vw, 20px);
             margin-top: 20px;
-            font-size: 0.6em; /* Relative to the 2em parent */
+            font-size: clamp(0.55em, 1.5vw, 0.6em); /* Relative to parent 2em */
             text-align: left;
-            line-height: 2;
+            line-height: 1.8;
             letter-spacing: 1px;
             font-family: 'Rajdhani', sans-serif;
+            text-shadow: none;
         }
 
-        @media (max-width: 900px) {
-            .comparison-grid { grid-template-columns: 1fr; }
-            .header h1 { font-size: 2.5em; }
-            .header p { font-size: 1.2em; }
-            .savings-box { font-size: 1.4em; padding: 25px;}
-            .dashboard-container { padding: 20px; }
-            .variant-card { padding: 20px; }
-            .data-row { font-size: 1.05em; }
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .breakdown-row span:last-child {
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            text-align: right;
+            flex-grow: 1;
         }
     </style>
 </head>
@@ -496,13 +519,13 @@
                     <span class="savings-amount">${formatCurrency(absDiff)}</span>
                     
                     <div class="breakdown-panel">
-                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 8px; margin-bottom: 8px;">
+                        <div class="breakdown-row" style="border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 8px; margin-bottom: 8px;">
                             <span style="color: var(--text-muted);">VEHICLE COST DIFFERENCE (FD PRINCIPAL):</span>
-                            <span style="color: #ffffff; font-weight: bold; font-family: 'Orbitron', sans-serif;">${formatCurrency(fdPrincipal)}</span>
+                            <span style="color: #ffffff;">${formatCurrency(fdPrincipal)}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between;">
+                        <div class="breakdown-row">
                             <span style="color: var(--text-muted);">FD MATURITY AFTER ${tenureYears}Y (@ 7% P.A.):</span>
-                            <span class="fd-amount" style="font-weight: bold; font-family: 'Orbitron', sans-serif;">${formatCurrency(fdMaturity)}</span>
+                            <span class="fd-amount">${formatCurrency(fdMaturity)}</span>
                         </div>
                     </div>
                 `;
