@@ -1,34 +1,37 @@
-# Fuel-Calculator
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sahi Chuna Kya - NEXA Comparison</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap');
 
         :root {
-            --primary-bg: #111;
-            --panel-bg: #1a1a1a;
+            --primary-bg: #0a0a0a;
             --accent-blue: #00e5ff;
             --accent-green: #00ff88;
-            --accent-red: #ff3366;
-            --accent-gold: #ffb700;
-            --text-light: #e0e0e0;
-            --text-muted: #888;
-            --border-color: #333;
+            --accent-red: #ff4d79;
+            --accent-gold: #ffc107;
+            --text-light: #ffffff;
+            --text-muted: #a0aab5;
+            --border-color: rgba(255, 255, 255, 0.15);
+            --panel-bg: rgba(20, 22, 28, 0.75);
         }
 
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--primary-bg);
+            /* Grand Vitara Background with dark overlay for readability */
             background-image: 
-                radial-gradient(circle at 100% 100%, #1a2a3a 0, transparent 50%),
-                radial-gradient(circle at 0% 0%, #2a1a1a 0, transparent 50%);
+                linear-gradient(rgba(10, 12, 16, 0.85), rgba(10, 12, 16, 0.92)), 
+                url('https://imgd.aeplcdn.com/1280x720/n/cw/ec/123185/grand-vitara-exterior-right-front-three-quarter-4.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-light);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -44,73 +47,100 @@
         .header h1 {
             font-family: 'Orbitron', sans-serif;
             color: var(--accent-blue);
-            font-size: 3.5em;
+            font-size: 4em;
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
         }
 
         .header p {
             color: var(--text-muted);
-            font-size: 1.3em;
+            font-size: 1.5em;
+            font-weight: 500;
             letter-spacing: 1px;
         }
 
         .dashboard-container {
             width: 100%;
-            max-width: 1200px;
-            background: rgba(26, 26, 26, 0.8);
+            max-width: 1250px;
+            background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         .control-panel {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 40px;
-            background: linear-gradient(145deg, #222, #111);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid #333;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 2px 2px 5px rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 10;
         }
 
         .input-group {
             flex: 1;
-            min-width: 200px;
+            min-width: 220px;
             display: flex;
             flex-direction: column;
         }
 
         .input-group label {
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.9em;
+            font-size: 1.1em;
             color: var(--text-muted);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .input-group select, .input-group input {
-            background: #0a0a0a;
+            background: rgba(10, 10, 10, 0.8);
             color: var(--accent-blue);
             border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 8px;
+            padding: 16px;
+            border-radius: 10px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1em;
+            font-size: 1.15em;
             transition: all 0.3s ease;
             outline: none;
+            touch-action: manipulation;
+            position: relative;
+            z-index: 20;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Mobile specific fixes for Select Dropdowns */
+        .input-group select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300e5ff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 14px;
+            padding-right: 45px;
+            cursor: pointer;
+        }
+
+        .input-group select option {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: sans-serif; 
         }
 
         .input-group select:focus, .input-group input:focus {
             border-color: var(--accent-blue);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+            background: rgba(20, 20, 20, 0.95);
         }
 
         .comparison-grid {
@@ -121,62 +151,53 @@
         }
 
         .variant-card {
-            background: linear-gradient(145deg, #1f1f1f, #151515);
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 35px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
         .variant-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.7);
-            border-color: #444;
+            border-color: rgba(255,255,255,0.3);
         }
 
         .odometer-display {
-            background: #050505;
-            border: 2px solid #222;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 25px;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
             text-align: center;
             position: relative;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
-
-        .odometer-display::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(transparent 50%, rgba(255,255,255,0.02) 50%);
-            background-size: 100% 4px;
-            pointer-events: none;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.8);
         }
 
         .variant-card h3 {
             font-family: 'Orbitron', sans-serif;
             color: var(--text-light);
-            font-size: 1.4em;
+            font-size: 1.6em;
             margin: 0;
-            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .data-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px dashed #333;
-            font-size: 1.05em;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.2em;
         }
 
         .data-row span:first-child {
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .data-row span:last-child {
@@ -190,29 +211,29 @@
         }
 
         .total-cost {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px solid var(--accent-red);
-            font-size: 1.3em;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(255, 77, 121, 0.5);
+            font-size: 1.4em;
         }
         
         .total-cost span:last-child {
             color: var(--accent-red);
-            text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
-            font-size: 1.2em;
+            text-shadow: 0 0 10px rgba(255, 77, 121, 0.4);
+            font-size: 1.3em;
         }
 
         .savings-box {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 0, 0, 0.8));
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 0, 0, 0.8));
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
-            padding: 30px;
-            border-radius: 15px;
+            padding: 35px;
+            border-radius: 20px;
             text-align: center;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.8em;
-            text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.1), inset 0 0 20px rgba(0, 255, 136, 0.05);
+            font-size: 2em;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1), inset 0 0 20px rgba(0, 255, 136, 0.05);
             position: relative;
             overflow: hidden;
         }
@@ -224,9 +245,9 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(transparent, rgba(255,255,255,0.05), transparent);
+            background: linear-gradient(transparent, rgba(255,255,255,0.03), transparent);
             transform: rotate(45deg);
-            animation: shine 4s infinite linear;
+            animation: shine 5s infinite linear;
             pointer-events: none;
         }
 
@@ -236,29 +257,46 @@
         }
 
         .savings-amount {
-            font-size: 1.4em;
+            font-size: 1.6em;
             display: block;
-            margin-top: 5px;
-            color: #fff;
+            margin-top: 8px;
+            color: #ffffff;
+            font-weight: bold;
         }
 
         .fd-amount {
             color: var(--accent-gold);
-            text-shadow: 0 0 15px rgba(255, 183, 0, 0.6);
+            text-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
         }
         
         .savings-neutral {
-            border-color: var(--text-muted);
+            border-color: rgba(255,255,255,0.2);
             color: var(--text-light);
-            background: #222;
+            background: rgba(0, 0, 0, 0.6);
             text-shadow: none;
             box-shadow: none;
+        }
+
+        .breakdown-panel {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.6em; /* Relative to the 2em parent */
+            text-align: left;
+            line-height: 2;
+            letter-spacing: 1px;
+            font-family: 'Rajdhani', sans-serif;
         }
 
         @media (max-width: 900px) {
             .comparison-grid { grid-template-columns: 1fr; }
             .header h1 { font-size: 2.5em; }
-            .savings-box { font-size: 1.4em; }
+            .header p { font-size: 1.2em; }
+            .savings-box { font-size: 1.4em; padding: 25px;}
+            .dashboard-container { padding: 20px; }
+            .variant-card { padding: 20px; }
+            .data-row { font-size: 1.05em; }
         }
     </style>
 </head>
@@ -266,25 +304,25 @@
 
     <div class="header">
         <h1>Sahi Chuna Kya</h1>
-        <p>SYSTEM BOOT: COMPARISON MATRIX ACTIVE</p>
+        <p>Compare variants, calculate EMIs, and discover your true savings.</p>
     </div>
 
     <div class="dashboard-container">
         <div class="control-panel">
             <div class="input-group">
-                <label for="variantA">SELECT VEHICLE ALPHA</label>
+                <label for="variantA">Select Vehicle A</label>
                 <select id="variantA"></select>
             </div>
             <div class="input-group">
-                <label for="variantB">SELECT VEHICLE BETA</label>
+                <label for="variantB">Select Vehicle B</label>
                 <select id="variantB"></select>
             </div>
             <div class="input-group">
-                <label for="monthlyKm">EST. RUNNING (KM/MONTH)</label>
+                <label for="monthlyKm">Est. Running (Km/Month)</label>
                 <input type="number" id="monthlyKm" value="1000" min="100" step="100">
             </div>
             <div class="input-group">
-                <label for="tenure">TENURE (YEARS)</label>
+                <label for="tenure">Ownership Tenure</label>
                 <select id="tenure">
                     <option value="1">1 Year</option>
                     <option value="2">2 Years</option>
@@ -306,10 +344,10 @@
                 <div class="data-row spec-highlight"><span>Mileage</span><span id="mileageA">-</span></div>
                 <div class="data-row spec-highlight"><span>Fuel Rate</span><span id="fuelRateA">-</span></div>
                 <div class="data-row"><span>Financed Amount (80%)</span><span id="loanA">-</span></div>
-                <div class="data-row"><span>Initial Capital</span><span id="downA">-</span></div>
+                <div class="data-row"><span>Initial Downpayment</span><span id="downA">-</span></div>
                 <div class="data-row"><span>Monthly Instalment (<span class="dyn-tenure">5</span>Y)</span><span id="emiA">-</span></div>
-                <div class="data-row"><span>Total Finance Cost</span><span id="totalEmiA">-</span></div>
-                <div class="data-row"><span>Energy Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelA">-</span></div>
+                <div class="data-row"><span>Total EMI Paid</span><span id="totalEmiA">-</span></div>
+                <div class="data-row"><span>Total Fuel Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelA">-</span></div>
                 <div class="data-row total-cost"><span>Total System Cost</span><span id="totalCostA">-</span></div>
             </div>
             
@@ -321,10 +359,10 @@
                 <div class="data-row spec-highlight"><span>Mileage</span><span id="mileageB">-</span></div>
                 <div class="data-row spec-highlight"><span>Fuel Rate</span><span id="fuelRateB">-</span></div>
                 <div class="data-row"><span>Financed Amount (80%)</span><span id="loanB">-</span></div>
-                <div class="data-row"><span>Initial Capital</span><span id="downB">-</span></div>
+                <div class="data-row"><span>Initial Downpayment</span><span id="downB">-</span></div>
                 <div class="data-row"><span>Monthly Instalment (<span class="dyn-tenure">5</span>Y)</span><span id="emiB">-</span></div>
-                <div class="data-row"><span>Total Finance Cost</span><span id="totalEmiB">-</span></div>
-                <div class="data-row"><span>Energy Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelB">-</span></div>
+                <div class="data-row"><span>Total EMI Paid</span><span id="totalEmiB">-</span></div>
+                <div class="data-row"><span>Total Fuel Cost (<span class="dyn-tenure">5</span>Y)</span><span id="fuelB">-</span></div>
                 <div class="data-row total-cost"><span>Total System Cost</span><span id="totalCostB">-</span></div>
             </div>
         </div>
@@ -452,26 +490,28 @@
 
             if (diff !== 0) {
                 savingsBox.innerHTML = `
-                    OPTIMAL ROUTE: <span style="color:#fff">${winner}</span><br>
-                    <span style="font-size:0.5em; color:var(--text-light); letter-spacing: 2px;">TOTAL SYSTEM SAVINGS (${tenureYears} YEARS)</span>
+                    <span style="font-family: 'Rajdhani', sans-serif; font-size: 0.6em; color: var(--text-light); text-transform: uppercase;">Most Cost-Effective Choice:</span><br>
+                    <span style="color:#ffffff;">${winner}</span><br>
+                    
+                    <span style="font-family: 'Rajdhani', sans-serif; font-size: 0.6em; color:var(--text-light); letter-spacing: 2px; margin-top: 15px; display: inline-block;">NET SAVINGS OVER ${tenureYears} YEARS</span>
                     <span class="savings-amount">${formatCurrency(absDiff)}</span>
                     
-                    <div style="background: rgba(0,0,0,0.4); border-radius: 10px; padding: 15px; margin-top: 15px; font-size: 0.65em; text-align: left; line-height: 1.8; letter-spacing: 1px;">
-                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #444; padding-bottom: 5px; margin-bottom: 5px;">
-                            <span style="color: var(--text-light);">VEHICLE COST DIFFERENCE (FD PRINCIPAL):</span>
-                            <span style="color: #fff; font-weight: bold;">${formatCurrency(fdPrincipal)}</span>
+                    <div class="breakdown-panel">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 8px; margin-bottom: 8px;">
+                            <span style="color: var(--text-muted);">VEHICLE COST DIFFERENCE (FD PRINCIPAL):</span>
+                            <span style="color: #ffffff; font-weight: bold; font-family: 'Orbitron', sans-serif;">${formatCurrency(fdPrincipal)}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--text-light);">FD MATURITY AFTER ${tenureYears}Y (@ 7% P.A.):</span>
-                            <span class="fd-amount" style="margin-top:0; font-weight: bold;">${formatCurrency(fdMaturity)}</span>
+                            <span style="color: var(--text-muted);">FD MATURITY AFTER ${tenureYears}Y (@ 7% P.A.):</span>
+                            <span class="fd-amount" style="font-weight: bold; font-family: 'Orbitron', sans-serif;">${formatCurrency(fdMaturity)}</span>
                         </div>
                     </div>
                 `;
                 savingsBox.style.borderColor = 'var(--accent-green)';
                 savingsBox.style.color = 'var(--accent-green)';
-                savingsBox.style.boxShadow = '0 0 30px rgba(0, 255, 136, 0.1), inset 0 0 20px rgba(0, 255, 136, 0.05)';
+                savingsBox.style.boxShadow = '0 10px 30px rgba(0, 255, 136, 0.1), inset 0 0 20px rgba(0, 255, 136, 0.05)';
             } else {
-                savingsBox.innerHTML = `PARITY ACHIEVED<br><span style="font-size:0.5em; color:#fff;">NO FISCAL VARIANCE DETECTED</span>`;
+                savingsBox.innerHTML = `EQUAL VALUE<br><span style="font-family: 'Rajdhani', sans-serif; font-size:0.6em; color:#ffffff;">No cost difference over ${tenureYears} years</span>`;
                 savingsBox.classList.add('savings-neutral');
             }
         }
