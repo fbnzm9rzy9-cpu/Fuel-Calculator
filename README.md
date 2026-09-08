@@ -39,7 +39,7 @@
         }
 
         /* --- BACKGROUND VIDEO & OVERLAY --- */
-        .WhatsApp Video 2026-09-08 at 9.31.36 PM {
+        .bg-video {
             position: fixed;
             top: 0;
             left: 0;
