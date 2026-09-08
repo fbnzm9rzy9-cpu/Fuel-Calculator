@@ -37,17 +37,29 @@
             min-height: 100vh;
         }
 
+        /* Clean Text Logo (Replaces broken image) */
         .top-logo-container {
             position: absolute;
             top: 25px;
             left: 25px;
             z-index: 100;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        .nexa-logo {
-            height: 22px;
-            /* Filters to dark for light theme */
-            filter: brightness(0) opacity(0.8);
+        
+        .top-logo-container::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background: var(--accent-blue);
+            border-radius: 2px;
         }
 
         .app-container {
@@ -192,13 +204,13 @@
 
         .gauge-svg {
             width: 100%;
-            max-width: 280px;
+            max-width: 260px;
             overflow: visible;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: -30px;
+            margin-top: 15px; /* Pushed safely below the needle base */
         }
 
         .gauge-score {
@@ -221,7 +233,7 @@
             border-radius: 10px;
             font-size: 0.9rem;
             font-weight: 700;
-            margin-top: 15px;
+            margin-top: 10px;
             display: inline-block;
             letter-spacing: 0.5px;
         }
@@ -345,6 +357,7 @@
         @media (max-width: 600px) {
             .top-logo-container { position: relative; top: 0; left: 0; display: flex; justify-content: center; margin-bottom: 10px; width: 100%;}
             .app-container { margin-top: 10px;}
+            .odo-digit { font-size: 2rem; padding: 8px 10px; }
         }
 
     </style>
@@ -352,7 +365,7 @@
 <body>
 
 <div class="top-logo-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Nexa_logo.svg" alt="NEXA Logo" class="nexa-logo">
+    NEXA
 </div>
 
 <div class="app-container">
@@ -424,6 +437,7 @@
         <div class="gauge-container">
             <p style="font-size: 0.85rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;">CNG Suitability Score</p>
             
+            <!-- ViewBox adjusted to cleanly clip exactly beneath the needle center to avoid overlap -->
             <svg class="gauge-svg" viewBox="0 0 200 110">
                 <defs>
                     <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -438,12 +452,12 @@
                 <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#score-grad)" stroke-width="18" stroke-linecap="round"/>
                 
                 <!-- Text Labels -->
-                <text x="20" y="115" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">0</text>
-                <text x="180" y="115" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">100</text>
+                <text x="20" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">0</text>
+                <text x="180" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">100</text>
                 <text x="45" y="45" fill="var(--text-main)" font-size="11" text-anchor="middle" font-weight="700" transform="rotate(-35, 45, 45)">PETROL</text>
                 <text x="155" y="45" fill="var(--text-main)" font-size="11" text-anchor="middle" font-weight="700" transform="rotate(35, 155, 45)">CNG</text>
 
-                <!-- Needle (Rotation adjusted: -90 points to 0, +90 points to 100) -->
+                <!-- Needle -->
                 <g id="score-needle" style="transform-origin: 100px 100px; transform: rotate(90deg); transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);">
                     <circle cx="100" cy="100" r="8" fill="#0f172a"/>
                     <polygon points="96,100 104,100 100,25" fill="#0f172a"/>
@@ -490,11 +504,11 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
             <div class="input-box">
                 <label>Petrol mileage (km/L)</label>
-                <input type="number" id="dispMilA" class="custom-input" readonly style="color: var(--text-muted); background: #f1f5f9;">
+                <input type="number" id="dispMilA" class="custom-input" readonly style="color: var(--text-muted); background: #f1f5f9; border-color: transparent;">
             </div>
             <div class="input-box">
                 <label>CNG mileage (km/kg)</label>
-                <input type="number" id="dispMilB" class="custom-input" readonly style="color: var(--text-muted); background: #f1f5f9;">
+                <input type="number" id="dispMilB" class="custom-input" readonly style="color: var(--text-muted); background: #f1f5f9; border-color: transparent;">
             </div>
         </div>
 
@@ -519,23 +533,23 @@
         <div class="gauge-container" id="time-section">
             <p class="odometer-title" style="margin-bottom: 0;">Break-Even Time</p>
             
-            <svg class="gauge-svg" viewBox="0 0 200 120" style="max-width: 220px; margin-top: 10px;">
+            <svg class="gauge-svg" viewBox="0 0 200 110" style="margin-top: 10px;">
                 <!-- Background Arc -->
                 <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--gauge-bg)" stroke-width="14" stroke-linecap="round"/>
                 <!-- Colored Arc -->
                 <path id="time-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--accent-blue)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);"/>
                 
-                <text x="20" y="115" fill="var(--text-muted)" font-size="11" font-weight="600" text-anchor="middle">0 yr</text>
-                <text x="180" y="115" fill="var(--text-muted)" font-size="11" font-weight="600" text-anchor="middle">8+ yr</text>
+                <text x="20" y="105" fill="var(--text-muted)" font-size="11" font-weight="600" text-anchor="middle">0 yr</text>
+                <text x="180" y="105" fill="var(--text-muted)" font-size="11" font-weight="600" text-anchor="middle">8+ yr</text>
 
-                <!-- Needle (Rotation adjusted: -90 points to 0, +90 points to max) -->
+                <!-- Needle -->
                 <g id="time-needle" style="transform-origin: 100px 100px; transform: rotate(-90deg); transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);">
                     <circle cx="100" cy="100" r="7" fill="#0f172a"/>
                     <polygon points="97,100 103,100 100,25" fill="#0f172a"/>
                 </g>
             </svg>
 
-            <div class="gauge-text-container" style="margin-top: -35px;">
+            <div class="gauge-text-container" style="margin-top: 15px;">
                 <div class="gauge-score" id="time-val" style="font-size: 2.8rem;">0.0</div>
                 <div class="gauge-subtext" style="font-size: 1.1rem; color: var(--text-main); font-weight: 700;">years</div>
                 <div class="gauge-subtext" id="time-desc" style="margin-top: 8px; font-weight: 600;">-</div>
