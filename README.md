@@ -300,7 +300,7 @@
         .odo-roller {
             display: flex;
             flex-direction: column;
-            height: 1000%; /* Holds 10 digits (0-9) */
+            height: 1000%; 
             transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
@@ -367,8 +367,8 @@
         </div>
 
         <div class="input-box" style="margin-top: 5px;">
-            <label>Monthly driving (km)</label>
-            <input type="number" id="monthlyDrivingInput" class="custom-input" value="2500" oninput="calculateProfile()">
+            <label>Daily driving (km)</label>
+            <input type="number" id="dailyDrivingInput" class="custom-input" value="80" oninput="syncToCalc(); calculateProfile()">
         </div>
 
         <!-- Pill Questions -->
@@ -462,6 +462,9 @@
             </div>
         </div>
 
+        <!-- Hidden input to keep logic intact but remove UI clutter -->
+        <input type="hidden" id="manualKm" value="80">
+
         <!-- Hidden when extra cost <= 0 -->
         <div id="no-cost-msg" style="display: none;">
             The selected CNG variant is equally or less priced than the Petrol variant.<br><strong>No break-even calculation required.</strong>
@@ -553,37 +556,48 @@
             const digit = parseInt(padded[i]);
             const roller = document.getElementById(`odo-${i}`);
             if(roller) {
-                // Stagger delay slightly for mechanical feel
                 roller.style.transitionDelay = `${i * 0.08}s`;
                 roller.style.transform = `translateY(-${digit * 10}%)`;
             }
         }
     }
 
+    // Syncing background hidden input
+    function syncToCalc() {
+        document.getElementById('manualKm').value = document.getElementById('dailyDrivingInput').value;
+        calculateFinance();
+    }
+
     function calculateProfile() {
         let score = 0;
-        const km = parseFloat(document.getElementById('monthlyDrivingInput').value) || 0;
+        const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
+        const km = dailyKm * 30; // Equivalent monthly calculation for original logic threshold
         
+        // Severely throttled points for driving to heavily bias Petrol
         if (km <= 500) score += 0;
         else if (km <= 1000) score += 5; 
         else if (km <= 2000) score += 12; 
         else score += 25;
 
+        // Boot Space
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
         if (q2 === 0) score += 0;
         else if (q2 === 50) score += 4;
         else score += 15;
 
+        // Driving Pref
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
         if (q3 === 0) score += 0;
         else if (q3 === 50) score += 5;
         else score += 20;
 
+        // Station
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
         if (q4 === 0) score += 0;
         else if (q4 === 50) score += 8;
         else score += 25;
 
+        // Ownership
         const q5 = parseInt(document.querySelector('input[name="q_own"]:checked').value);
         if (q5 === 0) score += 0;
         else if (q5 === 50) score += 5;
@@ -593,6 +607,7 @@
         
         document.getElementById('score-val').innerText = score;
         
+        // Gauge mapping: 0 score = -90deg, 100 score = +90deg
         const rotation = -90 + ((score / 100) * 180);
         document.getElementById('score-needle').style.transform = `rotate(${rotation}deg)`;
 
@@ -615,7 +630,6 @@
             badge.style.background = "#ecfdf5";
         }
 
-        // Trigger finance to ensure odometer updates with km changes
         calculateFinance();
     }
 
@@ -627,13 +641,13 @@
         const varA = variantsData[idxA];
         const varB = variantsData[idxB];
         
-        const monthlyKm = Math.max(parseFloat(document.getElementById('monthlyDrivingInput').value) || 1000, 1);
+        const dailyKm = Math.max(parseFloat(document.getElementById('manualKm').value) || 30, 1);
+        const yearlyKm = dailyKm * 365;
+        
         const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 100;
         const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 80;
 
-        // Pure On-Road Price Difference
         const extraCost = varB.on_road_price - varA.on_road_price;
-        
         const costPerKmA = pPrice / varA.mileage;
         const costPerKmB = cPrice / varB.mileage;
         const savingsPerKm = costPerKmA - costPerKmB;
@@ -657,8 +671,8 @@
             const breakEvenKm = extraCost / savingsPerKm;
             updateOdometerDisplay(Math.round(breakEvenKm).toString());
             
-            // Time Gauge
-            const breakEvenYears = breakEvenKm / (monthlyKm * 12);
+            // Time Gauge calculated against exact yearly running (daily * 365)
+            const breakEvenYears = breakEvenKm / yearlyKm;
             document.getElementById('time-val').innerText = breakEvenYears.toFixed(1);
             
             const timeRatio = Math.min(breakEvenYears / 8, 1);
@@ -694,6 +708,7 @@
     window.onload = () => {
         setupOdometer();
         setupDropdowns();
+        syncToCalc();
         calculateProfile();
     };
 
