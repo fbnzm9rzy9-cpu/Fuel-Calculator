@@ -96,29 +96,12 @@
             box-shadow: 0 12px 36px -12px rgba(0,0,0,0.08);
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-            margin-bottom: 4px;
-        }
-
         .card-title-group p {
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .card-title-group h2 {
-            font-size: 1.4rem;
+            letter-spacing: 1.5px;
             font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
         }
 
         /* --- INPUTS --- */
@@ -268,19 +251,16 @@
         }
 
         /* --- CALCULATOR SPECIFICS --- */
-        .calc-subtitle {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            line-height: 1.5;
-            text-align: center;
+        .variant-selectors {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
         /* --- ODOMETER --- */
         .odometer-section {
             text-align: center;
-            margin: 10px 0;
-            padding: 25px 0;
+            padding: 25px 0 10px 0;
             background: #f8fafc;
             border-radius: 16px;
             border: 1px solid var(--border-color);
@@ -321,6 +301,17 @@
             font-weight: 500;
         }
 
+        #no-cost-msg {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
         /* Responsive Fixes */
         @media (max-width: 600px) {
             .top-logo-container { position: relative; top: 0; left: 0; display: flex; justify-content: center; margin-bottom: 10px; width: 100%;}
@@ -344,8 +335,8 @@
 
     <!-- CARD 1: CUSTOMER PROFILE -->
     <div class="card">
-        <div style="margin-bottom: 5px;">
-            <p style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Customer Profile</p>
+        <div class="card-title-group" style="margin-bottom: -10px;">
+            <p>Customer Profile</p>
         </div>
 
         <!-- Manual Inputs for Fuel & Driving -->
@@ -360,9 +351,9 @@
             </div>
         </div>
 
-        <div class="input-box" style="margin-top: 5px;">
+        <div class="input-box">
             <label>Monthly driving (km)</label>
-            <input type="number" id="monthlyDrivingInput" class="custom-input" value="2500" oninput="syncToCalc(); calculateProfile()">
+            <input type="number" id="monthlyDrivingInput" class="custom-input" value="2500" oninput="calculateProfile()">
         </div>
 
         <!-- Pill Questions -->
@@ -441,15 +432,8 @@
 
     <!-- CARD 3: BREAK-EVEN CALCULATOR (Streamlined) -->
     <div class="card">
-        <div class="card-header">
-            <div class="card-title-group">
-                <p>Break-Even Calculator</p>
-                <h2 id="calc-main-title">When does the extra ₹0 come back?</h2>
-            </div>
-        </div>
-
-        <div class="calc-subtitle" id="calc-subtitle">
-            Select variants to calculate.
+        <div class="card-title-group" style="margin-bottom: -5px;">
+            <p>Break-Even Calculator</p>
         </div>
 
         <div class="variant-selectors">
@@ -463,20 +447,9 @@
             </div>
         </div>
 
-        <div class="input-box">
-            <label>Monthly running (km)</label>
-            <input type="number" id="manualKm" class="custom-input" value="2500" oninput="syncFromCalc(); calculateFinance()">
-        </div>
-
-        <div class="input-grid">
-            <div class="input-box">
-                <label>Petrol mileage (km/L)</label>
-                <input type="number" id="dispMilA" class="custom-input" readonly style="color: var(--text-muted); background: #f1f5f9; border-color: transparent;">
-            </div>
-            <div class="input-box">
-                <label>CNG mileage (km/kg)</label>
-                <input type="number" id="dispMilB" class="custom-input" readonly style="color: var(--text-muted); background: #f1f5f9; border-color: transparent;">
-            </div>
+        <!-- Hidden when extra cost <= 0 -->
+        <div id="no-cost-msg" style="display: none;">
+            The selected CNG variant is equally or less priced than the Petrol variant.<br><strong>No break-even calculation required.</strong>
         </div>
 
         <!-- ODOMETER SECTION -->
@@ -526,8 +499,6 @@
 <script>
     const variantsData = [{"variant": "BALENO SIGMA 1.2L 5MT", "on_road_price": 681390, "mileage": 22.35}, {"variant": "BALENO DELTA 1.2L 5MT", "on_road_price": 785420, "mileage": 22.35}, {"variant": "BALENO ZETA 1.2L 5MT", "on_road_price": 892854, "mileage": 22.35}, {"variant": "BALENO ALPHA 1.2L 5MT", "on_road_price": 1014079, "mileage": 22.35}, {"variant": "BALENO DELTA CNG 1.2L 5MT", "on_road_price": 891054, "mileage": 30.61}, {"variant": "BALENO ZETA CNG 1.2L 5MT", "on_road_price": 998923, "mileage": 30.61}, {"variant": "FRONX SIGMA 1.2L 5MT", "on_road_price": 776637, "mileage": 21.79}, {"variant": "FRONX DELTA 1.2L 5MT", "on_road_price": 875783, "mileage": 21.79}, {"variant": "FRONX SIGMA CNG 1.2L 5MT", "on_road_price": 891941, "mileage": 28.51}, {"variant": "FRONX DELTA CNG 1.2L 5MT", "on_road_price": 985637, "mileage": 28.51}, {"variant": "GRAND VITARA DELTA 1.5L 5MT", "on_road_price": 1398900, "mileage": 21.11}, {"variant": "GRAND VITARA DELTA CNG 1.5L 5MT", "on_road_price": 1496002, "mileage": 26.6}, {"variant": "XL6 ZETA 1.5L 5MT", "on_road_price": 1336091, "mileage": 20.97}, {"variant": "XL6 ZETA CNG 1.5L 5MT", "on_road_price": 1447048, "mileage": 26.32}];
 
-    const formatCurrency = (val) => '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val);
-
     function setupDropdowns() {
         const selectA = document.getElementById('variantA');
         const selectB = document.getElementById('variantB');
@@ -549,17 +520,6 @@
 
         selectA.addEventListener('change', calculateFinance);
         selectB.addEventListener('change', calculateFinance);
-    }
-
-    // Two-way sync for Monthly Driving Inputs
-    function syncToCalc() {
-        document.getElementById('manualKm').value = document.getElementById('monthlyDrivingInput').value;
-        calculateFinance();
-    }
-
-    function syncFromCalc() {
-        document.getElementById('monthlyDrivingInput').value = document.getElementById('manualKm').value;
-        calculateProfile();
     }
 
     function calculateProfile() {
@@ -609,6 +569,7 @@
             badge.style.background = "#ecfdf5";
         }
 
+        // Calculate Finance triggers implicitly when profile updates the monthly km
         calculateFinance();
     }
 
@@ -627,13 +588,10 @@
 
         const varA = variantsData[idxA];
         const varB = variantsData[idxB];
-        const monthlyKm = Math.max(parseFloat(document.getElementById('manualKm').value) || 1000, 1);
         
+        const monthlyKm = Math.max(parseFloat(document.getElementById('monthlyDrivingInput').value) || 1000, 1);
         const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 100;
         const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 80;
-
-        document.getElementById('dispMilA').value = varA.mileage;
-        document.getElementById('dispMilB').value = varB.mileage;
 
         // Pure On-Road Price Difference
         const extraCost = varB.on_road_price - varA.on_road_price;
@@ -642,24 +600,20 @@
         const costPerKmB = cPrice / varB.mileage;
         const savingsPerKm = costPerKmA - costPerKmB;
 
-        const mainTitle = document.getElementById('calc-main-title');
-        const subTitle = document.getElementById('calc-subtitle');
         const odoSection = document.getElementById('odo-section');
         const timeSection = document.getElementById('time-section');
+        const msgSection = document.getElementById('no-cost-msg');
 
         if(extraCost <= 0) {
-            mainTitle.innerText = "No Extra Cost Required";
-            subTitle.innerHTML = `CNG variant is equally or less priced.`;
             odoSection.style.display = 'none';
             timeSection.style.display = 'none';
+            msgSection.style.display = 'block';
             return;
         }
 
         odoSection.style.display = 'block';
         timeSection.style.display = 'flex';
-
-        mainTitle.innerText = `When does the extra ${formatCurrency(extraCost)} come back?`;
-        subTitle.innerHTML = `Petrol ₹${pPrice}/L • CNG ₹${cPrice}/kg<br>Estimated fuel cost: Petrol ₹${costPerKmA.toFixed(2)}/km - CNG ₹${costPerKmB.toFixed(2)}/km`;
+        msgSection.style.display = 'none';
 
         if(savingsPerKm > 0) {
             const breakEvenKm = extraCost / savingsPerKm;
