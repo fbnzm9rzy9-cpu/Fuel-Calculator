@@ -17,32 +17,26 @@
         }
 
         :root {
-            /* Premium Light Theme */
-            --bg-color: #f4f6f9;
-            --card-bg: #ffffff;
-            --border-light: #e5e9f0;
+            /* Premium Dark Theme Globally */
+            --bg-color: #05080f;
+            --card-bg: #0f141e;
+            --border-light: #1f2937;
+            --input-bg: #111827;
             
-            /* Premium Dark Theme for "Serious" Cards */
-            --dark-card-bg: #0f141e;
-            --dark-card-border: #1f2937;
-            --dark-text-muted: #8b9bb4;
-
             /* Text Colors */
-            --text-main: #111827;
-            --text-muted: #6b7280;
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
             
             /* Brand Accents */
-            --nexa-blue: #1d4ed8;
-            --nexa-blue-light: #eff6ff;
-            --positive-green: #10b981;
-            --positive-green-bg: #ecfdf5;
+            --nexa-green: #10b981;
+            --nexa-green-bg: rgba(16, 185, 129, 0.1);
             --serious-red: #ef4444;
             --serious-red-bg: rgba(239, 68, 68, 0.1);
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, transparent 100%);
+            background-image: radial-gradient(circle at 50% 0%, #111827 0%, transparent 100%);
             color: var(--text-main);
             padding: 30px 15px 80px 15px;
             display: flex;
@@ -111,14 +105,7 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05);
-        }
-
-        .serious-card {
-            background-color: var(--dark-card-bg);
-            border: 1px solid var(--dark-card-border);
-            color: #ffffff;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
 
         .card-title-group p {
@@ -130,10 +117,6 @@
             text-align: center;
         }
 
-        .serious-card .card-title-group p {
-            color: var(--dark-text-muted);
-        }
-
         .card-title-group h2 {
             font-size: 1.5rem;
             font-weight: 800;
@@ -141,10 +124,6 @@
             color: var(--text-main);
             text-align: center;
             margin-top: 8px;
-        }
-
-        .serious-card .card-title-group h2 {
-            color: #ffffff;
         }
 
         /* --- INPUTS --- */
@@ -161,13 +140,14 @@
         }
 
         .custom-input {
-            background: #f8fafc;
+            background: var(--input-bg);
             border: 1px solid var(--border-light);
-            color: var(--text-main);
+            color: var(--nexa-green); /* Green Input Data */
             padding: 16px;
             border-radius: 14px;
-            font-size: 1.05rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
             outline: none;
             width: 100%;
             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -175,13 +155,13 @@
         }
 
         .custom-input:focus {
-            border-color: var(--nexa-blue);
-            background: #ffffff;
-            box-shadow: 0 0 0 4px var(--nexa-blue-light);
+            border-color: var(--nexa-green);
+            background: #1f2937;
+            box-shadow: 0 0 0 4px var(--nexa-green-bg);
         }
 
         select.custom-input {
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238b9bb4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
             cursor: pointer;
@@ -225,7 +205,7 @@
             justify-content: center;
             align-items: center;
             height: 52px;
-            background: #f8fafc;
+            background: var(--input-bg);
             border: 1px solid var(--border-light);
             border-radius: 14px;
             color: var(--text-muted);
@@ -238,32 +218,35 @@
             line-height: 1.2;
         }
 
+        /* Green Highlight for selections */
         .pill-label input:checked + .pill-text {
-            background: var(--positive-green-bg);
-            border-color: var(--positive-green);
-            color: #059669; /* Darker green for text readability */
+            background: var(--nexa-green-bg);
+            border-color: var(--nexa-green);
+            color: var(--nexa-green);
             font-weight: 700;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
         }
 
         /* --- BUTTONS --- */
         .btn-primary {
-            background: var(--text-main);
-            color: #ffffff;
+            background: var(--nexa-green);
+            color: #000000;
             border: none;
             padding: 18px;
             border-radius: 16px;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 0.5px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 10px 25px rgba(17, 24, 39, 0.2);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
             margin-top: 10px;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(17, 24, 39, 0.3);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+            background: #059669;
+            color: #ffffff;
         }
 
         .btn-secondary {
@@ -278,9 +261,8 @@
             transition: 0.3s;
         }
         .btn-secondary:hover {
-            background: #f8fafc;
+            background: var(--input-bg);
             color: var(--text-main);
-            border-color: #cbd5e1;
         }
 
         /* --- DIAGNOSTIC GAUGE --- */
@@ -310,13 +292,6 @@
             letter-spacing: -3px;
         }
 
-        .gauge-subtext {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
         .gauge-result-badge {
             padding: 10px 20px;
             border-radius: 12px;
@@ -325,6 +300,7 @@
             display: inline-block;
             letter-spacing: 1px;
             text-transform: uppercase;
+            margin-top: 10px;
         }
 
         /* --- SERIOUS FINANCIALS --- */
@@ -337,7 +313,7 @@
 
         .cost-label {
             font-size: 0.95rem;
-            color: var(--dark-text-muted);
+            color: var(--text-muted);
             font-weight: 500;
         }
 
@@ -345,11 +321,11 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.1rem;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-main);
         }
 
         .cost-divider {
-            border-top: 1px dashed var(--dark-card-border);
+            border-top: 1px dashed var(--border-light);
             margin: 20px 0;
         }
 
@@ -357,16 +333,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.4);
             padding: 20px;
             border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
         .total-cost-label {
-            font-size: 1rem;
-            color: var(--dark-text-muted);
-            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -375,14 +351,14 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.6rem;
             font-weight: 800;
-            color: var(--serious-red); /* Stark red for serious tone */
+            color: var(--serious-red); /* Serious Red */
         }
 
         /* --- ODOMETER (PREMIUM REALISTIC) --- */
         .odometer-section {
             text-align: center;
             padding: 30px 0 10px 0;
-            background: #080b11; /* Even darker inner core */
+            background: #080b11; 
             border-radius: 16px;
             border: 1px inset rgba(255,255,255,0.05);
             margin-top: 10px;
@@ -410,7 +386,6 @@
             position: relative;
         }
         
-        /* Glossy overlay for realism */
         .odo-digit::after {
             content: '';
             position: absolute;
@@ -439,7 +414,7 @@
             margin-top: 25px;
             padding: 20px;
             border-radius: 16px;
-            background: rgba(239, 68, 68, 0.05); /* Slight red tint */
+            background: var(--serious-red-bg); 
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
@@ -447,7 +422,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 3.5rem;
             font-weight: 800;
-            color: var(--serious-red);
+            color: var(--serious-red); /* Serious Red */
             line-height: 1;
             margin: 10px 0;
             letter-spacing: -2px;
@@ -456,7 +431,6 @@
         /* --- UTILS & ANIMATIONS --- */
         .hidden { display: none !important; }
         
-        /* Elegant Staggered Display */
         @keyframes elegantFadeUp {
             0% { opacity: 0; transform: translateY(40px) scale(0.98); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -575,11 +549,11 @@
                     <defs>
                         <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#ef4444" />
-                            <stop offset="50%" stop-color="#3b82f6" />
+                            <stop offset="50%" stop-color="#f59e0b" />
                             <stop offset="100%" stop-color="#10b981" />
                         </linearGradient>
                     </defs>
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--gauge-bg)" stroke-width="16" stroke-linecap="round"/>
+                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--border-light)" stroke-width="16" stroke-linecap="round"/>
                     <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#score-grad)" stroke-width="16" stroke-linecap="round"/>
                     
                     <text x="20" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">0</text>
@@ -587,8 +561,8 @@
                     
                     <!-- Needle -->
                     <g id="score-needle" style="transform-origin: 100px 100px; transform: rotate(-90deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <circle cx="100" cy="100" r="8" fill="#111827"/>
-                        <polygon points="96,100 104,100 100,25" fill="#111827"/>
+                        <circle cx="100" cy="100" r="8" fill="#ffffff"/>
+                        <polygon points="96,100 104,100 100,25" fill="#ffffff"/>
                     </g>
                 </svg>
 
@@ -599,8 +573,8 @@
             </div>
         </div>
 
-        <!-- 2. ADDITIONAL COST (SERIOUS CARD) -->
-        <div class="card serious-card reveal-2" id="extra-cost-card">
+        <!-- 2. ADDITIONAL COST -->
+        <div class="card reveal-2" id="extra-cost-card">
             <div class="card-title-group">
                 <p>Investment Breakdown</p>
                 <h2>Additional Cost for CNG</h2>
@@ -619,36 +593,34 @@
                 <div class="cost-divider"></div>
                 
                 <div class="total-cost-row">
-                    <span class="total-cost-label">Total Extra Debt</span>
+                    <span class="total-cost-label">Total Additional Cost</span>
                     <span class="total-cost-value" id="total-extra-val">0</span>
                 </div>
             </div>
 
-            <div id="no-cost-msg" class="hidden" style="text-align: center; color: var(--dark-text-muted); font-weight: 500; border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 12px;">
+            <div id="no-cost-msg" class="hidden" style="text-align: center; color: var(--text-muted); font-weight: 500; border: 1px solid var(--border-light); padding: 20px; border-radius: 12px;">
                 CNG variant is equally or less priced than Petrol. No extra investment required.
             </div>
         </div>
 
-        <!-- 3. SAVINGS START AFTER (SERIOUS CARD) -->
-        <div class="card serious-card reveal-3" id="break-even-card">
+        <!-- 3. SAVINGS START AFTER -->
+        <div class="card reveal-3" id="break-even-card">
             <div class="card-title-group">
-                <p style="color: #f87171;">No Savings Upto:</p>
+                <p style="color: var(--serious-red);">No Savings Upto:</p>
             </div>
 
             <!-- ODOMETER -->
             <div class="odometer-section">
-                <div class="odometer-title">Distance Required</div>
                 <div class="odometer-display" id="odometer">
                     <!-- Dynamically generated by setupOdometer() -->
                 </div>
-                <div style="font-size: 0.85rem; color: var(--dark-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Kilometres</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Kilometres</div>
             </div>
 
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
-                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--dark-text-muted); font-weight: 700;">Time Required</p>
-                <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--dark-text-muted);">Yrs</span></div>
-                <div id="time-text-desc" style="font-size: 1rem; font-weight: 600; margin-top: 5px; color: var(--dark-text-muted);">-</div>
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
+                <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
             </div>
         </div>
 
@@ -725,7 +697,7 @@
             if (formatAsCurrency) {
                 obj.innerHTML = formatCurrency(Math.floor(currentVal));
             } else if (isFloat) {
-                obj.innerHTML = `${currentVal.toFixed(1)} <span style="font-size: 1.2rem; font-weight: 600; color: var(--dark-text-muted);">Yrs</span>`;
+                obj.innerHTML = `${currentVal.toFixed(1)} <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span>`;
             } else {
                 obj.innerHTML = Math.floor(currentVal);
             }
@@ -811,19 +783,19 @@
         setTimeout(() => {
             if(score < 50) {
                 badge.innerText = "STRONG PETROL FIT";
-                badge.style.color = "#b91c1c";
-                badge.style.background = "#fef2f2";
-                badge.style.border = "1px solid #fca5a5";
+                badge.style.color = "#ef4444";
+                badge.style.background = "rgba(239, 68, 68, 0.1)";
+                badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
             } else if (score < 80) {
                 badge.innerText = "PETROL RECOMMENDED";
-                badge.style.color = "#2563eb";
-                badge.style.background = "#eff6ff";
-                badge.style.border = "1px solid #bfdbfe";
+                badge.style.color = "#3b82f6";
+                badge.style.background = "rgba(59, 130, 246, 0.1)";
+                badge.style.border = "1px solid rgba(59, 130, 246, 0.3)";
             } else {
                 badge.innerText = "CNG FEASIBLE";
-                badge.style.color = "#047857";
-                badge.style.background = "#ecfdf5";
-                badge.style.border = "1px solid #6ee7b7";
+                badge.style.color = "#10b981";
+                badge.style.background = "rgba(16, 185, 129, 0.1)";
+                badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
             }
         }, 1200);
 
@@ -892,27 +864,11 @@
             
             setTimeout(() => {
                 animateValue(document.getElementById('time-text-val'), 0, breakEvenYears, 2000, false, true);
-                
-                // Set alarming styling if over 2 years
-                const timeDesc = document.getElementById('time-desc');
-                const timeValBlock = document.getElementById('time-text-val');
-                
-                if(breakEvenYears <= 2) { 
-                    timeDesc.innerText = "Fast recovery at this running"; 
-                    timeValBlock.style.color = "var(--positive-green)";
-                } else if (breakEvenYears <= 4.5) {
-                    timeDesc.innerText = "Moderate recovery time"; 
-                    timeValBlock.style.color = "#f59e0b";
-                } else { 
-                    timeDesc.innerText = "Severe recovery lag"; 
-                    timeValBlock.style.color = "var(--serious-red)"; 
-                }
             }, 800);
 
         } else {
             updateOdometerDisplay("999999");
             document.getElementById('time-text-val').innerHTML = `Never`;
-            document.getElementById('time-text-desc').innerText = "CNG is costlier to run";
             document.getElementById('time-text-val').style.color = "var(--serious-red)";
         }
         
