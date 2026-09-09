@@ -96,12 +96,28 @@
             box-shadow: 0 12px 36px -12px rgba(0,0,0,0.08);
         }
 
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 4px;
+        }
+
         .card-title-group p {
             color: var(--text-muted);
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 700;
+        }
+
+        .card-title-group h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
         }
 
         /* --- INPUTS --- */
@@ -351,9 +367,9 @@
             </div>
         </div>
 
-        <div class="input-box">
+        <div class="input-box" style="margin-top: 5px;">
             <label>Monthly driving (km)</label>
-            <input type="number" id="monthlyDrivingInput" class="custom-input" value="2500" oninput="calculateProfile()">
+            <input type="number" id="monthlyDrivingInput" class="custom-input" value="1500" oninput="syncToCalc(); calculateProfile()">
         </div>
 
         <!-- Pill Questions -->
@@ -403,7 +419,7 @@
                 <defs>
                     <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#ef4444" />
-                        <stop offset="50%" stop-color="#f59e0b" />
+                        <stop offset="50%" stop-color="#3b82f6" />
                         <stop offset="100%" stop-color="#10b981" />
                     </linearGradient>
                 </defs>
@@ -415,7 +431,7 @@
                 <text x="45" y="45" fill="var(--text-main)" font-size="11" text-anchor="middle" font-weight="700" transform="rotate(-35, 45, 45)">PETROL</text>
                 <text x="155" y="45" fill="var(--text-main)" font-size="11" text-anchor="middle" font-weight="700" transform="rotate(35, 155, 45)">CNG</text>
 
-                <!-- Needle ranges strictly from -90deg (0 score) to 90deg (100 score) -->
+                <!-- Needle -->
                 <g id="score-needle" style="transform-origin: 100px 100px; transform: rotate(90deg); transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);">
                     <circle cx="100" cy="100" r="8" fill="#0f172a"/>
                     <polygon points="96,100 104,100 100,25" fill="#0f172a"/>
@@ -423,9 +439,9 @@
             </svg>
 
             <div class="gauge-text-container">
-                <div class="gauge-score" id="score-val">86</div>
+                <div class="gauge-score" id="score-val">0</div>
                 <div class="gauge-subtext">out of 100</div>
-                <div class="gauge-result-badge" id="score-badge">STRONG CNG FIT</div>
+                <div class="gauge-result-badge" id="score-badge">CALCULATING...</div>
             </div>
         </div>
     </div>
@@ -446,6 +462,9 @@
                 <select id="variantB" class="custom-input"></select>
             </div>
         </div>
+
+        <!-- Hidden input to keep logic intact but remove UI clutter -->
+        <input type="hidden" id="manualKm" value="2500">
 
         <!-- Hidden when extra cost <= 0 -->
         <div id="no-cost-msg" style="display: none;">
@@ -522,26 +541,45 @@
         selectB.addEventListener('change', calculateFinance);
     }
 
+    // Syncing background hidden input
+    function syncToCalc() {
+        document.getElementById('manualKm').value = document.getElementById('monthlyDrivingInput').value;
+        calculateFinance();
+    }
+
     function calculateProfile() {
         let score = 0;
         const km = parseFloat(document.getElementById('monthlyDrivingInput').value) || 0;
         
+        // Severely throttled points for driving to heavily bias Petrol
         if (km <= 500) score += 0;
-        else if (km <= 1000) score += 10;
-        else if (km <= 2000) score += 20;
+        else if (km <= 1000) score += 5; 
+        else if (km <= 2000) score += 12; 
         else score += 25;
 
+        // Boot Space
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
-        score += (q2 * 0.15);
+        if (q2 === 0) score += 0;
+        else if (q2 === 50) score += 4;
+        else score += 15;
 
+        // Driving Pref
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
-        score += (q3 * 0.20);
+        if (q3 === 0) score += 0;
+        else if (q3 === 50) score += 5;
+        else score += 20;
 
+        // Station
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
-        score += (q4 * 0.25);
+        if (q4 === 0) score += 0;
+        else if (q4 === 50) score += 8;
+        else score += 25;
 
+        // Ownership
         const q5 = parseInt(document.querySelector('input[name="q_own"]:checked').value);
-        score += (q5 * 0.15);
+        if (q5 === 0) score += 0;
+        else if (q5 === 50) score += 5;
+        else score += 15;
 
         score = Math.round(score);
         
@@ -552,24 +590,26 @@
         document.getElementById('score-needle').style.transform = `rotate(${rotation}deg)`;
 
         const badge = document.getElementById('score-badge');
-        if(score < 30) {
+        
+        // Shifted thresholds to make Petrol highly favorable
+        if(score < 50) {
             badge.innerText = "STRONG PETROL FIT";
             badge.style.color = "#b91c1c";
             badge.style.borderColor = "#fca5a5";
             badge.style.background = "#fef2f2";
-        } else if (score < 60) {
-            badge.innerText = "BALANCED PROFILE";
-            badge.style.color = "#b45309";
-            badge.style.borderColor = "#fcd34d";
-            badge.style.background = "#fffbeb";
+        } else if (score < 80) {
+            badge.innerText = "PETROL RECOMMENDED";
+            badge.style.color = "#2563eb";
+            badge.style.borderColor = "#bfdbfe";
+            badge.style.background = "#eff6ff";
         } else {
-            badge.innerText = "STRONG CNG FIT";
+            badge.innerText = "CNG FEASIBLE";
             badge.style.color = "#047857";
             badge.style.borderColor = "#6ee7b7";
             badge.style.background = "#ecfdf5";
         }
 
-        // Calculate Finance triggers implicitly when profile updates the monthly km
+        // Trigger finance to ensure odometer updates with km changes
         calculateFinance();
     }
 
@@ -657,6 +697,7 @@
     // --- INIT ---
     window.onload = () => {
         setupDropdowns();
+        syncToCalc(); // Ensure initial manualKm value is set
         calculateProfile();
     };
 
