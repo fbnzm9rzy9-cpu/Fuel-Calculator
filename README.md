@@ -111,6 +111,15 @@
             text-align: center;
         }
 
+        .card-title-group h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 6px;
+        }
+
         /* --- INPUTS --- */
         .input-box {
             display: flex;
@@ -355,25 +364,54 @@
 
         /* --- EXTRA COST BOX --- */
         .extra-cost-box {
-            text-align: center;
             padding: 20px;
-            background: var(--accent-blue-bg);
-            border: 1px dashed var(--accent-blue);
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
             border-radius: 16px;
         }
-        .extra-cost-title {
-            font-size: 0.85rem;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            margin-bottom: 8px;
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
         }
-        .extra-cost-val {
-            font-size: 2.5rem;
-            font-weight: 800;
+
+        .cost-label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .cost-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--text-main);
-            letter-spacing: -1px;
+        }
+
+        .cost-divider {
+            border-top: 1px dashed var(--border-color);
+            margin: 15px 0;
+        }
+
+        .total-cost-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-cost-label {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .total-cost-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent-blue);
         }
 
         /* --- UTILS --- */
@@ -486,21 +524,11 @@
     <!-- ================= PART 2: RESULTS ================= -->
     <div id="part2" class="hidden fade-in">
         
-        <!-- 1. ADDITIONAL COST -->
-        <div class="card" style="padding: 20px;">
-            <div class="extra-cost-box" id="extra-cost-container">
-                <div class="extra-cost-title">Additional Investment for CNG</div>
-                <div class="extra-cost-val" id="extra-cost-val">₹0</div>
-            </div>
-            <div id="no-cost-msg" class="hidden" style="text-align: center; color: var(--text-muted); font-weight: 500;">
-                CNG variant is equally or less priced than Petrol. No extra investment required.
-            </div>
-        </div>
-
-        <!-- 2. SUITABILITY METER -->
+        <!-- 1. SUITABILITY METER -->
         <div class="card">
             <div class="card-title-group">
                 <p>Diagnostic Result</p>
+                <h2>CNG Suitability Meter</h2>
             </div>
             <div class="gauge-container" style="margin-top: 0;">
                 <svg class="gauge-svg" viewBox="0 0 200 110">
@@ -516,9 +544,7 @@
                     
                     <text x="20" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">0</text>
                     <text x="180" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">100</text>
-                    <text x="45" y="45" fill="var(--text-main)" font-size="11" text-anchor="middle" font-weight="700" transform="rotate(-35, 45, 45)">PETROL</text>
-                    <text x="155" y="45" fill="var(--text-main)" font-size="11" text-anchor="middle" font-weight="700" transform="rotate(35, 155, 45)">CNG</text>
-
+                    
                     <!-- Needle -->
                     <g id="score-needle" style="transform-origin: 100px 100px; transform: rotate(-90deg); transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
                         <circle cx="100" cy="100" r="8" fill="#0f172a"/>
@@ -534,42 +560,55 @@
             </div>
         </div>
 
-        <!-- 3. SAVINGS START AFTER (ODOMETER & TIME) -->
+        <!-- 2. ADDITIONAL COST -->
+        <div class="card" id="extra-cost-card">
+            <div class="card-title-group">
+                <p>Investment Breakdown</p>
+                <h2>Additional Cost for CNG</h2>
+            </div>
+            
+            <div class="extra-cost-box" id="extra-cost-container">
+                <div class="cost-row">
+                    <span class="cost-label">Difference in On-Road Price</span>
+                    <span class="cost-value" id="orp-diff-val">₹0</span>
+                </div>
+                <div class="cost-row">
+                    <span class="cost-label">Additional EMI Interest (5 Yrs)</span>
+                    <span class="cost-value" id="int-diff-val">₹0</span>
+                </div>
+                
+                <div class="cost-divider"></div>
+                
+                <div class="total-cost-row">
+                    <span class="total-cost-label">Total Extra Investment</span>
+                    <span class="total-cost-value" id="total-extra-val">₹0</span>
+                </div>
+            </div>
+
+            <div id="no-cost-msg" class="hidden" style="text-align: center; color: var(--text-muted); font-weight: 500; background: #f8fafc; border: 1px solid var(--border-color); padding: 20px; border-radius: 12px;">
+                CNG variant is equally or less priced than Petrol. No extra investment required.
+            </div>
+        </div>
+
+        <!-- 3. SAVINGS START AFTER -->
         <div class="card" id="break-even-card">
             <div class="card-title-group">
-                <p style="color: var(--accent-blue);">Savings start after:</p>
+                <p style="color: var(--accent-red); font-size: 0.85rem;">No savings upto:</p>
             </div>
 
             <!-- ODOMETER -->
-            <div class="odometer-section" style="margin-top: 0;">
-                <div class="odometer-title">Distance Required</div>
+            <div class="odometer-section" style="margin-top: 0; padding-top: 15px;">
                 <div class="odometer-display" id="odometer">
                     <!-- Dynamically generated by setupOdometer() -->
                 </div>
                 <div class="odo-sub">kilometres</div>
             </div>
 
-            <!-- TIME GAUGE -->
-            <div class="gauge-container" style="margin-top: 20px;">
-                <p class="odometer-title" style="margin-bottom: 0;">Time Required</p>
-                <svg class="gauge-svg" viewBox="0 0 200 110" style="margin-top: 10px;">
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--gauge-bg)" stroke-width="14" stroke-linecap="round"/>
-                    <path id="time-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--accent-blue)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);"/>
-                    
-                    <text x="20" y="105" fill="var(--text-muted)" font-size="11" font-weight="600" text-anchor="middle">0 yr</text>
-                    <text x="180" y="105" fill="var(--text-muted)" font-size="11" font-weight="600" text-anchor="middle">8+ yr</text>
-
-                    <g id="time-needle" style="transform-origin: 100px 100px; transform: rotate(-90deg); transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <circle cx="100" cy="100" r="7" fill="#0f172a"/>
-                        <polygon points="97,100 103,100 100,25" fill="#0f172a"/>
-                    </g>
-                </svg>
-
-                <div class="gauge-text-container" style="margin-top: 15px;">
-                    <div class="gauge-score" id="time-val" style="font-size: 2.8rem;">0.0</div>
-                    <div class="gauge-subtext" style="font-size: 1.1rem; color: var(--text-main); font-weight: 700;">years</div>
-                    <div class="gauge-subtext" id="time-desc" style="margin-top: 8px; font-weight: 600;">-</div>
-                </div>
+            <!-- TIME TEXT -->
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 5px; font-weight: 700;">Estimated Time Required</p>
+                <div style="font-size: 3rem; font-weight: 800; color: var(--text-main); font-family: 'Inter', sans-serif;" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--text-muted);">Years</span></div>
+                <div id="time-text-desc" style="font-size: 1rem; font-weight: 600; margin-top: 5px;">-</div>
             </div>
         </div>
 
@@ -622,7 +661,7 @@
             const digit = parseInt(padded[i]);
             const roller = document.getElementById(`odo-${i}`);
             if(roller) {
-                // Reset immediately without transition to prevent backward spinning if recalculating
+                // Reset immediately without transition
                 roller.style.transition = 'none';
                 roller.style.transform = `translateY(0%)`;
                 
@@ -636,19 +675,21 @@
         }
     }
 
+    function calculateEMI(principal, annualRate, months) {
+        if (principal === 0) return 0;
+        const r = annualRate / 12 / 100;
+        return (principal * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+    }
+
     function generateReport() {
-        // Hide Part 1, Show Part 2
         document.getElementById('part1').classList.add('hidden');
         document.getElementById('part2').classList.remove('hidden');
         document.getElementById('sub-header-text').innerText = "Here is your detailed analysis";
         
-        // Reset gauges visually to 0 before calculating so they animate upwards
+        // Reset gauges visually to 0
         document.getElementById('score-needle').style.transform = `rotate(-90deg)`;
-        document.getElementById('time-needle').style.transform = `rotate(-90deg)`;
-        document.getElementById('time-arc').style.strokeDashoffset = 251.2;
         updateOdometerDisplay("0");
 
-        // Give DOM time to un-hide before triggering CSS transitions
         setTimeout(() => {
             runCalculations();
         }, 50);
@@ -666,7 +707,6 @@
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
-        // Biased against CNG
         if (monthlyKmEquiv <= 500) score += 0;
         else if (monthlyKmEquiv <= 1000) score += 5; 
         else if (monthlyKmEquiv <= 2000) score += 12; 
@@ -687,7 +727,6 @@
         score = Math.round(score);
         document.getElementById('score-val').innerText = score;
         
-        // Map 0 to -90deg, 100 to 90deg
         const scoreRotation = -90 + ((score / 100) * 180);
         document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
 
@@ -709,17 +748,41 @@
             badge.style.border = "1px solid #6ee7b7";
         }
 
-        // --- 2. CALCULATE FINANCE & BREAK EVEN ---
+        // --- 2. CALCULATE ADDITIONAL COST (ORP + Interest) ---
         const idxA = document.getElementById('variantA').value;
         const idxB = document.getElementById('variantB').value;
         const varA = variantsData[idxA];
         const varB = variantsData[idxB];
         
         const yearlyKm = Math.max(dailyKm * 365, 365);
-        const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 100;
-        const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 80;
+        const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 104;
+        const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 89;
 
-        const extraCost = varB.on_road_price - varA.on_road_price;
+        // 1. Difference in ORP
+        const orpDiff = varB.on_road_price - varA.on_road_price;
+
+        // 2. Extra EMI Interest calculation (Assumes 80% loan, 8.5% int, 5 years)
+        // Ensure rounding exactly as requested previously
+        let loanA = Math.round((varA.on_road_price * 0.8) / 100000) * 100000;
+        let loanB = Math.round((varB.on_road_price * 0.8) / 100000) * 100000;
+        
+        // Prevent taking loan more than car value
+        if (loanA > varA.on_road_price) loanA = varA.on_road_price;
+        if (loanB > varB.on_road_price) loanB = varB.on_road_price;
+
+        let emiA = calculateEMI(loanA, 8.5, 60);
+        let emiB = calculateEMI(loanB, 8.5, 60);
+
+        let intA = (emiA * 60) - loanA;
+        let intB = (emiB * 60) - loanB;
+        
+        if (intA < 0) intA = 0;
+        if (intB < 0) intB = 0;
+
+        const intDiff = intB - intA;
+        const totalExtraCost = orpDiff + intDiff;
+
+        // 3. Fuel Savings
         const costPerKmA = pPrice / varA.mileage;
         const costPerKmB = cPrice / varB.mileage;
         const savingsPerKm = costPerKmA - costPerKmB;
@@ -728,7 +791,8 @@
         const noCostMsg = document.getElementById('no-cost-msg');
         const breakEvenCard = document.getElementById('break-even-card');
 
-        if(extraCost <= 0) {
+        // Check if there is an upfront premium to pay
+        if(totalExtraCost <= 0) {
             extraCostBox.classList.add('hidden');
             noCostMsg.classList.remove('hidden');
             breakEvenCard.classList.add('hidden');
@@ -739,40 +803,36 @@
         extraCostBox.classList.remove('hidden');
         noCostMsg.classList.add('hidden');
         breakEvenCard.classList.remove('hidden');
-        document.getElementById('extra-cost-val').innerText = formatCurrency(extraCost);
 
+        document.getElementById('orp-diff-val').innerText = formatCurrency(orpDiff);
+        document.getElementById('int-diff-val').innerText = formatCurrency(intDiff);
+        document.getElementById('total-extra-val').innerText = formatCurrency(totalExtraCost);
+
+        // Calculate Break Even based on Total Extra Cost (ORP diff + Int diff)
         if(savingsPerKm > 0) {
-            const breakEvenKm = extraCost / savingsPerKm;
+            const breakEvenKm = totalExtraCost / savingsPerKm;
             updateOdometerDisplay(Math.round(breakEvenKm).toString());
             
-            // Time Gauge calculated against exact yearly running
             const breakEvenYears = breakEvenKm / yearlyKm;
-            document.getElementById('time-val').innerText = breakEvenYears.toFixed(1);
+            document.getElementById('time-text-val').innerHTML = `${breakEvenYears.toFixed(1)} <span style="font-size: 1.2rem; font-weight: 600; color: var(--text-muted);">Years</span>`;
             
-            const timeRatio = Math.min(breakEvenYears / 8, 1);
-            const offset = 251.2 - (timeRatio * 251.2);
-            document.getElementById('time-arc').style.strokeDashoffset = offset;
-            
-            const timeRotation = -90 + (timeRatio * 180);
-            document.getElementById('time-needle').style.transform = `rotate(${timeRotation}deg)`;
-
             const timeDesc = document.getElementById('time-desc');
             
             if(breakEvenYears <= 2) { 
                 timeDesc.innerText = "Fast recovery at this running"; 
                 timeDesc.style.color = "var(--accent-green)"; 
-                document.getElementById('time-arc').style.stroke = "var(--accent-green)";
+            } else if (breakEvenYears <= 4.5) {
+                timeDesc.innerText = "Moderate recovery time"; 
+                timeDesc.style.color = "#f59e0b";
             } else { 
                 timeDesc.innerText = "Slow recovery at this running"; 
                 timeDesc.style.color = "var(--accent-red)"; 
-                document.getElementById('time-arc').style.stroke = "var(--accent-red)";
             }
         } else {
-            // CNG is costlier to run
             updateOdometerDisplay("999999");
-            document.getElementById('time-val').innerText = "Never";
-            document.getElementById('time-desc').innerText = "CNG is costlier to run";
-            document.getElementById('time-needle').style.transform = `rotate(90deg)`;
+            document.getElementById('time-text-val').innerHTML = `Never`;
+            document.getElementById('time-text-desc').innerText = "CNG is costlier to run";
+            document.getElementById('time-text-desc').style.color = "var(--accent-red)";
         }
     }
 
