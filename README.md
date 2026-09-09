@@ -121,19 +121,6 @@
             color: var(--text-main);
         }
 
-        .reset-btn {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .reset-btn:hover { background: #e2e8f0; color: var(--text-main); }
-
         /* --- INPUTS --- */
         .input-box {
             display: flex;
@@ -228,7 +215,7 @@
             line-height: 1.2;
         }
 
-        /* Changed Highlight Color to Green */
+        /* Highlight Color (Green) */
         .pill-label input:checked + .pill-text {
             background: var(--accent-green-bg);
             border-color: var(--accent-green);
@@ -357,12 +344,8 @@
 
     <!-- CARD 1: CUSTOMER PROFILE -->
     <div class="card">
-        <div class="card-header">
-            <div class="card-title-group">
-                <p>Customer Profile</p>
-                <h2>What matters to you?</h2>
-            </div>
-            <button class="reset-btn" onclick="resetProfile()">Reset</button>
+        <div style="margin-bottom: 5px;">
+            <p style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Customer Profile</p>
         </div>
 
         <!-- Manual Inputs for Fuel & Driving -->
@@ -579,19 +562,6 @@
         calculateProfile();
     }
 
-    function resetProfile() {
-        document.getElementById('petrolPriceInput').value = 104;
-        document.getElementById('cngPriceInput').value = 89;
-        document.getElementById('monthlyDrivingInput').value = 2500;
-        document.querySelector('input[name="q_boot"][value="100"]').checked = true;
-        document.querySelector('input[name="q_pref"][value="100"]').checked = true;
-        document.querySelector('input[name="q_stn"][value="100"]').checked = true;
-        document.querySelector('input[name="q_own"][value="100"]').checked = true;
-        
-        syncToCalc();
-        calculateProfile();
-    }
-
     function calculateProfile() {
         let score = 0;
         const km = parseFloat(document.getElementById('monthlyDrivingInput').value) || 0;
@@ -665,7 +635,7 @@
         document.getElementById('dispMilA').value = varA.mileage;
         document.getElementById('dispMilB').value = varB.mileage;
 
-        // Pure On-Road Price Difference (No EMI interest included per prompt requirements)
+        // Pure On-Road Price Difference
         const extraCost = varB.on_road_price - varA.on_road_price;
         
         const costPerKmA = pPrice / varA.mileage;
