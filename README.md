@@ -28,7 +28,7 @@
             --nexa-green: #10b981;
             --nexa-green-bg: rgba(16, 185, 129, 0.1);
             --nexa-blue: #3b82f6;
-            --nexa-sky: #0ea5e9;
+            --nexa-yellow: #eab308;
             --serious-red: #ef4444;
             --serious-red-bg: rgba(239, 68, 68, 0.1);
         }
@@ -59,7 +59,7 @@
             padding: 4px 0 0 2px;
         }
 
-        .brand-title-large {
+        .brand-title-match {
             font-size: 2.5rem;
             font-weight: 900;
             color: #ffffff;
@@ -365,81 +365,23 @@
             color: var(--text-main);
         }
 
-        /* --- LINEAR SCALE (REPLACING ANALOG DIAL) --- */
-        .linear-scale-container {
-            width: 100%;
-            padding: 15px 0;
+        /* --- DIAGNOSTIC GAUGE (3-ZONE SPEEDOMETER) --- */
+        .gauge-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .linear-labels {
-            display: flex;
-            justify-content: space-between;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-        }
-        
-        .label-petrol { color: var(--nexa-blue); }
-        .label-cng { color: var(--nexa-green); }
-
-        .linear-track {
-            position: relative;
-            height: 24px;
-            border-radius: 12px;
-            background: linear-gradient(90deg, var(--nexa-blue) 0%, var(--nexa-sky) 50%, var(--nexa-green) 100%);
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.05);
-            border: 2px solid #1f2937;
-            margin: 10px 0;
-        }
-
-        .linear-pointer {
-            position: absolute;
-            top: -12px;
-            left: 0%;
-            height: 48px;
-            transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
             align-items: center;
-            transition: left 2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 10;
+            position: relative;
         }
 
-        .pointer-line {
-            width: 4px;
-            height: 100%;
-            background: #ffffff;
-            border-radius: 2px;
-            box-shadow: 0 0 10px rgba(255,255,255,0.8);
-        }
-
-        .pointer-ring {
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            border: 4px solid #ffffff;
-            background: var(--bg-color);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0,0,0,0.8);
-        }
-
-        .linear-ticks {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.95rem;
-            font-weight: 700;
-            padding: 0 5px;
+        .gauge-svg {
+            width: 100%;
+            max-width: 340px; 
+            overflow: visible;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 5px; 
+            margin-top: -10px; 
         }
 
         .gauge-result-badge {
@@ -618,7 +560,7 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
-            .brand-title-large { font-size: 2rem; }
+            .brand-title-match { font-size: 2rem; }
         }
 
     </style>
@@ -629,7 +571,7 @@
 
     <!-- 1. BRANDING: Large, bold NEXA-C4 only -->
     <div class="branding-header">
-        <div class="brand-title-large">NEXA-C4</div>
+        <div class="brand-title-match">NEXA-C4</div>
     </div>
 
     <!-- 2. MAIN TITLE WITH DUAL HORIZONTAL LINES -->
@@ -773,39 +715,62 @@
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="generateReport()">Generate Report</button>
+            <!-- 10. Refueling Convenience and Time Importance -->
+            <div class="question-block">
+                <label class="question-label">
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)"/>
+                        <polyline points="12 6 12 12 16 14" stroke="rgba(255,255,255,0.4)"/>
+                    </svg>
+                    Refueling convenience and time importance
+                </label>
+                <div class="pill-group">
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0" checked><div class="pill-text">Very important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="50"><div class="pill-text">Manageable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="100"><div class="pill-text">Not important</div></label>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="generateReport()">Check My CNG Suitability</button>
         </div>
     </div>
 
     <!-- ================= PART 2: RESULTS ================= -->
     <div id="part2" class="hidden reveal-container">
         
-        <!-- 1. LINEAR RANGE BAND SCALE -->
+        <!-- 1. SUITABILITY SPEEDOMETER (3 ZONES) -->
         <div class="card reveal-1">
-            <div class="linear-scale-container">
-                
-                <div class="linear-labels">
-                    <span class="label-petrol">PETROL</span>
-                    <span class="label-cng">CNG</span>
-                </div>
-                
-                <div class="linear-track">
-                    <div class="linear-pointer" id="score-pointer">
-                        <div class="pointer-line"></div>
-                        <div class="pointer-ring"></div>
-                    </div>
-                </div>
+            <div class="gauge-container">
+                <svg class="gauge-svg" viewBox="0 0 340 260">
+                    
+                    <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
+                    <!-- RED ZONE (0-50): Angle -210 to -90 -->
+                    <path d="M 61.75 212.5 A 125 125 0 0 1 170 25" fill="none" stroke="#ef4444" stroke-width="24" stroke-linecap="butt"/>
+                    
+                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
+                    <path d="M 170 25 A 125 125 0 0 1 262.89 66.36" fill="none" stroke="#eab308" stroke-width="24" stroke-linecap="butt"/>
+                    
+                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
+                    <path d="M 262.89 66.36 A 125 125 0 0 1 278.25 212.5" fill="none" stroke="#10b981" stroke-width="24" stroke-linecap="butt"/>
 
-                <div class="linear-ticks">
-                    <span>0</span>
-                    <span>50</span>
-                    <span>100</span>
-                </div>
+                    <!-- Dynamic Ticks and Numbers injected via JS -->
+                    <g id="dial-ticks"></g>
+                    <g id="dial-labels"></g>
+                    
+                    <!-- Center Readout Box -->
+                    <text id="center-score-val" x="170" y="200" fill="#ffffff" font-size="38" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">0</text>
+                    <text id="center-score-label" x="170" y="225" fill="#8b9bb4" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="1">CALCULATING...</text>
+
+                    <!-- Analog Car Needle -->
+                    <g id="score-needle" style="transform-origin: 170px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                        <polygon points="167,150 173,150 171,45 169,45" fill="#ffffff"/>
+                        <circle cx="170" cy="150" r="12" fill="#05080f" stroke="#ffffff" stroke-width="3"/>
+                    </g>
+                </svg>
 
                 <div class="gauge-text-container">
                     <div class="gauge-result-badge" id="score-badge">-</div>
                 </div>
-
             </div>
         </div>
 
@@ -944,6 +909,45 @@
         }
     }
 
+    function drawAnalogDial() {
+        const ticksGroup = document.getElementById('dial-ticks');
+        const labelsGroup = document.getElementById('dial-labels');
+        
+        let ticks = '';
+        let labels = '';
+        const cx = 170;
+        const cy = 150; // New updated center pivot
+        
+        for (let i = 0; i <= 100; i += 2) {
+            let angle = -120 + (i * 2.4);
+            let rad = (angle - 90) * (Math.PI / 180);
+            
+            let rOuter = 108;
+            let isMajor = (i % 20 === 0);
+            let isMedium = (i % 10 === 0);
+            
+            let rInner = isMajor ? 90 : (isMedium ? 96 : 102);
+            let strokeW = isMajor ? 3 : 2;
+            
+            let x1 = cx + rOuter * Math.cos(rad);
+            let y1 = cy + rOuter * Math.sin(rad);
+            let x2 = cx + rInner * Math.cos(rad);
+            let y2 = cy + rInner * Math.sin(rad);
+            
+            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${isMajor ? 1 : 0.4}" />`;
+            
+            if (isMajor) {
+                let textR = 70;
+                let tx = cx + textR * Math.cos(rad);
+                let ty = cy + textR * Math.sin(rad) + 5; 
+                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Space Mono', monospace" font-size="14" font-weight="700" text-anchor="middle">${i}</text>`;
+            }
+        }
+        
+        ticksGroup.innerHTML = ticks;
+        labelsGroup.innerHTML = labels;
+    }
+
     function animateValue(obj, start, end, duration, formatAsCurrency = false, isFloat = false) {
         let startTimestamp = null;
         const step = (timestamp) => {
@@ -1004,8 +1008,11 @@
         void part2.offsetWidth;
         part2.classList.add('fade-in');
 
-        // Reset linear pointer to 0
-        document.getElementById('score-pointer').style.left = `0%`;
+        document.getElementById('score-needle').style.transform = `rotate(-120deg)`;
+        document.getElementById('center-score-val').innerText = "0";
+        document.getElementById('center-score-label').innerText = "CALCULATING...";
+        document.getElementById('center-score-label').setAttribute("fill", "#8b9bb4");
+
         updateOdometerDisplay("0");
 
         setTimeout(() => {
@@ -1019,26 +1026,26 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- RE-WEIGHTED, JUSTIFIABLE ALGORITHM ---
+    // --- NEW RE-WEIGHTED EXACT 100 PT ALGORITHM ---
     function runCalculations() {
         let score = 0;
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
-        // 1. Daily Running (Max 45 points - heavily drives logic)
+        // 1. Daily Running (Max 35 points)
         if (monthlyKmEquiv < 500) score += 0;
-        else if (monthlyKmEquiv < 1000) score += 15; 
-        else if (monthlyKmEquiv <= 1500) score += 30; 
-        else score += 45;
+        else if (monthlyKmEquiv <= 1000) score += 10; 
+        else if (monthlyKmEquiv <= 1500) score += 20; 
+        else score += 35;
 
         // 2. Vehicle Usage (Max 15 points)
         const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
         if (q1 === 0) score += 5;       
         else score += 15;               
 
-        // 3. Boot Space (Max 15 points)
+        // 3. Boot Space (Max 10 points)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
-        if (q2 === 0) score += 0; else if (q2 === 50) score += 7; else score += 15;
+        if (q2 === 0) score += 0; else if (q2 === 50) score += 5; else score += 10;
 
         // 4. Driving Preference (Max 10 points)
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
@@ -1048,55 +1055,73 @@
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
         if (q4 === 0) score += 0; else if (q4 === 50) score += 8; else score += 15;
 
+        // 6. Refueling Convenience and Time (Max 15 points)
+        const q5 = parseInt(document.querySelector('input[name="q_refuel_time"]:checked').value);
+        if (q5 === 0) score += 0; else if (q5 === 50) score += 8; else score += 15;
+
         score = Math.round(score);
         
-        // Slide Linear Pointer Left to Right
+        // Needle Sweep
+        const scoreRotation = -120 + ((score / 100) * 240);
         setTimeout(() => {
-            document.getElementById('score-pointer').style.left = `${score}%`;
+            document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
         }, 200);
+
+        // Center Digital Score Animation
+        animateValue(document.getElementById('center-score-val'), 0, score, 2000, false, false);
 
         const badge = document.getElementById('score-badge');
         const odoSection = document.getElementById('odometer-section');
         const ampersand = document.getElementById('ampersand-sign');
+        const centerLabel = document.getElementById('center-score-label');
 
         setTimeout(() => {
-            // BAND 1: 0 - 49
+            // RED BAND 1: 0 - 49
             if(score < 50) {
                 badge.innerText = "पेट्रोल ही सही है";
-                badge.style.color = "#3b82f6";
-                badge.style.background = "rgba(59, 130, 246, 0.1)";
-                badge.style.border = "1px solid rgba(59, 130, 246, 0.3)";
+                badge.style.color = "#ef4444";
+                badge.style.background = "rgba(239, 68, 68, 0.1)";
+                badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
                 
-                odoSection.style.borderColor = "#3b82f6";
-                odoSection.style.boxShadow = "0 0 25px rgba(59, 130, 246, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "#3b82f6";
-                ampersand.style.textShadow = "0 0 15px rgba(59, 130, 246, 0.4)";
+                centerLabel.innerText = "PETROL FIT";
+                centerLabel.setAttribute("fill", "#ef4444");
+
+                odoSection.style.borderColor = "#ef4444";
+                odoSection.style.boxShadow = "0 0 25px rgba(239, 68, 68, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
+                ampersand.style.color = "#ef4444";
+                ampersand.style.textShadow = "0 0 15px rgba(239, 68, 68, 0.4)";
             } 
-            // BAND 2: 50 - 69
+            // YELLOW BAND 2: 50 - 69
             else if (score < 70) {
                 badge.innerText = "पेट्रोल बेहतर रहेगा";
-                badge.style.color = "#0ea5e9";
-                badge.style.background = "rgba(14, 165, 233, 0.1)";
-                badge.style.border = "1px solid rgba(14, 165, 233, 0.3)";
+                badge.style.color = "#eab308";
+                badge.style.background = "rgba(234, 179, 8, 0.1)";
+                badge.style.border = "1px solid rgba(234, 179, 8, 0.3)";
                 
-                odoSection.style.borderColor = "#0ea5e9";
-                odoSection.style.boxShadow = "0 0 25px rgba(14, 165, 233, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "#0ea5e9";
-                ampersand.style.textShadow = "0 0 15px rgba(14, 165, 233, 0.4)";
+                centerLabel.innerText = "PETROL INCLINED";
+                centerLabel.setAttribute("fill", "#eab308");
+
+                odoSection.style.borderColor = "#eab308";
+                odoSection.style.boxShadow = "0 0 25px rgba(234, 179, 8, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
+                ampersand.style.color = "#eab308";
+                ampersand.style.textShadow = "0 0 15px rgba(234, 179, 8, 0.4)";
             } 
-            // BAND 3: 70 - 100
+            // GREEN BAND 3: 70 - 100
             else {
                 badge.innerText = "सीएनजी (CNG) सही है";
                 badge.style.color = "#10b981";
                 badge.style.background = "rgba(16, 185, 129, 0.1)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
                 
+                centerLabel.innerText = "CNG FIT";
+                centerLabel.setAttribute("fill", "#10b981");
+
                 odoSection.style.borderColor = "#10b981";
                 odoSection.style.boxShadow = "0 0 25px rgba(16, 185, 129, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
                 ampersand.style.color = "#10b981";
                 ampersand.style.textShadow = "0 0 15px rgba(16, 185, 129, 0.4)";
             }
-        }, 1200);
+        }, 2000);
 
         // --- CALCULATE TRUE BREAK-EVEN ---
         const idxA = document.getElementById('variantA').value;
@@ -1182,6 +1207,7 @@
     window.onload = () => {
         setupOdometer();
         setupDropdowns();
+        drawAnalogDial();
         
         document.getElementById('petrolPriceInput').value = "";
         document.getElementById('cngPriceInput').value = "";
