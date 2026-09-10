@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -409,7 +408,7 @@
         /* --- ODOMETER (MECHANICAL REALISM & HIGHLIGHTED) --- */
         .odometer-section {
             text-align: center;
-            padding: 25px 0 20px 0;
+            padding: 25px 0 25px 0;
             background: #080b11; 
             border-radius: 16px;
             /* Border and glow are controlled dynamically by JS based on result */
@@ -434,21 +433,21 @@
             font-family: 'Space Mono', monospace;
             font-size: 2.8rem;
             font-weight: 700;
-            width: 46px;
-            height: 66px;
+            width: 44px;
+            height: 64px;
             border-right: 1px solid #000;
             overflow: hidden;
             position: relative;
         }
         
-        .odo-digit:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
-        .odo-digit:last-child { border-right: none; border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+        .odo-digit:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+        .odo-digit:last-child { border-right: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
 
         .odo-digit::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.6) 100%);
             pointer-events: none;
         }
 
@@ -513,7 +512,7 @@
 
         @media (max-width: 600px) {
             .app-container { margin-top: 10px;}
-            .odo-digit { width: 38px; height: 58px; font-size: 2.3rem; }
+            .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
         }
 
@@ -588,6 +587,7 @@
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Mileage (km/L)</label>
+                    <!-- Initial state is blank, auto-populated ONLY if dropdown changes -->
                     <input type="number" id="petrolMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
                 </div>
                 <div class="input-box">
@@ -677,10 +677,15 @@
                             <stop offset="0%" stop-color="#3b82f6" /> 
                             <stop offset="100%" stop-color="#10b981" /> 
                         </linearGradient>
+                        
+                        <!-- Invisible path for curving text EXACTLY on outer circumference -->
+                        <path id="outerCurve" d="M 10 150 A 140 140 0 0 1 290 150" fill="transparent" />
                     </defs>
 
-                    <!-- Thick Scale Highlight Track -->
+                    <!-- Background Dark Arch mimicking the speedometer depth -->
                     <path d="M 57.42 225 A 130 130 0 1 1 282.58 225" fill="none" stroke="#1f2937" stroke-width="12" stroke-linecap="round"/>
+                    
+                    <!-- Color Arc mapping -->
                     <path d="M 57.42 225 A 130 130 0 1 1 282.58 225" fill="none" stroke="url(#score-grad)" stroke-width="12" stroke-linecap="round" opacity="1"/>
 
                     <!-- Dynamic Ticks and Numbers injected via JS -->
@@ -1069,7 +1074,7 @@
         // 3. Total
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
-        // Calculate exact savings per KM using manual inputs
+        // Calculate exact savings using manual inputs
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
@@ -1125,16 +1130,12 @@
         setupDropdowns();
         drawAnalogDial();
         
-        // Clear manual inputs initially to force user to review/click them
+        // Ensure manual inputs start completely blank
         document.getElementById('petrolPriceInput').value = "";
         document.getElementById('cngPriceInput').value = "";
         document.getElementById('petrolMileageInput').value = "";
         document.getElementById('cngMileageInput').value = "";
         document.getElementById('dailyDrivingInput').value = "";
-        
-        // Populate mileage inputs based on default dropdown silently
-        document.getElementById('petrolMileageInput').value = variantsData[document.getElementById('variantA').value].mileage;
-        document.getElementById('cngMileageInput').value = variantsData[document.getElementById('variantB').value].mileage;
         
         updatePerKmCost();
     };
