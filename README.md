@@ -741,7 +741,7 @@
                     
                     <!-- Outer Circumference Texts -->
                     <text x="44.5" y="87.5" fill="#3b82f6" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(300 44.5 87.5)" text-anchor="middle">PETROL</text>
-                    <text x="295.5" y="87.5" fill="#10b981" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(60 295.5 87.5)" text-anchor="middle">CNG</text>
+                    <text x="314" y="175" fill="#10b981" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(96 314 175)" text-anchor="middle">CNG</text>
 
                     <!-- Dial Subtext -->
                     <text x="170" y="120" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
