@@ -1,10 +1,10 @@
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>सही फ्यूल चुना क्या?</title>
     <style>
+        /* Premium Fonts Setup */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
         * {
@@ -104,15 +104,6 @@
             letter-spacing: 2px;
             font-weight: 700;
             text-align: center;
-        }
-
-        .card-title-group h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            text-align: center;
-            margin-top: 8px;
         }
 
         /* --- INPUTS --- */
@@ -253,7 +244,7 @@
             color: var(--text-main);
         }
 
-        /* --- DIAGNOSTIC GAUGE --- */
+        /* --- DIAGNOSTIC GAUGE (ANALOG DIAL) --- */
         .gauge-container {
             display: flex;
             flex-direction: column;
@@ -262,22 +253,13 @@
 
         .gauge-svg {
             width: 100%;
-            max-width: 300px;
+            max-width: 320px;
             overflow: visible;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 25px;
-        }
-
-        .gauge-score {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1;
-            color: var(--text-main);
-            letter-spacing: -3px;
+            margin-top: 15px;
         }
 
         .gauge-result-badge {
@@ -287,7 +269,7 @@
             font-weight: 800;
             display: inline-block;
             letter-spacing: 1px;
-            margin-top: 15px;
+            margin-top: 5px;
         }
 
         /* --- SERIOUS FINANCIALS --- */
@@ -304,12 +286,13 @@
         }
 
         .total-cost-label {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             text-align: center;
+            line-height: 1.4;
         }
 
         .total-cost-value {
@@ -419,7 +402,7 @@
             .top-logo-container { position: relative; top: 0; left: 0; display: flex; justify-content: center; margin-bottom: 5px; width: 100%;}
             .app-container { margin-top: 10px;}
             .odo-digit { width: 42px; height: 60px; font-size: 2.2rem; }
-            .header-section h1 { font-size: 2rem; }
+            .header-section h1 { font-size: 2.2rem; }
         }
 
     </style>
@@ -467,7 +450,7 @@
                 <input type="number" id="dailyDrivingInput" class="custom-input" value="80">
             </div>
 
-            <!-- Driving Preference (Left to Right: Economy -> Performance) -->
+            <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
             <div class="question-block" style="margin-top: 10px;">
                 <div class="question-label">Driving preference</div>
                 <div class="pill-group">
@@ -477,7 +460,7 @@
                 </div>
             </div>
 
-            <!-- Boot Space Importance (Left to Right: Not important -> Very important) -->
+            <!-- 2. Boot Space Importance (Not important -> Somewhat -> Very) -->
             <div class="question-block">
                 <div class="question-label">Boot space importance</div>
                 <div class="pill-group">
@@ -487,13 +470,13 @@
                 </div>
             </div>
 
-            <!-- CNG station convenience -->
+            <!-- 3. CNG station convenience (Inconvenient -> Manageable -> Easy) -->
             <div class="question-block">
                 <div class="question-label">CNG station convenience</div>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_stn" value="100" checked><div class="pill-text">Easy access</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">Manageable</div></label>
                     <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">Inconvenient</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">Manageable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="100" checked><div class="pill-text">Easy access</div></label>
                 </div>
             </div>
 
@@ -504,55 +487,37 @@
     <!-- ================= PART 2: RESULTS ================= -->
     <div id="part2" class="hidden reveal-container">
         
-        <!-- 1. SUITABILITY METER -->
+        <!-- 1. SUITABILITY METER (ANALOG CAR DIAL) -->
         <div class="card reveal-1">
             <div class="card-title-group">
                 <p>Diagnostic Result</p>
                 <h2>CNG Suitability Meter</h2>
             </div>
-            <div class="gauge-container" style="margin-top: 0;">
-                <svg class="gauge-svg" viewBox="0 0 200 110">
-                    <defs>
-                        <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#ef4444" />
-                            <stop offset="50%" stop-color="#3b82f6" />
-                            <stop offset="100%" stop-color="#10b981" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Background Arc -->
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#1f2937" stroke-width="14" stroke-linecap="round"/>
+            
+            <div class="gauge-container" style="margin-top: 10px;">
+                <svg class="gauge-svg" viewBox="0 0 300 180">
+                    <!-- Background Dark Arch mimicking the speedometer depth -->
+                    <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="#111827" stroke-width="40" stroke-linecap="butt"/>
                     
-                    <!-- Tick Marks simulating a car dial -->
-                    <g stroke="rgba(255,255,255,0.2)" stroke-width="2">
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(0 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(18 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(36 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(54 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(72 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(90 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(108 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(126 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(144 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(162 100 100)" />
-                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(180 100 100)" />
-                    </g>
+                    <!-- Dynamic Ticks and Numbers injected via JS -->
+                    <g id="dial-ticks"></g>
+                    <g id="dial-labels"></g>
+                    
+                    <!-- Dial Subtext -->
+                    <text x="150" y="110" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
 
-                    <!-- Colored Gradient Arc -->
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#score-grad)" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
-                    
-                    <text x="20" y="105" fill="#8b9bb4" font-size="10" text-anchor="middle" font-weight="700">0</text>
-                    <text x="180" y="105" fill="#8b9bb4" font-size="10" text-anchor="middle" font-weight="700">100</text>
-                    
-                    <!-- Automotive Style Needle -->
-                    <g id="score-needle" style="transform-origin: 100px 100px; transform: rotate(-90deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <circle cx="100" cy="100" r="10" fill="#1f2937" stroke="#374151" stroke-width="2"/>
-                        <polygon points="97,100 103,100 100,25" fill="#ef4444"/>
-                        <circle cx="100" cy="100" r="4" fill="#ef4444"/>
+                    <!-- Analog Car Needle -->
+                    <g id="score-needle" style="transform-origin: 150px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                        <!-- Needle Body -->
+                        <polygon points="147,150 153,150 151,35 149,35" fill="#ffffff"/>
+                        <!-- Counterweight -->
+                        <polygon points="148,165 152,165 153,150 147,150" fill="#ffffff" opacity="0.8"/>
+                        <!-- Center Cap -->
+                        <circle cx="150" cy="150" r="10" fill="#05080f" stroke="#ffffff" stroke-width="2"/>
                     </g>
                 </svg>
 
                 <div class="gauge-text-container">
-                    <div class="gauge-score" id="score-val">0</div>
                     <div class="gauge-result-badge" id="score-badge">-</div>
                 </div>
             </div>
@@ -579,7 +544,7 @@
         <!-- 3. SAVINGS START AFTER -->
         <div class="card reveal-3" id="break-even-card">
             <div class="card-title-group">
-                <p style="color: var(--serious-red); font-size: 1.3rem; font-weight: 800; letter-spacing: 1px;">NO SAVINGS UPTO:</p>
+                <p style="color: var(--serious-red); font-size: 1.6rem; font-weight: 800; letter-spacing: 1px;">NO SAVINGS UPTO:</p>
             </div>
 
             <!-- ODOMETER -->
@@ -594,8 +559,8 @@
 
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
-                <div id="time-text-desc" style="font-size: 1rem; font-weight: 600; margin-top: 5px; color: var(--text-muted);">-</div>
             </div>
         </div>
 
@@ -659,6 +624,48 @@
         }
     }
 
+    // Function to draw the realistic analog car dial ticks and numbers
+    function drawAnalogDial() {
+        const ticksGroup = document.getElementById('dial-ticks');
+        const labelsGroup = document.getElementById('dial-labels');
+        
+        let ticks = '';
+        let labels = '';
+        const cx = 150;
+        const cy = 150;
+        
+        // Loop from 0 to 100 in steps of 2 for fine tick marks
+        for (let i = 0; i <= 100; i += 2) {
+            // Map 0-100 to an angle between -120deg to +120deg
+            let angle = -120 + (i * 2.4);
+            let rad = (angle - 90) * (Math.PI / 180);
+            
+            let rOuter = 130;
+            let isMajor = (i % 20 === 0);
+            let isMedium = (i % 10 === 0);
+            
+            let rInner = isMajor ? 112 : (isMedium ? 118 : 124);
+            let strokeW = isMajor ? 3 : 2;
+            
+            let x1 = cx + rOuter * Math.cos(rad);
+            let y1 = cy + rOuter * Math.sin(rad);
+            let x2 = cx + rInner * Math.cos(rad);
+            let y2 = cy + rInner * Math.sin(rad);
+            
+            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${isMajor ? 1 : 0.6}" />`;
+            
+            if (isMajor) {
+                let textR = 92;
+                let tx = cx + textR * Math.cos(rad);
+                let ty = cy + textR * Math.sin(rad) + 6; 
+                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Space Mono', monospace" font-size="16" font-weight="700" text-anchor="middle">${i}</text>`;
+            }
+        }
+        
+        ticksGroup.innerHTML = ticks;
+        labelsGroup.innerHTML = labels;
+    }
+
     function animateValue(obj, start, end, duration, formatAsCurrency = false, isFloat = false) {
         let startTimestamp = null;
         const step = (timestamp) => {
@@ -697,7 +704,7 @@
         void part2.offsetWidth;
         part2.classList.add('fade-in');
 
-        document.getElementById('score-needle').style.transform = `rotate(-90deg)`;
+        document.getElementById('score-needle').style.transform = `rotate(-120deg)`;
         updateOdometerDisplay("0");
 
         setTimeout(() => {
@@ -717,29 +724,28 @@
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
-        // 30 Max Points
+        // 35 Max Points
         if (monthlyKmEquiv <= 500) score += 0;
-        else if (monthlyKmEquiv <= 1000) score += 5; 
-        else if (monthlyKmEquiv <= 2000) score += 15; 
-        else score += 30;
+        else if (monthlyKmEquiv <= 1000) score += 10; 
+        else if (monthlyKmEquiv <= 2000) score += 20; 
+        else score += 35;
+
+        // 25 Max Points
+        const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
+        if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 25;
 
         // 20 Max Points
-        const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
-        if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 20;
-
-        // 25 Max Points
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
-        if (q3 === 0) score += 0; else if (q3 === 50) score += 10; else score += 25;
+        if (q3 === 0) score += 0; else if (q3 === 50) score += 10; else score += 20;
 
-        // 25 Max Points
+        // 20 Max Points
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
-        if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 25;
+        if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 20;
 
         score = Math.round(score);
         
-        animateValue(document.getElementById('score-val'), 0, score, 1500);
-        
-        const scoreRotation = -90 + ((score / 100) * 180);
+        // Map score 0-100 to rotation -120 to +120
+        const scoreRotation = -120 + ((score / 100) * 240);
         setTimeout(() => {
             document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
         }, 200);
@@ -828,22 +834,12 @@
             
             setTimeout(() => {
                 animateValue(document.getElementById('time-text-val'), 0, breakEvenYears, 2000, false, true);
-                const timeDesc = document.getElementById('time-desc');
-                
-                if(breakEvenYears <= 2) { 
-                    timeDesc.innerText = "Fast recovery at this running"; 
-                } else if (breakEvenYears <= 4.5) {
-                    timeDesc.innerText = "Moderate recovery time"; 
-                } else { 
-                    timeDesc.innerText = "Slow recovery at this running"; 
-                }
             }, 800);
 
         } else {
             updateOdometerDisplay("999999");
             document.getElementById('time-text-val').innerHTML = `Never`;
-            document.getElementById('time-text-desc').innerText = "CNG is costlier to run";
-            document.getElementById('time-text-desc').style.color = "var(--serious-red)";
+            document.getElementById('time-text-val').style.color = "var(--serious-red)";
         }
         
         setTimeout(() => {
@@ -855,6 +851,7 @@
     window.onload = () => {
         setupOdometer();
         setupDropdowns();
+        drawAnalogDial();
     };
 
 </script>
