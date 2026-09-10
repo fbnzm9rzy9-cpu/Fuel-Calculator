@@ -26,6 +26,7 @@
             
             --nexa-green: #10b981;
             --nexa-green-bg: rgba(16, 185, 129, 0.1);
+            --nexa-blue: #3b82f6;
             --serious-red: #ef4444;
             --serious-red-bg: rgba(239, 68, 68, 0.1);
         }
@@ -34,7 +35,7 @@
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at 50% 0%, #111827 0%, transparent 100%);
             color: var(--text-main);
-            padding: 20px 15px 60px 15px; 
+            padding: 20px 15px 60px 15px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -55,7 +56,7 @@
         }
 
         .header-section h1 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: -1px;
@@ -72,6 +73,24 @@
             flex-direction: column;
             gap: 20px; 
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+        }
+
+        .card-title-group p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .card-title-group h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 8px;
         }
 
         /* --- INPUTS --- */
@@ -123,6 +142,37 @@
             gap: 16px;
         }
 
+        /* --- PER KM COST DISPLAY --- */
+        .cpk-container {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-top: -5px;
+        }
+        .cpk-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .cpk-item.right { text-align: right; }
+        .cpk-label { 
+            font-size: 0.8rem; 
+            color: var(--text-muted); 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-weight: 700;
+        }
+        .cpk-val { 
+            font-size: 1.3rem; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-weight: 800;
+        }
+        .cpk-petrol-val { color: var(--nexa-blue); }
+        .cpk-cng-val { color: var(--nexa-green); }
+
         /* --- TECHY ICONS & ANIMATIONS --- */
         .tech-icon {
             width: 22px;
@@ -164,7 +214,6 @@
             100% { r: 10; opacity: 0; stroke-width: 0.5;}
         }
         .anim-radar { animation: radarPulse 1.5s infinite cubic-bezier(0.215, 0.610, 0.355, 1); transform-origin: center;}
-
 
         /* --- SEGMENTED CONTROLS (PILLS) --- */
         .question-block {
@@ -288,6 +337,32 @@
         }
 
         /* --- SERIOUS FINANCIALS --- */
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 0 10px;
+        }
+
+        .cost-label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .cost-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .cost-divider {
+            border-top: 1px dashed var(--border-light);
+            margin: 15px 0 20px 0;
+        }
+
         .total-cost-row {
             display: flex;
             flex-direction: column;
@@ -305,7 +380,7 @@
             color: var(--text-muted);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-align: center;
             line-height: 1.4;
         }
@@ -391,12 +466,11 @@
 
         .ampersand {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            color: var(--border-light);
+            color: var(--nexa-green);
             margin: 0; 
             font-family: 'Outfit', sans-serif;
-            opacity: 0.5;
             line-height: 1;
         }
 
@@ -434,30 +508,8 @@
     <div id="part1">
         <div class="card">
             
-            <div class="input-grid">
-                <div class="input-box">
-                    <label>Petrol Variant</label>
-                    <select id="variantA" class="custom-input"></select>
-                </div>
-                <div class="input-box">
-                    <label>CNG Variant</label>
-                    <select id="variantB" class="custom-input"></select>
-                </div>
-            </div>
-
-            <div class="input-grid">
-                <div class="input-box">
-                    <label>Petrol Price (₹/L)</label>
-                    <input type="number" id="petrolPriceInput" class="custom-input" value="104">
-                </div>
-                <div class="input-box">
-                    <label>CNG Price (₹/kg)</label>
-                    <input type="number" id="cngPriceInput" class="custom-input" value="89">
-                </div>
-            </div>
-
-            <div class="input-box" style="margin-top: 5px;">
-                <!-- Animated Road Icon -->
+            <!-- 1. Daily Running (MOVED TO TOP) -->
+            <div class="input-box" style="margin-bottom: 5px;">
                 <label>
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <path d="M4 22L8 2m8 0l4 20" stroke="rgba(255,255,255,0.4)"/>
@@ -466,13 +518,12 @@
                     </svg>
                     Daily Running (in KMs)
                 </label>
-                <input type="number" id="dailyDrivingInput" class="custom-input" value="80">
+                <input type="number" id="dailyDrivingInput" class="custom-input" value="80" oninput="updatePerKmCost()">
             </div>
 
-            <!-- New Question: Purpose of vehicle utility -->
+            <!-- Purpose of vehicle utility -->
             <div class="question-block" style="margin-top: 5px;">
                 <label class="question-label">
-                    <!-- Animated Briefcase / Car Icon -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <rect x="3" y="8" width="18" height="12" rx="2" stroke="rgba(255,255,255,0.4)"/>
                         <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="rgba(255,255,255,0.4)"/>
@@ -486,10 +537,57 @@
                 </div>
             </div>
 
-            <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
-            <div class="question-block">
+            <!-- Variant Selection -->
+            <div class="input-grid" style="margin-top: 10px;">
+                <div class="input-box">
+                    <label>Petrol Variant</label>
+                    <select id="variantA" class="custom-input"></select>
+                </div>
+                <div class="input-box">
+                    <label>CNG Variant</label>
+                    <select id="variantB" class="custom-input"></select>
+                </div>
+            </div>
+
+            <!-- Prices -->
+            <div class="input-grid">
+                <div class="input-box">
+                    <label>Petrol Price (₹/L)</label>
+                    <input type="number" id="petrolPriceInput" class="custom-input" value="104" oninput="updatePerKmCost()">
+                </div>
+                <div class="input-box">
+                    <label>CNG Price (₹/kg)</label>
+                    <input type="number" id="cngPriceInput" class="custom-input" value="89" oninput="updatePerKmCost()">
+                </div>
+            </div>
+
+            <!-- Manual Mileage -->
+            <div class="input-grid">
+                <div class="input-box">
+                    <label>Petrol Mileage (km/L)</label>
+                    <input type="number" id="petrolMileageInput" class="custom-input" value="22.35" step="0.1" oninput="updatePerKmCost()">
+                </div>
+                <div class="input-box">
+                    <label>CNG Mileage (km/kg)</label>
+                    <input type="number" id="cngMileageInput" class="custom-input" value="30.61" step="0.1" oninput="updatePerKmCost()">
+                </div>
+            </div>
+
+            <!-- Live Per KM Running Cost Display -->
+            <div class="cpk-container">
+                <div class="cpk-item">
+                    <span class="cpk-label">Petrol Cost / KM</span>
+                    <span class="cpk-val cpk-petrol-val" id="cpk-petrol">₹0.00</span>
+                </div>
+                <div class="cpk-item right">
+                    <span class="cpk-label">CNG Cost / KM</span>
+                    <span class="cpk-val cpk-cng-val" id="cpk-cng">₹0.00</span>
+                </div>
+            </div>
+
+            <!-- Driving Preference -->
+            <div class="question-block" style="margin-top: 10px;">
                 <label class="question-label">
-                    <!-- Animated Steering Wheel -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <g class="anim-steer">
                             <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/>
@@ -506,10 +604,9 @@
                 </div>
             </div>
 
-            <!-- 2. Boot Space Importance (Not important -> Somewhat -> Very) -->
+            <!-- Boot Space Importance -->
             <div class="question-block">
                 <label class="question-label">
-                    <!-- Animated Scan Box Icon -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <rect x="4" y="6" width="16" height="12" rx="2" stroke="rgba(255,255,255,0.4)"/>
                         <path d="M8 6V4h8v2" stroke="rgba(255,255,255,0.4)"/>
@@ -524,10 +621,9 @@
                 </div>
             </div>
 
-            <!-- 3. CNG station convenience (Inconvenient -> Manageable -> Easy) -->
+            <!-- CNG station convenience -->
             <div class="question-block">
                 <label class="question-label">
-                    <!-- Animated Radar/Pin Icon -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="rgba(255,255,255,0.4)"/>
                         <circle cx="12" cy="10" r="1" class="anim-radar"/>
@@ -552,9 +648,19 @@
         <div class="card reveal-1">
             <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 300 180">
+                    <defs>
+                        <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#3b82f6" /> <!-- Blue for Petrol -->
+                            <stop offset="100%" stop-color="#10b981" /> <!-- Green for CNG -->
+                        </linearGradient>
+                    </defs>
+
                     <!-- Background Dark Arch mimicking the speedometer depth -->
                     <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="#111827" stroke-width="40" stroke-linecap="butt"/>
                     
+                    <!-- Color Arc mapping -->
+                    <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="url(#score-grad)" stroke-width="40" stroke-linecap="butt" opacity="0.15"/>
+
                     <!-- Dynamic Ticks and Numbers injected via JS -->
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
@@ -562,13 +668,14 @@
                     <!-- Dial Subtext -->
                     <text x="150" y="110" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
 
+                    <!-- Curved Text along circumference -->
+                    <text x="50" y="65" fill="#3b82f6" font-size="14" text-anchor="middle" font-weight="800" transform="rotate(-40, 50, 65)">PETROL</text>
+                    <text x="250" y="65" fill="#10b981" font-size="14" text-anchor="middle" font-weight="800" transform="rotate(40, 250, 65)">CNG</text>
+
                     <!-- Analog Car Needle -->
                     <g id="score-needle" style="transform-origin: 150px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <!-- Needle Body -->
                         <polygon points="147,150 153,150 151,35 149,35" fill="#ffffff"/>
-                        <!-- Counterweight -->
                         <polygon points="148,165 152,165 153,150 147,150" fill="#ffffff" opacity="0.8"/>
-                        <!-- Center Cap -->
                         <circle cx="150" cy="150" r="10" fill="#05080f" stroke="#ffffff" stroke-width="2"/>
                     </g>
                 </svg>
@@ -582,8 +689,19 @@
         <!-- 2. ADDITIONAL COST -->
         <div class="card reveal-2" id="extra-cost-card">
             <div id="extra-cost-container">
+                <div class="cost-row">
+                    <span class="cost-label">Additional cost of CNG vehicle</span>
+                    <span class="cost-value" id="orp-diff-val">₹0</span>
+                </div>
+                <div class="cost-row">
+                    <span class="cost-label">Additional EMI Burden (@8.5% for 5 Years)</span>
+                    <span class="cost-value" id="int-diff-val">₹0</span>
+                </div>
+                
+                <div class="cost-divider"></div>
+
                 <div class="total-cost-row">
-                    <span class="total-cost-label">Total additional cost of purchasing a CNG vehicle</span>
+                    <span class="total-cost-label">Total additional investment for CNG Car</span>
                     <span class="total-cost-value" id="total-extra-val">0</span>
                 </div>
             </div>
@@ -645,6 +763,29 @@
 
         selectA.value = petrolIndex !== -1 ? petrolIndex : 0;
         selectB.value = cngIndex !== -1 ? cngIndex : 0;
+
+        // Add Event Listeners to update manual mileage when dropdowns change
+        selectA.addEventListener('change', () => {
+            document.getElementById('petrolMileageInput').value = variantsData[selectA.value].mileage;
+            updatePerKmCost();
+        });
+        selectB.addEventListener('change', () => {
+            document.getElementById('cngMileageInput').value = variantsData[selectB.value].mileage;
+            updatePerKmCost();
+        });
+    }
+
+    function updatePerKmCost() {
+        const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 0;
+        const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 0;
+        const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
+        const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
+        
+        const petrolCost = pPrice / pMil;
+        const cngCost = cPrice / cMil;
+
+        document.getElementById('cpk-petrol').innerText = `₹${petrolCost.toFixed(2)}`;
+        document.getElementById('cpk-cng').innerText = `₹${cngCost.toFixed(2)}`;
     }
 
     function setupOdometer() {
@@ -799,6 +940,7 @@
 
         score = Math.round(score);
         
+        // Map score 0-100 to rotation -120 to +120
         const scoreRotation = -120 + ((score / 100) * 240);
         setTimeout(() => {
             document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
@@ -835,6 +977,10 @@
         const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 104;
         const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 89;
 
+        // From manual inputs
+        const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
+        const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
+
         const orpDiff = varB.on_road_price - varA.on_road_price;
 
         let loanA = Math.round((varA.on_road_price * 0.8) / 100000) * 100000;
@@ -853,10 +999,11 @@
         const intDiff = intB - intA;
         let totalExtraCost = orpDiff + intDiff;
         
+        // Round off to next thousand
         const roundedExtraCost = Math.ceil(totalExtraCost / 1000) * 1000;
 
-        const costPerKmA = pPrice / varA.mileage;
-        const costPerKmB = cPrice / varB.mileage;
+        const costPerKmA = pPrice / pMil;
+        const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
 
         const extraCostBox = document.getElementById('extra-cost-container');
@@ -874,6 +1021,9 @@
         noCostMsg.classList.add('hidden');
         breakEvenCard.classList.remove('hidden');
         
+        document.getElementById('orp-diff-val').innerText = formatCurrency(orpDiff);
+        document.getElementById('int-diff-val').innerText = formatCurrency(intDiff);
+
         setTimeout(() => {
             animateValue(document.getElementById('total-extra-val'), 0, roundedExtraCost, 1500, true);
         }, 500);
@@ -905,6 +1055,7 @@
         setupOdometer();
         setupDropdowns();
         drawAnalogDial();
+        updatePerKmCost();
     };
 
 </script>
