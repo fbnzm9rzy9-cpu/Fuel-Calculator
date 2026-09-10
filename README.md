@@ -85,7 +85,7 @@
         }
 
         .card-title-group h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             color: var(--text-main);
@@ -123,10 +123,23 @@
             appearance: none;
         }
 
+        .custom-input::placeholder {
+            color: #4b5563;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
         .custom-input:focus {
             border-color: var(--nexa-green);
             background: #1f2937;
             box-shadow: 0 0 0 4px var(--nexa-green-bg);
+        }
+
+        /* Validation Error State */
+        .input-error {
+            border-color: var(--serious-red) !important;
+            box-shadow: 0 0 0 4px var(--serious-red-bg) !important;
         }
 
         select.custom-input {
@@ -150,7 +163,6 @@
             border: 1px solid var(--border-light);
             border-radius: 14px;
             padding: 16px 20px;
-            margin-top: -5px;
         }
         .cpk-item {
             display: flex;
@@ -159,14 +171,14 @@
         }
         .cpk-item.right { text-align: right; }
         .cpk-label { 
-            font-size: 0.8rem; 
+            font-size: 0.75rem; 
             color: var(--text-muted); 
             text-transform: uppercase; 
-            letter-spacing: 1px; 
+            letter-spacing: 1.5px; 
             font-weight: 700;
         }
         .cpk-val { 
-            font-size: 1.3rem; 
+            font-size: 1.4rem; 
             font-family: 'JetBrains Mono', monospace; 
             font-weight: 800;
         }
@@ -178,7 +190,7 @@
             width: 22px;
             height: 22px;
             margin-right: 8px;
-            stroke: var(--nexa-green);
+            stroke: var(--text-muted);
             fill: none;
             stroke-width: 2;
             stroke-linecap: round;
@@ -317,7 +329,7 @@
 
         .gauge-svg {
             width: 100%;
-            max-width: 300px;
+            max-width: 320px;
             overflow: visible;
         }
 
@@ -376,9 +388,9 @@
         }
 
         .total-cost-label {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
             text-align: center;
@@ -466,12 +478,14 @@
 
         .ampersand {
             text-align: center;
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
             color: var(--nexa-green);
             margin: 0; 
             font-family: 'Outfit', sans-serif;
+            opacity: 1;
             line-height: 1;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
         }
 
         /* --- UTILS & ANIMATIONS --- */
@@ -509,7 +523,7 @@
         <div class="card">
             
             <!-- 1. Daily Running (MOVED TO TOP) -->
-            <div class="input-box" style="margin-bottom: 5px;">
+            <div class="input-box">
                 <label>
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <path d="M4 22L8 2m8 0l4 20" stroke="rgba(255,255,255,0.4)"/>
@@ -518,7 +532,7 @@
                     </svg>
                     Daily Running (in KMs)
                 </label>
-                <input type="number" id="dailyDrivingInput" class="custom-input" value="80" oninput="updatePerKmCost()">
+                <input type="number" id="dailyDrivingInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
             </div>
 
             <!-- Purpose of vehicle utility -->
@@ -553,11 +567,11 @@
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Price (₹/L)</label>
-                    <input type="number" id="petrolPriceInput" class="custom-input" value="104" oninput="updatePerKmCost()">
+                    <input type="number" id="petrolPriceInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
                 </div>
                 <div class="input-box">
                     <label>CNG Price (₹/kg)</label>
-                    <input type="number" id="cngPriceInput" class="custom-input" value="89" oninput="updatePerKmCost()">
+                    <input type="number" id="cngPriceInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
                 </div>
             </div>
 
@@ -565,11 +579,11 @@
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Mileage (km/L)</label>
-                    <input type="number" id="petrolMileageInput" class="custom-input" value="22.35" step="0.1" oninput="updatePerKmCost()">
+                    <input type="number" id="petrolMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
                 </div>
                 <div class="input-box">
                     <label>CNG Mileage (km/kg)</label>
-                    <input type="number" id="cngMileageInput" class="custom-input" value="30.61" step="0.1" oninput="updatePerKmCost()">
+                    <input type="number" id="cngMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
                 </div>
             </div>
 
@@ -585,7 +599,7 @@
                 </div>
             </div>
 
-            <!-- Driving Preference -->
+            <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
             <div class="question-block" style="margin-top: 10px;">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -604,7 +618,7 @@
                 </div>
             </div>
 
-            <!-- Boot Space Importance -->
+            <!-- 2. Boot Space Importance (Not important -> Somewhat -> Very) -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -621,7 +635,7 @@
                 </div>
             </div>
 
-            <!-- CNG station convenience -->
+            <!-- 3. CNG station convenience (Inconvenient -> Manageable -> Easy) -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -650,9 +664,12 @@
                 <svg class="gauge-svg" viewBox="0 0 300 180">
                     <defs>
                         <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#3b82f6" /> <!-- Blue for Petrol -->
-                            <stop offset="100%" stop-color="#10b981" /> <!-- Green for CNG -->
+                            <stop offset="0%" stop-color="#3b82f6" /> 
+                            <stop offset="100%" stop-color="#10b981" /> 
                         </linearGradient>
+                        
+                        <!-- Invisible path for curving the text -->
+                        <path id="curvePath" d="M 50 150 A 100 100 0 0 1 250 150" fill="transparent" />
                     </defs>
 
                     <!-- Background Dark Arch mimicking the speedometer depth -->
@@ -668,9 +685,11 @@
                     <!-- Dial Subtext -->
                     <text x="150" y="110" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
 
-                    <!-- Curved Text along circumference -->
-                    <text x="50" y="65" fill="#3b82f6" font-size="14" text-anchor="middle" font-weight="800" transform="rotate(-40, 50, 65)">PETROL</text>
-                    <text x="250" y="65" fill="#10b981" font-size="14" text-anchor="middle" font-weight="800" transform="rotate(40, 250, 65)">CNG</text>
+                    <!-- Curved Text along circumference using textPath -->
+                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="800" letter-spacing="1">
+                        <textPath href="#curvePath" startOffset="10%" text-anchor="middle" fill="#3b82f6">PETROL</textPath>
+                        <textPath href="#curvePath" startOffset="90%" text-anchor="middle" fill="#10b981">CNG</textPath>
+                    </text>
 
                     <!-- Analog Car Needle -->
                     <g id="score-needle" style="transform-origin: 150px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
@@ -688,6 +707,10 @@
 
         <!-- 2. ADDITIONAL COST -->
         <div class="card reveal-2" id="extra-cost-card">
+            <div class="card-title-group" style="margin-bottom: 5px;">
+                <h2 style="font-size: 1.3rem;">Total additional investment for CNG Car</h2>
+            </div>
+            
             <div id="extra-cost-container">
                 <div class="cost-row">
                     <span class="cost-label">Additional cost of CNG vehicle</span>
@@ -700,8 +723,7 @@
                 
                 <div class="cost-divider"></div>
 
-                <div class="total-cost-row">
-                    <span class="total-cost-label">Total additional investment for CNG Car</span>
+                <div class="total-cost-row" style="padding-top: 15px; padding-bottom: 15px;">
                     <span class="total-cost-value" id="total-extra-val">0</span>
                 </div>
             </div>
@@ -722,13 +744,13 @@
                 <div class="odometer-display" id="odometer">
                     <!-- Dynamically generated by setupOdometer() -->
                 </div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Kilometres</div>
             </div>
 
             <div class="ampersand">&</div>
 
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
+                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
             </div>
         </div>
@@ -764,7 +786,7 @@
         selectA.value = petrolIndex !== -1 ? petrolIndex : 0;
         selectB.value = cngIndex !== -1 ? cngIndex : 0;
 
-        // Add Event Listeners to update manual mileage when dropdowns change
+        // Auto-fill mileage when dropdown changes (after initial blank state)
         selectA.addEventListener('change', () => {
             document.getElementById('petrolMileageInput').value = variantsData[selectA.value].mileage;
             updatePerKmCost();
@@ -778,14 +800,14 @@
     function updatePerKmCost() {
         const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 0;
         const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 0;
-        const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
-        const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
-        
-        const petrolCost = pPrice / pMil;
-        const cngCost = cPrice / cMil;
+        const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 0;
+        const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 0;
 
-        document.getElementById('cpk-petrol').innerText = `₹${petrolCost.toFixed(2)}`;
-        document.getElementById('cpk-cng').innerText = `₹${cngCost.toFixed(2)}`;
+        const petrolCost = pMil > 0 ? pPrice / pMil : 0;
+        const cngCost = cMil > 0 ? cPrice / cMil : 0;
+
+        document.getElementById('cpk-petrol').innerText = petrolCost > 0 ? `₹${petrolCost.toFixed(2)}` : '₹0.00';
+        document.getElementById('cpk-cng').innerText = cngCost > 0 ? `₹${cngCost.toFixed(2)}` : '₹0.00';
     }
 
     function setupOdometer() {
@@ -886,7 +908,29 @@
         return (principal * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
     }
 
+    function validateInputs() {
+        const inputIds = ['dailyDrivingInput', 'petrolPriceInput', 'cngPriceInput', 'petrolMileageInput', 'cngMileageInput'];
+        let isValid = true;
+        
+        inputIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el.value || isNaN(parseFloat(el.value)) || parseFloat(el.value) <= 0) {
+                el.classList.add('input-error');
+                isValid = false;
+            } else {
+                el.classList.remove('input-error');
+            }
+        });
+        
+        return isValid;
+    }
+
     function generateReport() {
+        // Stop execution if inputs are not filled
+        if (!validateInputs()) {
+            return;
+        }
+
         document.getElementById('part1').classList.add('hidden');
         
         const part2 = document.getElementById('part2');
@@ -967,7 +1011,7 @@
         }, 1200);
 
 
-        // --- 2. CALCULATE ADDITIONAL COST & ROUND OFF ---
+        // --- 2. CALCULATE ADDITIONAL COST (ROUNDED TO NEXT THOUSAND) ---
         const idxA = document.getElementById('variantA').value;
         const idxB = document.getElementById('variantB').value;
         const varA = variantsData[idxA];
@@ -977,15 +1021,16 @@
         const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 104;
         const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 89;
 
-        // From manual inputs
         const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
         const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
 
-        const orpDiff = varB.on_road_price - varA.on_road_price;
+        // 1. Difference in ORP (Rounded to next thousand)
+        const orpDiffRaw = varB.on_road_price - varA.on_road_price;
+        const orpDiffRounded = Math.ceil(orpDiffRaw / 1000) * 1000;
 
+        // 2. Extra EMI Calculation
         let loanA = Math.round((varA.on_road_price * 0.8) / 100000) * 100000;
         let loanB = Math.round((varB.on_road_price * 0.8) / 100000) * 100000;
-        
         if (loanA > varA.on_road_price) loanA = varA.on_road_price;
         if (loanB > varB.on_road_price) loanB = varB.on_road_price;
 
@@ -996,11 +1041,11 @@
         let intB = (emiB * 60) - loanB;
         if (intA < 0) intA = 0; if (intB < 0) intB = 0;
 
-        const intDiff = intB - intA;
-        let totalExtraCost = orpDiff + intDiff;
+        const intDiffRaw = intB - intA;
+        const intDiffRounded = Math.ceil(intDiffRaw / 1000) * 1000;
         
-        // Round off to next thousand
-        const roundedExtraCost = Math.ceil(totalExtraCost / 1000) * 1000;
+        // 3. Total
+        const totalExtraCost = orpDiffRounded + intDiffRounded;
 
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
@@ -1010,7 +1055,7 @@
         const noCostMsg = document.getElementById('no-cost-msg');
         const breakEvenCard = document.getElementById('break-even-card');
 
-        if(roundedExtraCost <= 0) {
+        if(totalExtraCost <= 0) {
             extraCostBox.classList.add('hidden');
             noCostMsg.classList.remove('hidden');
             breakEvenCard.classList.add('hidden');
@@ -1021,16 +1066,16 @@
         noCostMsg.classList.add('hidden');
         breakEvenCard.classList.remove('hidden');
         
-        document.getElementById('orp-diff-val').innerText = formatCurrency(orpDiff);
-        document.getElementById('int-diff-val').innerText = formatCurrency(intDiff);
+        document.getElementById('orp-diff-val').innerText = formatCurrency(orpDiffRounded);
+        document.getElementById('int-diff-val').innerText = formatCurrency(intDiffRounded);
 
         setTimeout(() => {
-            animateValue(document.getElementById('total-extra-val'), 0, roundedExtraCost, 1500, true);
+            animateValue(document.getElementById('total-extra-val'), 0, totalExtraCost, 1500, true);
         }, 500);
 
         // --- 3. BREAK EVEN ---
         if(savingsPerKm > 0) {
-            const breakEvenKm = roundedExtraCost / savingsPerKm;
+            const breakEvenKm = totalExtraCost / savingsPerKm;
             updateOdometerDisplay(Math.round(breakEvenKm).toString());
             
             const breakEvenYears = breakEvenKm / yearlyKm;
