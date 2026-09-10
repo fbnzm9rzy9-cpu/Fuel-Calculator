@@ -51,21 +51,11 @@
             margin: 0 auto;
         }
 
-        /* --- STACKED BRAND HEADER --- */
+        /* --- CLEAN BRAND HEADER --- */
         .branding-header {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
+            align-items: center;
             padding: 4px 0 0 2px;
-        }
-
-        .repo-title {
-            font-size: 2.1rem;
-            font-weight: 800;
-            color: var(--nexa-blue);
-            letter-spacing: -0.5px;
-            line-height: 1.1;
         }
 
         .brand-title-match {
@@ -566,7 +556,7 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
-            .repo-title, .brand-title-match { font-size: 1.8rem; }
+            .brand-title-match { font-size: 1.8rem; }
         }
 
     </style>
@@ -575,9 +565,8 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING (Both in exact same large font, NEXA-C4 in clean white) -->
+    <!-- 1. BRANDING: Only NEXA-C4 in clean white -->
     <div class="branding-header">
-        <div class="repo-title">Fuel-Suitability-Tool</div>
         <div class="brand-title-match">NEXA-C4</div>
     </div>
 
