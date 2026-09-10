@@ -51,20 +51,29 @@
             margin: 0 auto;
         }
 
-        /* --- CLEAN BRAND HEADER --- */
+        /* --- STACKED BRAND HEADER --- */
         .branding-header {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
             padding: 4px 0 0 2px;
         }
 
-        .brand-title-large {
-            font-size: 2.2rem;
-            font-weight: 900;
+        .repo-title {
+            font-size: 2.1rem;
+            font-weight: 800;
             color: var(--nexa-blue);
-            letter-spacing: 2px;
-            line-height: 1;
-            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .brand-title-match {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
         /* --- TITLE WITH DUAL HORIZONTAL LINES --- */
@@ -557,7 +566,7 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
-            .brand-title-large { font-size: 2rem; }
+            .repo-title, .brand-title-match { font-size: 1.8rem; }
         }
 
     </style>
@@ -566,9 +575,10 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING: Large, Bold NEXA-C4 (Clean, in-flow layout) -->
+    <!-- 1. BRANDING (Both in exact same large font, NEXA-C4 in clean white) -->
     <div class="branding-header">
-        <div class="brand-title-large">NEXA-C4</div>
+        <div class="repo-title">Fuel-Suitability-Tool</div>
+        <div class="brand-title-match">NEXA-C4</div>
     </div>
 
     <!-- 2. MAIN TITLE WITH DUAL HORIZONTAL LINES -->
@@ -1090,9 +1100,11 @@
         const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
         const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
 
+        // Difference in ORP (Rounded to next thousand)
         const orpDiffRaw = varB.on_road_price - varA.on_road_price;
         const orpDiffRounded = Math.ceil(orpDiffRaw / 1000) * 1000;
 
+        // Extra EMI Calculation
         let loanA = Math.round((varA.on_road_price * 0.8) / 100000) * 100000;
         let loanB = Math.round((varB.on_road_price * 0.8) / 100000) * 100000;
         if (loanA > varA.on_road_price) loanA = varA.on_road_price;
@@ -1110,6 +1122,7 @@
         
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
+        // Savings per KM
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
