@@ -367,7 +367,7 @@
             color: var(--text-main);
         }
 
-        /* --- DIAGNOSTIC GAUGE (3-ZONE SPEEDOMETER) --- */
+        /* --- DIAGNOSTIC GAUGE (REALISTIC SPEEDOMETER) --- */
         .gauge-container {
             display: flex;
             flex-direction: column;
@@ -379,7 +379,6 @@
             width: 100%;
             max-width: 360px; 
             overflow: visible;
-            margin-top: 5px;
         }
 
         .gauge-text-container {
@@ -734,7 +733,8 @@
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="generateReport()">Check My CNG Suitability</button>
+            <!-- BUTTON RENAMED -->
+            <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
         </div>
     </div>
 
@@ -744,40 +744,43 @@
         <!-- 1. REALISTIC 3-ZONE SPEEDOMETER -->
         <div class="card reveal-1">
             <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 340 260">
+                <svg class="gauge-svg" viewBox="0 0 340 250">
                     <defs>
                         <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
                             <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
                         </filter>
-                        <radialGradient id="metal-cap" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#475569"/>
-                            <stop offset="70%" stop-color="#1e293b"/>
-                            <stop offset="100%" stop-color="#0f172a"/>
-                        </radialGradient>
-
-                        <!-- Invisible geometric paths perfectly aligning the text around the outer circumference -->
+                        
+                        <!-- Invisible paths perfectly tracking the outer circumference for multiline and precise text rendering -->
                         <path id="curveRed" d="M 45.3 232 A 144 144 0 0 1 170 16" fill="transparent" />
-                        <path id="curveYellow" d="M 170 16 A 144 144 0 0 1 277 63.6" fill="transparent" />
+                        <path id="curveYellowOuter" d="M 170 6 A 154 154 0 0 1 284.4 57" fill="transparent" />
+                        <path id="curveYellowInner" d="M 170 16 A 144 144 0 0 1 277 63.6" fill="transparent" />
                         <path id="curveGreen" d="M 277 63.6 A 144 144 0 0 1 294.7 232" fill="transparent" />
                     </defs>
 
                     <!-- Base Dashboard Backing Plate -->
-                    <path d="M 48.75 230 A 140 140 0 0 1 291.25 230" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 46.75 215 A 140 140 0 0 1 293.25 215" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
 
                     <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
-                    <!-- RED ZONE (0-50): Angle -210 to -90 -->
-                    <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="#ef4444" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
+                    <!-- RED ZONE (0-50) -->
+                    <path d="M 61.75 212.5 A 125 125 0 0 1 170 25" fill="none" stroke="var(--zone-red)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
                     
-                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
-                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="#eab308" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
+                    <!-- YELLOW ZONE (50-70) -->
+                    <path d="M 170 25 A 125 125 0 0 1 262.89 66.36" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
                     
-                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
-                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="#10b981" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
+                    <!-- GREEN ZONE (70-100) -->
+                    <path d="M 262.89 66.36 A 125 125 0 0 1 278.25 212.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
 
-                    <!-- Outer Circumference Texts smoothly wrapping via SVG paths -->
-                    <text font-family="'Outfit', sans-serif" font-size="10" font-weight="800" letter-spacing="0.5">
+                    <!-- Outer Circumference Texts (Perfectly Mapped and Split for Yellow) -->
+                    <text font-size="10" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="0.5">
                         <textPath href="#curveRed" startOffset="50%" text-anchor="middle" fill="var(--zone-red)">PETROL FIT</textPath>
-                        <textPath href="#curveYellow" startOffset="50%" text-anchor="middle" fill="var(--zone-yellow)">PETROL RECOMMENDED</textPath>
+                    </text>
+                    <text font-size="11" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="1.5">
+                        <textPath href="#curveYellowOuter" startOffset="50%" text-anchor="middle" fill="var(--zone-yellow)">PETROL</textPath>
+                    </text>
+                    <text font-size="8.5" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="0.5">
+                        <textPath href="#curveYellowInner" startOffset="50%" text-anchor="middle" fill="var(--zone-yellow)">RECOMMENDED</textPath>
+                    </text>
+                    <text font-size="10" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="0.5">
                         <textPath href="#curveGreen" startOffset="50%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
                     </text>
 
@@ -786,13 +789,11 @@
                     <g id="dial-labels"></g>
                     
                     <!-- Clean Digital Score Output directly under the needle pivot -->
-                    <text id="center-score-val" x="170" y="225" fill="#ffffff" font-size="56" font-family="'Outfit', sans-serif" font-weight="800" text-anchor="middle">0</text>
+                    <text id="center-score-val" x="170" y="215" fill="#ffffff" font-size="56" font-family="'Outfit', sans-serif" font-weight="800" text-anchor="middle">0</text>
 
                     <!-- Realistic Analog Car Needle with Hollow Center -->
-                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);" filter="url(#drop-shadow)">
-                        <!-- Hollow Pivot Ring -->
+                    <g id="score-needle" style="transform-origin: 170px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);" filter="url(#drop-shadow)">
                         <circle cx="170" cy="160" r="12" fill="#0f141e" stroke="#ffffff" stroke-width="4"/>
-                        <!-- White Pointer Line -->
                         <line x1="170" y1="148" x2="170" y2="45" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
                     </g>
                 </svg>
@@ -945,13 +946,12 @@
         let ticks = '';
         let labels = '';
         const cx = 170;
-        const cy = 160;
+        const cy = 150;
         
         for (let i = 0; i <= 100; i += 2) {
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            // Adjust to sit crisply inside the colored arc
             let rOuter = 108; 
             let isMajor = (i % 20 === 0);
             let isMinor = (i % 10 === 0);
