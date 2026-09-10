@@ -367,7 +367,7 @@
             color: var(--text-main);
         }
 
-        /* --- DIAGNOSTIC GAUGE (REALISTIC SPEEDOMETER) --- */
+        /* --- DIAGNOSTIC GAUGE (3-ZONE SPEEDOMETER) --- */
         .gauge-container {
             display: flex;
             flex-direction: column;
@@ -379,6 +379,7 @@
             width: 100%;
             max-width: 360px; 
             overflow: visible;
+            margin-top: 5px;
         }
 
         .gauge-text-container {
@@ -387,7 +388,7 @@
         }
 
         .gauge-result-badge {
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 14px;
             font-size: 1.6rem; 
             font-weight: 800;
@@ -711,9 +712,9 @@
                     CNG station convenience
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_stn" value="0" checked><div class="pill-text">Inconvenient</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">Manageable</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="100"><div class="pill-text">Easy access</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="100" checked><div class="pill-text">2-5 KMs</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">5-7 KMs</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">More than<br>7 KMs</div></label>
                 </div>
             </div>
 
@@ -740,18 +741,45 @@
     <!-- ================= PART 2: RESULTS ================= -->
     <div id="part2" class="hidden reveal-container">
         
-        <!-- 1. REALISTIC 3-ZONE SPEEDOMETER (No "Calculating" Text) -->
+        <!-- 1. REALISTIC 3-ZONE SPEEDOMETER -->
         <div class="card reveal-1">
             <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 340 260">
+                    <defs>
+                        <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+                        </filter>
+                        <radialGradient id="metal-cap" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#475569"/>
+                            <stop offset="70%" stop-color="#1e293b"/>
+                            <stop offset="100%" stop-color="#0f172a"/>
+                        </radialGradient>
+
+                        <!-- Invisible geometric paths perfectly aligning the text around the outer circumference -->
+                        <path id="curveRed" d="M 45.3 232 A 144 144 0 0 1 170 16" fill="transparent" />
+                        <path id="curveYellow" d="M 170 16 A 144 144 0 0 1 277 63.6" fill="transparent" />
+                        <path id="curveGreen" d="M 277 63.6 A 144 144 0 0 1 294.7 232" fill="transparent" />
+                    </defs>
+
+                    <!-- Base Dashboard Backing Plate -->
+                    <path d="M 48.75 230 A 140 140 0 0 1 291.25 230" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
+
+                    <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
+                    <!-- RED ZONE (0-50): Angle -210 to -90 -->
+                    <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="#ef4444" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
                     
-                    <!-- Exact 3-Zone Arcs perfectly divided -->
-                    <!-- RED ZONE (0-50) -->
-                    <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="var(--zone-red)" stroke-width="16" stroke-linecap="butt"/>
-                    <!-- YELLOW ZONE (50-70) -->
-                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="var(--zone-yellow)" stroke-width="16" stroke-linecap="butt"/>
-                    <!-- GREEN ZONE (70-100) -->
-                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="16" stroke-linecap="butt"/>
+                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
+                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="#eab308" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
+                    
+                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
+                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="#10b981" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
+
+                    <!-- Outer Circumference Texts smoothly wrapping via SVG paths -->
+                    <text font-family="'Outfit', sans-serif" font-size="10" font-weight="800" letter-spacing="0.5">
+                        <textPath href="#curveRed" startOffset="50%" text-anchor="middle" fill="var(--zone-red)">PETROL FIT</textPath>
+                        <textPath href="#curveYellow" startOffset="50%" text-anchor="middle" fill="var(--zone-yellow)">PETROL RECOMMENDED</textPath>
+                        <textPath href="#curveGreen" startOffset="50%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
+                    </text>
 
                     <!-- Dynamic Ticks and Numbers injected via JS -->
                     <g id="dial-ticks"></g>
@@ -761,7 +789,7 @@
                     <text id="center-score-val" x="170" y="225" fill="#ffffff" font-size="56" font-family="'Outfit', sans-serif" font-weight="800" text-anchor="middle">0</text>
 
                     <!-- Realistic Analog Car Needle with Hollow Center -->
-                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);" filter="url(#drop-shadow)">
                         <!-- Hollow Pivot Ring -->
                         <circle cx="170" cy="160" r="12" fill="#0f141e" stroke="#ffffff" stroke-width="4"/>
                         <!-- White Pointer Line -->
@@ -923,12 +951,12 @@
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            // Adjust to sit crisply inside the 16px colored arc
-            let rOuter = 112; 
+            // Adjust to sit crisply inside the colored arc
+            let rOuter = 108; 
             let isMajor = (i % 20 === 0);
             let isMinor = (i % 10 === 0);
             
-            let rInner = isMajor ? 97 : (isMinor ? 104 : 108);
+            let rInner = isMajor ? 92 : (isMinor ? 100 : 104);
             let strokeW = isMajor ? 3 : 2;
             let tickOpacity = isMajor ? 1 : 0.6;
             
