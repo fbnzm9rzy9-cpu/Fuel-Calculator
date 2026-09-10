@@ -49,8 +49,8 @@
             z-index: 100;
             font-weight: 800;
             font-size: 1.3rem;
-            letter-spacing: 3px;
-            color: var(--text-main);
+            letter-spacing: 2px;
+            color: var(--nexa-blue);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -61,7 +61,7 @@
             display: inline-block;
             width: 4px;
             height: 20px;
-            background: var(--text-main);
+            background: var(--nexa-blue);
             border-radius: 2px;
         }
 
@@ -184,14 +184,29 @@
             gap: 16px;
         }
 
-        /* --- PER KM COST DISPLAY --- */
+        /* --- PER KM COST DISPLAY REBUILT --- */
         .cpk-container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             background: rgba(0,0,0,0.3);
             border: 1px solid var(--border-light);
             border-radius: 14px;
             padding: 16px 20px;
+        }
+        .cpk-main-title {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--border-light);
+        }
+        .cpk-inner {
+            display: flex;
+            justify-content: space-between;
         }
         .cpk-item {
             display: flex;
@@ -200,7 +215,7 @@
         }
         .cpk-item.right { text-align: right; }
         .cpk-label { 
-            font-size: 0.75rem; 
+            font-size: 0.8rem; 
             color: var(--text-muted); 
             text-transform: uppercase; 
             letter-spacing: 1.5px; 
@@ -550,7 +565,7 @@
 <body>
 
 <div class="top-logo-container">
-    NEXA
+    NEXA-C4
 </div>
 
 <div class="app-container">
@@ -563,19 +578,7 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Variant Selection -->
-            <div class="input-grid">
-                <div class="input-box">
-                    <label>Petrol Variant</label>
-                    <select id="variantA" class="custom-input"></select>
-                </div>
-                <div class="input-box">
-                    <label>CNG Variant</label>
-                    <select id="variantB" class="custom-input"></select>
-                </div>
-            </div>
-            
-            <!-- 2. Daily Running -->
+            <!-- 1. Daily Running (TOP POSITION) -->
             <div class="input-box">
                 <label>
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -588,43 +591,7 @@
                 <input type="number" id="dailyDrivingInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
             </div>
 
-            <!-- 3. Prices -->
-            <div class="input-grid">
-                <div class="input-box">
-                    <label>Petrol Price (₹/L)</label>
-                    <input type="number" id="petrolPriceInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
-                </div>
-                <div class="input-box">
-                    <label>CNG Price (₹/kg)</label>
-                    <input type="number" id="cngPriceInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
-                </div>
-            </div>
-
-            <!-- 4. Manual Mileage -->
-            <div class="input-grid">
-                <div class="input-box">
-                    <label>Petrol Mileage (km/L)</label>
-                    <input type="number" id="petrolMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
-                </div>
-                <div class="input-box">
-                    <label>CNG Mileage (km/kg)</label>
-                    <input type="number" id="cngMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
-                </div>
-            </div>
-
-            <!-- 5. Live Per KM Running Cost Display -->
-            <div class="cpk-container">
-                <div class="cpk-item">
-                    <span class="cpk-label">Petrol Cost / KM</span>
-                    <span class="cpk-val cpk-petrol-val" id="cpk-petrol">₹0.00</span>
-                </div>
-                <div class="cpk-item right">
-                    <span class="cpk-label">CNG Cost / KM</span>
-                    <span class="cpk-val cpk-cng-val" id="cpk-cng">₹0.00</span>
-                </div>
-            </div>
-
-            <!-- 6. Vehicle Usage (Formerly Purpose of vehicle utility) -->
+            <!-- 2. Vehicle Usage -->
             <div class="question-block" style="margin-top: 5px;">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -640,8 +607,61 @@
                 </div>
             </div>
 
+            <!-- 3. Variant Selection -->
+            <div class="input-grid" style="margin-top: 10px;">
+                <div class="input-box">
+                    <label>Petrol Variant</label>
+                    <select id="variantA" class="custom-input"></select>
+                </div>
+                <div class="input-box">
+                    <label>CNG Variant</label>
+                    <select id="variantB" class="custom-input"></select>
+                </div>
+            </div>
+
+            <!-- 4. Prices -->
+            <div class="input-grid">
+                <div class="input-box">
+                    <label>Petrol Price (₹/L)</label>
+                    <input type="number" id="petrolPriceInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
+                </div>
+                <div class="input-box">
+                    <label>CNG Price (₹/kg)</label>
+                    <input type="number" id="cngPriceInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
+                </div>
+            </div>
+
+            <!-- 5. Manual Mileage -->
+            <div class="input-grid">
+                <div class="input-box">
+                    <label>Petrol Mileage (km/L)</label>
+                    <!-- Blank input -->
+                    <input type="number" id="petrolMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
+                </div>
+                <div class="input-box">
+                    <label>CNG Mileage (km/kg)</label>
+                    <!-- Blank input -->
+                    <input type="number" id="cngMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
+                </div>
+            </div>
+
+            <!-- 6. Live Per KM Running Cost Display (Updated Header format) -->
+            <div class="cpk-container">
+                <div class="cpk-main-title">Price per KM</div>
+                <div class="cpk-inner">
+                    <div class="cpk-item">
+                        <span class="cpk-label">Petrol</span>
+                        <span class="cpk-val cpk-petrol-val" id="cpk-petrol">₹0.00</span>
+                    </div>
+                    <div class="cpk-item right">
+                        <span class="cpk-label">CNG</span>
+                        <span class="cpk-val cpk-cng-val" id="cpk-cng">₹0.00</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- 7. Driving Preference (Economy -> Balanced -> Performance) -->
-            <div class="question-block">
+            <div class="question-block" style="margin-top: 10px;">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <g class="anim-steer">
@@ -793,7 +813,7 @@
 
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
-                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
+                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Recovery Period</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
             </div>
         </div>
