@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>सही फ्यूल चुना क्या?</title>
     <style>
+        /* Premium Fonts Setup */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
         * {
@@ -24,8 +25,8 @@
             --text-main: #ffffff;
             --text-muted: #8b9bb4;
             
-            --accent-green: #10b981;
-            --accent-green-bg: rgba(16, 185, 129, 0.1);
+            --nexa-green: #10b981;
+            --nexa-green-bg: rgba(16, 185, 129, 0.1);
             --serious-red: #ef4444;
             --serious-red-bg: rgba(239, 68, 68, 0.1);
         }
@@ -34,10 +35,33 @@
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at 50% 0%, #111827 0%, transparent 100%);
             color: var(--text-main);
-            padding: 30px 15px 80px 15px;
+            padding: 20px 15px 60px 15px; /* Reduced top padding */
             display: flex;
             justify-content: center;
             min-height: 100vh;
+        }
+
+        .top-logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .top-logo-container::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--text-main);
+            border-radius: 2px;
         }
 
         .app-container {
@@ -45,21 +69,21 @@
             max-width: 520px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
-            margin-top: 50px;
+            gap: 20px; /* Reduced gap to bring sections closer */
+            margin-top: 40px; /* Reduced to pull content up */
         }
 
         .header-section {
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 0px;
         }
 
         .header-section h1 {
-            font-size: 2.6rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: -1px;
-            margin-bottom: 8px;
+            margin-bottom: 0px;
         }
 
         /* --- CARDS --- */
@@ -67,36 +91,18 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-light);
             border-radius: 24px;
-            padding: 32px;
+            padding: 24px; /* Tighter inner padding */
             display: flex;
             flex-direction: column;
-            gap: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-
-        .card-title-group p {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .card-title-group h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            text-align: center;
-            margin-top: 8px;
+            gap: 20px; /* Tighter spacing inside cards */
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
         }
 
         /* --- INPUTS --- */
         .input-box {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .input-box label {
@@ -110,8 +116,8 @@
         .custom-input {
             background: var(--input-bg);
             border: 1px solid var(--border-light);
-            color: var(--accent-green);
-            padding: 16px;
+            color: var(--nexa-green);
+            padding: 14px 16px;
             border-radius: 14px;
             font-size: 1.1rem;
             font-weight: 700;
@@ -123,9 +129,9 @@
         }
 
         .custom-input:focus {
-            border-color: var(--accent-green);
+            border-color: var(--nexa-green);
             background: #1f2937;
-            box-shadow: 0 0 0 4px var(--accent-green-bg);
+            box-shadow: 0 0 0 4px var(--nexa-green-bg);
         }
 
         select.custom-input {
@@ -146,13 +152,14 @@
             width: 22px;
             height: 22px;
             margin-right: 8px;
-            stroke: var(--accent-green);
+            stroke: var(--nexa-green);
             fill: none;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
+        /* 1. Moving Road Dash */
         @keyframes dashMove {
             0% { transform: translateY(-5px); opacity: 0; }
             50% { opacity: 1; }
@@ -160,22 +167,26 @@
         }
         .anim-dash { animation: dashMove 1.5s infinite linear; }
 
-        @keyframes revNeedle {
-            0% { transform: rotate(-45deg); }
-            30% { transform: rotate(45deg); }
-            50% { transform: rotate(10deg); }
-            80% { transform: rotate(60deg); }
-            100% { transform: rotate(-45deg); }
+        /* 2. Steering Wheel Animation */
+        @keyframes steerWheel {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-25deg); }
+            75% { transform: rotate(25deg); }
         }
-        .anim-rev { transform-origin: center bottom; animation: revNeedle 3s infinite ease-in-out; }
+        .anim-steer { 
+            transform-origin: 12px 12px; 
+            animation: steerWheel 3s infinite ease-in-out; 
+        }
 
+        /* 3. Laser Scan */
         @keyframes scanBox {
-            0% { transform: translateY(0); stroke: var(--accent-green); opacity: 0.5;}
+            0% { transform: translateY(0); stroke: var(--nexa-green); opacity: 0.5;}
             50% { transform: translateY(12px); stroke: #ffffff; opacity: 1;}
-            100% { transform: translateY(0); stroke: var(--accent-green); opacity: 0.5;}
+            100% { transform: translateY(0); stroke: var(--nexa-green); opacity: 0.5;}
         }
         .anim-scan { animation: scanBox 2s infinite ease-in-out; }
 
+        /* 4. Radar Pulse */
         @keyframes radarPulse {
             0% { r: 1; opacity: 1; stroke-width: 2;}
             100% { r: 10; opacity: 0; stroke-width: 0.5;}
@@ -187,13 +198,15 @@
         .question-block {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .question-label {
             font-size: 0.95rem;
             color: var(--text-main);
             font-weight: 600;
+            display: flex;
+            align-items: center;
         }
 
         .pill-group {
@@ -214,10 +227,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 52px;
+            height: 48px;
             background: var(--input-bg);
             border: 1px solid var(--border-light);
-            border-radius: 14px;
+            border-radius: 12px;
             color: var(--text-muted);
             font-size: 0.9rem;
             font-weight: 500;
@@ -229,27 +242,27 @@
         }
 
         .pill-label input:checked + .pill-text {
-            background: var(--accent-green-bg);
-            border-color: var(--accent-green);
-            color: var(--accent-green);
+            background: var(--nexa-green-bg);
+            border-color: var(--nexa-green);
+            color: var(--nexa-green);
             font-weight: 700;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
         }
 
         /* --- BUTTONS --- */
         .btn-primary {
-            background: var(--accent-green);
+            background: var(--nexa-green);
             color: #000000;
             border: none;
-            padding: 18px;
-            border-radius: 16px;
+            padding: 16px;
+            border-radius: 14px;
             font-size: 1.1rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
@@ -263,7 +276,7 @@
             color: var(--text-muted);
             border: 1px solid var(--border-light);
             padding: 16px;
-            border-radius: 16px;
+            border-radius: 14px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -289,16 +302,16 @@
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 10px; /* Reduced gap */
         }
 
         .gauge-result-badge {
             padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 14px;
+            font-size: 1.6rem; /* Huge font size for suggestion */
             font-weight: 800;
             display: inline-block;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             margin-top: 5px;
         }
 
@@ -309,14 +322,14 @@
             align-items: center;
             justify-content: center;
             background: rgba(0,0,0,0.4);
-            padding: 30px 20px;
+            padding: 25px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.05);
-            gap: 15px;
+            gap: 10px; /* Tighter gap */
         }
 
         .total-cost-label {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--text-muted);
             font-weight: 700;
             text-transform: uppercase;
@@ -327,7 +340,7 @@
 
         .total-cost-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
             color: var(--serious-red);
             letter-spacing: -2px;
@@ -336,7 +349,7 @@
         /* --- ODOMETER & TIME DISPLAY --- */
         .odometer-section {
             text-align: center;
-            padding: 30px 0 10px 0;
+            padding: 20px 0 5px 0;
             background: #080b11; 
             border-radius: 16px;
             border: 1px inset rgba(255,255,255,0.05);
@@ -346,17 +359,17 @@
             display: flex;
             justify-content: center;
             gap: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .odo-digit {
             background: linear-gradient(180deg, #111827 0%, #030712 50%, #111827 100%);
             color: #ffffff;
             font-family: 'Space Mono', monospace;
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 700;
-            width: 52px;
-            height: 72px;
+            width: 48px;
+            height: 68px;
             border-radius: 6px;
             border: 1px solid #1f2937;
             box-shadow: inset 0 5px 15px rgba(0,0,0,1), 0 2px 5px rgba(0,0,0,0.5);
@@ -388,7 +401,7 @@
 
         .serious-time-box {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             border-radius: 16px;
             background: var(--serious-red-bg); 
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -400,18 +413,19 @@
             font-weight: 800;
             color: var(--serious-red);
             line-height: 1;
-            margin: 10px 0;
+            margin: 5px 0;
             letter-spacing: -2px;
         }
 
         .ampersand {
             text-align: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: var(--border-light);
-            margin: -5px 0;
+            margin: 0; /* Removed vertical margins to pull things together */
             font-family: 'Outfit', sans-serif;
             opacity: 0.5;
+            line-height: 1;
         }
 
         /* --- UTILS & ANIMATIONS --- */
@@ -422,21 +436,25 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .reveal-container { display: flex; flex-direction: column; gap: 24px; }
+        .reveal-container { display: flex; flex-direction: column; gap: 20px; } /* Tighter gap */
         .reveal-1 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-        .reveal-2 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; opacity: 0; }
-        .reveal-3 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; opacity: 0; }
-        .reveal-4 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards; opacity: 0; }
+        .reveal-2 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; opacity: 0; }
+        .reveal-3 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; opacity: 0; }
+        .reveal-4 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; opacity: 0; }
 
         @media (max-width: 600px) {
             .app-container { margin-top: 10px;}
-            .odo-digit { width: 42px; height: 60px; font-size: 2.2rem; }
+            .odo-digit { width: 40px; height: 58px; font-size: 2.2rem; }
             .header-section h1 { font-size: 2.2rem; }
         }
 
     </style>
 </head>
 <body>
+
+<div class="top-logo-container">
+    NEXA
+</div>
 
 <div class="app-container">
 
@@ -470,7 +488,7 @@
                 </div>
             </div>
 
-            <div class="input-box" style="margin-top: 5px;">
+            <div class="input-box">
                 <!-- Animated Road Icon -->
                 <label>
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -484,20 +502,25 @@
             </div>
 
             <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
-            <div class="question-block" style="margin-top: 10px;">
+            <div class="question-block">
                 <label class="question-label">
-                    <!-- Animated Speedometer Icon -->
+                    <!-- Animated Steering Wheel -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
-                        <path d="M12 22v-4M4.9 19.1l2.8-2.8M2 12h4M4.9 4.9l2.8 2.8M12 2v4M19.1 4.9l-2.8 2.8M22 12h-4M19.1 19.1l-2.8-2.8" opacity="0.3"/>
-                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"/>
-                        <line x1="12" y1="12" x2="16" y2="8" class="anim-rev"/>
+                        <g class="anim-steer">
+                            <!-- Outer rim -->
+                            <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/>
+                            <!-- Center horn pad -->
+                            <circle cx="12" cy="12" r="2" fill="rgba(255,255,255,0.4)"/>
+                            <!-- Spokes: Left, Right, Bottom -->
+                            <path d="M2 12h8M14 12h8M12 14v8" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                        </g>
                     </svg>
                     Driving preference
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_pref" value="100" checked><div class="pill-text">Economy</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="100"><div class="pill-text">Economy</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="50"><div class="pill-text">Balanced</div></label>
-                    <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="0" checked><div class="pill-text">Performance</div></label>
                 </div>
             </div>
 
@@ -513,9 +536,9 @@
                     Boot space importance
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_boot" value="100" checked><div class="pill-text">Not<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="100"><div class="pill-text">Not<br>important</div></label>
                     <label class="pill-label"><input type="radio" name="q_boot" value="50"><div class="pill-text">Somewhat</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="0"><div class="pill-text">Very<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="0" checked><div class="pill-text">Very<br>important</div></label>
                 </div>
             </div>
 
@@ -545,12 +568,7 @@
         
         <!-- 1. SUITABILITY METER (ANALOG CAR DIAL) -->
         <div class="card reveal-1">
-            <div class="card-title-group">
-                <p>Diagnostic Result</p>
-                <h2>CNG Suitability Meter</h2>
-            </div>
-            
-            <div class="gauge-container" style="margin-top: 10px;">
+            <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 300 180">
                     <!-- Background Dark Arch mimicking the speedometer depth -->
                     <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="#111827" stroke-width="40" stroke-linecap="butt"/>
@@ -581,11 +599,7 @@
 
         <!-- 2. ADDITIONAL COST -->
         <div class="card reveal-2" id="extra-cost-card">
-            <div class="card-title-group">
-                <p>Investment Breakdown</p>
-            </div>
-            
-            <div id="extra-cost-container" style="margin-top: 5px;">
+            <div id="extra-cost-container">
                 <div class="total-cost-row">
                     <span class="total-cost-label">Total additional cost of purchasing a CNG vehicle</span>
                     <span class="total-cost-value" id="total-extra-val">0</span>
@@ -599,8 +613,8 @@
 
         <!-- 3. SAVINGS START AFTER -->
         <div class="card reveal-3" id="break-even-card">
-            <div class="card-title-group">
-                <p style="color: var(--serious-red); font-size: 1.6rem; font-weight: 800; letter-spacing: 1px;">NO SAVINGS UPTO:</p>
+            <div style="text-align: center; margin-bottom: 5px;">
+                <p style="color: var(--serious-red); font-size: 1.8rem; font-weight: 800; letter-spacing: 1px;">NO SAVINGS UPTO:</p>
             </div>
 
             <!-- ODOMETER -->
@@ -615,8 +629,8 @@
 
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
+                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
-                <div id="time-text-desc" style="font-size: 1rem; font-weight: 600; margin-top: 5px; color: var(--text-muted);">-</div>
             </div>
         </div>
 
@@ -695,7 +709,6 @@
         
         // Loop from 0 to 100 in steps of 2 for fine tick marks
         for (let i = 0; i <= 100; i += 2) {
-            // Map 0-100 to an angle between -120deg to +120deg
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
@@ -778,26 +791,26 @@
     }
 
     function runCalculations() {
-        // --- 1. CALCULATE PROFILE SCORE ---
+        // --- 1. CALCULATE PROFILE SCORE (Out of 100 total points) ---
         let score = 0;
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
-        // 35 Max Points
+        // Running - 35 Max Points
         if (monthlyKmEquiv <= 500) score += 0;
         else if (monthlyKmEquiv <= 1000) score += 10; 
         else if (monthlyKmEquiv <= 2000) score += 20; 
         else score += 35;
 
-        // 25 Max Points
+        // Boot Space - 25 Max Points (Reversed Values compared to before)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
         if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 25;
 
-        // 20 Max Points
+        // Driving Preference - 20 Max Points (Reversed Values compared to before)
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
         if (q3 === 0) score += 0; else if (q3 === 50) score += 10; else score += 20;
 
-        // 20 Max Points
+        // Station Convenience - 20 Max Points
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
         if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 20;
 
@@ -893,22 +906,12 @@
             
             setTimeout(() => {
                 animateValue(document.getElementById('time-text-val'), 0, breakEvenYears, 2000, false, true);
-                const timeDesc = document.getElementById('time-desc');
-                
-                if(breakEvenYears <= 2) { 
-                    timeDesc.innerText = "Fast recovery at this running"; 
-                } else if (breakEvenYears <= 4.5) {
-                    timeDesc.innerText = "Moderate recovery time"; 
-                } else { 
-                    timeDesc.innerText = "Slow recovery at this running"; 
-                }
             }, 800);
 
         } else {
             updateOdometerDisplay("999999");
             document.getElementById('time-text-val').innerHTML = `Never`;
-            document.getElementById('time-text-desc').innerText = "CNG is costlier to run";
-            document.getElementById('time-text-desc').style.color = "var(--serious-red)";
+            document.getElementById('time-text-val').style.color = "var(--serious-red)";
         }
         
         setTimeout(() => {
