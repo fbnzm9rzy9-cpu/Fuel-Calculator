@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,18 +42,43 @@
             min-height: 100vh;
         }
 
+        .top-logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .top-logo-container::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--text-main);
+            border-radius: 2px;
+        }
+
         .app-container {
             width: 100%;
             max-width: 520px;
             display: flex;
             flex-direction: column;
             gap: 20px; 
-            margin-top: 20px; 
+            margin-top: 60px; /* Pushed down slightly to clear the NEXA logo */
         }
 
+        /* --- HEADER SECTION REBUILT --- */
         .header-section {
             text-align: center;
-            margin-bottom: 0px;
+            margin-bottom: 10px;
+            width: 100%;
         }
 
         .header-section h1 {
@@ -60,7 +86,11 @@
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: -1px;
-            margin-bottom: 0px;
+            margin: 0;
+            padding: 24px 0; /* Exact vertical centering between borders */
+            border-top: 1.5px solid #ffffff; /* Top alignment line */
+            border-bottom: 1.5px solid #ffffff; /* Bottom alignment line */
+            line-height: 1.2;
         }
 
         /* --- CARDS --- */
@@ -411,8 +441,7 @@
             padding: 25px 0 25px 0;
             background: #080b11; 
             border-radius: 16px;
-            /* Border and glow are controlled dynamically by JS based on result */
-            border: 2px solid transparent;
+            border: 2px solid transparent; /* Controlled dynamically via JS */
             transition: all 0.5s ease-in-out;
         }
 
@@ -511,7 +540,7 @@
         .reveal-4 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; opacity: 0; }
 
         @media (max-width: 600px) {
-            .app-container { margin-top: 10px;}
+            .app-container { margin-top: 50px;}
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
         }
@@ -519,6 +548,10 @@
     </style>
 </head>
 <body>
+
+<div class="top-logo-container">
+    NEXA
+</div>
 
 <div class="app-container">
 
@@ -587,7 +620,6 @@
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Mileage (km/L)</label>
-                    <!-- Initial state is blank, auto-populated ONLY if dropdown changes -->
                     <input type="number" id="petrolMileageInput" class="custom-input" placeholder="Enter Value" step="0.1" oninput="updatePerKmCost()">
                 </div>
                 <div class="input-box">
@@ -1074,7 +1106,7 @@
         // 3. Total
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
-        // Calculate exact savings using manual inputs
+        // Calculate exact savings per KM using manual inputs
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
