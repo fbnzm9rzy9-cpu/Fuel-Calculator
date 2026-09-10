@@ -51,19 +51,20 @@
             margin: 0 auto;
         }
 
-        /* --- CLEAN BRAND HEADER --- */
+        /* --- LARGE & BOLD NEXA-C4 HEADER --- */
         .branding-header {
             display: flex;
             align-items: center;
             padding: 4px 0 0 2px;
         }
 
-        .brand-title-match {
-            font-size: 2.1rem;
-            font-weight: 800;
+        .brand-title-large {
+            font-size: 2.5rem;
+            font-weight: 900;
             color: #ffffff;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
+            letter-spacing: 2px;
+            line-height: 1;
+            text-transform: uppercase;
         }
 
         /* --- TITLE WITH DUAL HORIZONTAL LINES --- */
@@ -556,7 +557,7 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
-            .brand-title-match { font-size: 1.8rem; }
+            .brand-title-match { font-size: 2rem; }
         }
 
     </style>
@@ -565,7 +566,7 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING: Only NEXA-C4 in clean white -->
+    <!-- 1. BRANDING: Large, bold NEXA-C4 only -->
     <div class="branding-header">
         <div class="brand-title-match">NEXA-C4</div>
     </div>
@@ -723,17 +724,15 @@
             <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 340 260">
                     <defs>
-                        <!-- Vibrant Solid Gradient for the Scale Highlight -->
                         <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#3b82f6" /> 
                             <stop offset="100%" stop-color="#10b981" /> 
                         </linearGradient>
 
-                        <!-- Invisible curved paths to perfectly place text along the outer circumference -->
-                        <!-- Path 1: Curves right around unit 40 for PETROL -->
-                        <path id="petrolCurvePath" d="M 40 180 A 155 155 0 0 1 140 12" fill="none" stroke="none" />
-                        <!-- Path 2: Curves right between units 80 to 100 for CNG -->
-                        <path id="cngCurvePath" d="M 230 40 A 155 155 0 0 1 330 200" fill="none" stroke="none" />
+                        <!-- Invisible path for PETROL near unit 40 -->
+                        <path id="petrolCurve" d="M 50 160 A 120 120 0 0 1 120 40" fill="none" />
+                        <!-- Invisible path for CNG between 80 to 100 -->
+                        <path id="cngCurve" d="M 220 40 A 120 120 0 0 1 290 160" fill="none" />
                     </defs>
 
                     <!-- Background Dark Arch -->
@@ -746,15 +745,14 @@
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
                     
-                    <!-- Outer Circumference Texts (Using precise textPaths) -->
-                    <!-- PETROL curved along outer circumference near unit 40 -->
-                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#3b82f6">
-                        <textPath href="#petrolCurvePath" startOffset="48%" text-anchor="middle">PETROL</textPath>
+                    <!-- PETROL text placed near unit 40 on circumference -->
+                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="900" letter-spacing="2" fill="#3b82f6">
+                        <textPath href="#petrolCurve" startOffset="50%" text-anchor="middle">PETROL</textPath>
                     </text>
 
-                    <!-- CNG curved along outer circumference between 80 to 100 -->
-                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#10b981">
-                        <textPath href="#cngCurvePath" startOffset="50%" text-anchor="middle">CNG</textPath>
+                    <!-- CNG text placed between 80 to 100 units on circumference -->
+                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="900" letter-spacing="2" fill="#10b981">
+                        <textPath href="#cngCurve" startOffset="50%" text-anchor="middle">CNG</textPath>
                     </text>
 
                     <!-- Dial Subtext -->
@@ -1028,26 +1026,21 @@
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
-        // 1. Daily Running (Max 30 points)
         if (monthlyKmEquiv <= 500) score += 0;
         else if (monthlyKmEquiv <= 1000) score += 8; 
         else if (monthlyKmEquiv <= 2000) score += 18; 
         else score += 30;
 
-        // 2. Purpose of Vehicle Utility (Max 15 points)
         const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
         if (q1 === 0) score += 0;       
         else score += 15;               
 
-        // 3. Boot Space (Max 20 points)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
         if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 20;
 
-        // 4. Driving Preference (Max 15 points)
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
         if (q3 === 0) score += 0; else if (q3 === 50) score += 7; else score += 15;
 
-        // 5. Station Convenience (Max 20 points)
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
         if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 20;
 
@@ -1089,7 +1082,6 @@
             }
         }, 1200);
 
-
         // --- 2. CALCULATE ADDITIONAL COST (ROUNDED TO NEXT THOUSAND) ---
         const idxA = document.getElementById('variantA').value;
         const idxB = document.getElementById('variantB').value;
@@ -1103,11 +1095,9 @@
         const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
         const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
 
-        // Difference in ORP (Rounded to next thousand)
         const orpDiffRaw = varB.on_road_price - varA.on_road_price;
         const orpDiffRounded = Math.ceil(orpDiffRaw / 1000) * 1000;
 
-        // Extra EMI Calculation
         let loanA = Math.round((varA.on_road_price * 0.8) / 100000) * 100000;
         let loanB = Math.round((varB.on_road_price * 0.8) / 100000) * 100000;
         if (loanA > varA.on_road_price) loanA = varA.on_road_price;
@@ -1125,7 +1115,6 @@
         
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
-        // Savings per KM
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
