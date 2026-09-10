@@ -409,7 +409,7 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .reveal-container { display: flex; flex-direction: column; gap: 20px; }
+        .reveal-container { display: flex; flex-direction: column; gap: 20px; } 
         .reveal-1 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
         .reveal-2 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; opacity: 0; }
         .reveal-3 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; opacity: 0; }
@@ -483,7 +483,7 @@
                 </label>
                 <div class="pill-group">
                     <label class="pill-label"><input type="radio" name="q_purpose" value="0" checked><div class="pill-text">Personal</div></label>
-                    <label class="pill-label"><input type="radio" name="q_purpose" value="100"><div class="pill-text">Commercial</div></label>
+                    <label class="pill-label"><input type="radio" name="q_purpose" value="100"><div class="pill-text">Taxi</div></label>
                 </div>
             </div>
 
@@ -519,9 +519,9 @@
                     Boot space importance
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_boot" value="100"><div class="pill-text">Not<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="100" checked><div class="pill-text">Not<br>important</div></label>
                     <label class="pill-label"><input type="radio" name="q_boot" value="50"><div class="pill-text">Somewhat</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="0" checked><div class="pill-text">Very<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="0"><div class="pill-text">Very<br>important</div></label>
                 </div>
             </div>
 
@@ -542,7 +542,7 @@
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="generateReport()">Generate Analysis Matrix</button>
+            <button class="btn-primary" onclick="generateReport()">Generate Report</button>
         </div>
     </div>
 
@@ -633,7 +633,6 @@
         let cngIndex = -1, petrolIndex = -1;
 
         variantsData.forEach((variant, index) => {
-            // Strip engine details for cleaner look
             let displayName = variant.variant.replace(" 1.2L 5MT", "").replace(" 1.5L 5MT", "");
             
             if(!variant.variant.includes('CNG')) {
@@ -679,7 +678,6 @@
         }
     }
 
-    // Function to draw the realistic analog car dial ticks and numbers
     function drawAnalogDial() {
         const ticksGroup = document.getElementById('dial-ticks');
         const labelsGroup = document.getElementById('dial-labels');
@@ -689,7 +687,6 @@
         const cx = 150;
         const cy = 150;
         
-        // Loop from 0 to 100 in steps of 2 for fine tick marks
         for (let i = 0; i <= 100; i += 2) {
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
@@ -786,8 +783,8 @@
 
         // 2. Purpose of Vehicle Utility (Max 15 points)
         const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
-        if (q1 === 0) score += 0;       // Personal
-        else score += 15;               // Commercial
+        if (q1 === 0) score += 0;       
+        else score += 15;               
 
         // 3. Boot Space (Max 20 points)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
@@ -803,7 +800,6 @@
 
         score = Math.round(score);
         
-        // Map score 0-100 to rotation -120 to +120
         const scoreRotation = -120 + ((score / 100) * 240);
         setTimeout(() => {
             document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
@@ -816,7 +812,7 @@
                 badge.style.color = "#ef4444";
                 badge.style.background = "rgba(239, 68, 68, 0.1)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
-            } else if (score < 80) {
+            } else if (score < 70) {
                 badge.innerText = "पेट्रोल बेहतर रहेगा";
                 badge.style.color = "#3b82f6";
                 badge.style.background = "rgba(59, 130, 246, 0.1)";
@@ -858,7 +854,6 @@
         const intDiff = intB - intA;
         let totalExtraCost = orpDiff + intDiff;
         
-        // Round off to next thousand
         const roundedExtraCost = Math.ceil(totalExtraCost / 1000) * 1000;
 
         const costPerKmA = pPrice / varA.mileage;
