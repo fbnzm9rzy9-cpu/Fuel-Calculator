@@ -723,10 +723,17 @@
             <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 340 260">
                     <defs>
+                        <!-- Vibrant Solid Gradient for the Scale Highlight -->
                         <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#3b82f6" /> 
                             <stop offset="100%" stop-color="#10b981" /> 
                         </linearGradient>
+
+                        <!-- Invisible curved paths to perfectly place text along the outer circumference -->
+                        <!-- Path 1: Curves right around unit 40 for PETROL -->
+                        <path id="petrolCurvePath" d="M 40 180 A 155 155 0 0 1 140 12" fill="none" stroke="none" />
+                        <!-- Path 2: Curves right between units 80 to 100 for CNG -->
+                        <path id="cngCurvePath" d="M 230 40 A 155 155 0 0 1 330 200" fill="none" stroke="none" />
                     </defs>
 
                     <!-- Background Dark Arch -->
@@ -739,9 +746,16 @@
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
                     
-                    <!-- Outer Circumference Texts -->
-                    <text x="44.5" y="87.5" fill="#3b82f6" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(300 44.5 87.5)" text-anchor="middle">PETROL</text>
-                    <text x="295.5" y="87.5" fill="#10b981" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(60 295.5 87.5)" text-anchor="middle">CNG</text>
+                    <!-- Outer Circumference Texts (Using precise textPaths) -->
+                    <!-- PETROL curved along outer circumference near unit 40 -->
+                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#3b82f6">
+                        <textPath href="#petrolCurvePath" startOffset="48%" text-anchor="middle">PETROL</textPath>
+                    </text>
+
+                    <!-- CNG curved along outer circumference between 80 to 100 -->
+                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#10b981">
+                        <textPath href="#cngCurvePath" startOffset="50%" text-anchor="middle">CNG</textPath>
+                    </text>
 
                     <!-- Dial Subtext -->
                     <text x="170" y="120" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
