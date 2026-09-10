@@ -57,8 +57,18 @@
         /* --- LARGE & BOLD NEXA-C4 HEADER --- */
         .branding-header {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
             padding: 4px 0 0 2px;
+        }
+
+        .repo-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--nexa-blue);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
         .brand-title-match {
@@ -99,24 +109,6 @@
             flex-direction: column;
             gap: 20px; 
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
-        }
-
-        .card-title-group p {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .card-title-group h2 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            text-align: center;
-            margin-top: 8px;
         }
 
         /* --- INPUTS --- */
@@ -172,6 +164,14 @@
             background-repeat: no-repeat;
             background-position: right 16px center;
             cursor: pointer;
+            font-size: 1rem; /* Slightly smaller to ensure full display */
+        }
+
+        /* Variant block styled differently so it stacks full-width */
+        .variant-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .input-grid {
@@ -383,7 +383,7 @@
 
         .gauge-text-container {
             text-align: center;
-            margin-top: -10px; 
+            margin-top: -5px; 
         }
 
         .gauge-result-badge {
@@ -562,7 +562,6 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
-            .brand-title-match { font-size: 2rem; }
         }
 
     </style>
@@ -571,8 +570,9 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING: Large, bold NEXA-C4 only -->
+    <!-- 1. BRANDING: Fuel-Suitability-Tool & NEXA-C4 -->
     <div class="branding-header">
+        <div class="repo-title">Fuel-Suitability-Tool</div>
         <div class="brand-title-match">NEXA-C4</div>
     </div>
 
@@ -585,8 +585,8 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Variant Selection -->
-            <div class="input-grid">
+            <!-- 1. Variant Selection (Stacked for Full Visibility) -->
+            <div class="variant-grid">
                 <div class="input-box">
                     <label>Petrol Variant</label>
                     <select id="variantA" class="custom-input"></select>
@@ -733,7 +733,6 @@
                 </div>
             </div>
 
-            <!-- BUTTON RENAMED -->
             <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
         </div>
     </div>
@@ -744,44 +743,34 @@
         <!-- 1. REALISTIC 3-ZONE SPEEDOMETER -->
         <div class="card reveal-1">
             <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 340 250">
+                <svg class="gauge-svg" viewBox="0 0 340 260">
                     <defs>
                         <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
                             <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
                         </filter>
-                        
-                        <!-- Invisible paths perfectly tracking the outer circumference for multiline and precise text rendering -->
-                        <path id="curveRed" d="M 45.3 232 A 144 144 0 0 1 170 16" fill="transparent" />
-                        <path id="curveYellowOuter" d="M 170 6 A 154 154 0 0 1 284.4 57" fill="transparent" />
-                        <path id="curveYellowInner" d="M 170 16 A 144 144 0 0 1 277 63.6" fill="transparent" />
-                        <path id="curveGreen" d="M 277 63.6 A 144 144 0 0 1 294.7 232" fill="transparent" />
+
+                        <!-- Invisible mathematical paths completely wrapping the exact outer circumference -->
+                        <path id="textPathOut" d="M 47 231 A 142 142 0 1 1 293 231" fill="transparent" />
                     </defs>
 
                     <!-- Base Dashboard Backing Plate -->
-                    <path d="M 46.75 215 A 140 140 0 0 1 293.25 215" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 48.75 230 A 140 140 0 0 1 291.25 230" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
 
                     <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
-                    <!-- RED ZONE (0-50) -->
-                    <path d="M 61.75 212.5 A 125 125 0 0 1 170 25" fill="none" stroke="var(--zone-red)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
+                    <!-- RED ZONE (0-50): Angle -210 to -90 -->
+                    <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="var(--zone-red)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
                     
-                    <!-- YELLOW ZONE (50-70) -->
-                    <path d="M 170 25 A 125 125 0 0 1 262.89 66.36" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
+                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
+                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
                     
-                    <!-- GREEN ZONE (70-100) -->
-                    <path d="M 262.89 66.36 A 125 125 0 0 1 278.25 212.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
+                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
+                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
 
-                    <!-- Outer Circumference Texts (Perfectly Mapped and Split for Yellow) -->
-                    <text font-size="10" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="0.5">
-                        <textPath href="#curveRed" startOffset="50%" text-anchor="middle" fill="var(--zone-red)">PETROL FIT</textPath>
-                    </text>
-                    <text font-size="11" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="1.5">
-                        <textPath href="#curveYellowOuter" startOffset="50%" text-anchor="middle" fill="var(--zone-yellow)">PETROL</textPath>
-                    </text>
-                    <text font-size="8.5" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="0.5">
-                        <textPath href="#curveYellowInner" startOffset="50%" text-anchor="middle" fill="var(--zone-yellow)">RECOMMENDED</textPath>
-                    </text>
-                    <text font-size="10" font-family="'Outfit', sans-serif" font-weight="800" letter-spacing="0.5">
-                        <textPath href="#curveGreen" startOffset="50%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
+                    <!-- Outer Circumference Texts perfectly contoured -->
+                    <text font-family="'Outfit', sans-serif" font-size="10.5" font-weight="800" letter-spacing="1">
+                        <textPath href="#textPathOut" startOffset="25%" text-anchor="middle" fill="var(--zone-red)">PETROL FIT</textPath>
+                        <textPath href="#textPathOut" startOffset="60%" text-anchor="middle" fill="var(--zone-yellow)">PETROL RECOMMENDED</textPath>
+                        <textPath href="#textPathOut" startOffset="85%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
                     </text>
 
                     <!-- Dynamic Ticks and Numbers injected via JS -->
@@ -789,10 +778,10 @@
                     <g id="dial-labels"></g>
                     
                     <!-- Clean Digital Score Output directly under the needle pivot -->
-                    <text id="center-score-val" x="170" y="215" fill="#ffffff" font-size="56" font-family="'Outfit', sans-serif" font-weight="800" text-anchor="middle">0</text>
+                    <text id="center-score-val" x="170" y="220" fill="#ffffff" font-size="56" font-family="'Outfit', sans-serif" font-weight="800" text-anchor="middle">0</text>
 
                     <!-- Realistic Analog Car Needle with Hollow Center -->
-                    <g id="score-needle" style="transform-origin: 170px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);" filter="url(#drop-shadow)">
+                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);" filter="url(#drop-shadow)">
                         <circle cx="170" cy="160" r="12" fill="#0f141e" stroke="#ffffff" stroke-width="4"/>
                         <line x1="170" y1="148" x2="170" y2="45" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
                     </g>
@@ -946,17 +935,17 @@
         let ticks = '';
         let labels = '';
         const cx = 170;
-        const cy = 150;
+        const cy = 160;
         
         for (let i = 0; i <= 100; i += 2) {
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            let rOuter = 108; 
+            let rOuter = 110; 
             let isMajor = (i % 20 === 0);
             let isMinor = (i % 10 === 0);
             
-            let rInner = isMajor ? 92 : (isMinor ? 100 : 104);
+            let rInner = isMajor ? 95 : (isMinor ? 101 : 105);
             let strokeW = isMajor ? 3 : 2;
             let tickOpacity = isMajor ? 1 : 0.6;
             
