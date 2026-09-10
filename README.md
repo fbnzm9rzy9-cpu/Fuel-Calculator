@@ -365,27 +365,85 @@
             color: var(--text-main);
         }
 
-        /* --- DIAGNOSTIC GAUGE (ANALOG DIAL) --- */
-        .gauge-container {
+        /* --- LINEAR SCALE (REPLACING ANALOG DIAL) --- */
+        .linear-scale-container {
+            width: 100%;
+            padding: 15px 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            position: relative;
+            gap: 15px;
         }
 
-        .gauge-svg {
-            width: 100%;
-            max-width: 350px; 
-            overflow: visible;
+        .linear-labels {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        
+        .label-petrol { color: var(--nexa-blue); }
+        .label-cng { color: var(--nexa-green); }
+
+        .linear-track {
+            position: relative;
+            height: 24px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, var(--nexa-blue) 0%, var(--nexa-sky) 50%, var(--nexa-green) 100%);
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.05);
+            border: 2px solid #1f2937;
+            margin: 10px 0;
+        }
+
+        .linear-pointer {
+            position: absolute;
+            top: -12px;
+            left: 0%;
+            height: 48px;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: left 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+        }
+
+        .pointer-line {
+            width: 4px;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        .pointer-ring {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 4px solid #ffffff;
+            background: var(--bg-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .linear-ticks {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 0 5px;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 10px; 
+            margin-top: 5px; 
         }
 
         .gauge-result-badge {
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 14px;
             font-size: 1.6rem; 
             font-weight: 800;
@@ -722,61 +780,32 @@
     <!-- ================= PART 2: RESULTS ================= -->
     <div id="part2" class="hidden reveal-container">
         
-        <!-- 1. RANGE BAND METER -->
+        <!-- 1. LINEAR RANGE BAND SCALE -->
         <div class="card reveal-1">
-            <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 340 220">
-                    <defs>
-                        <!-- Thicker Band Gradient: Blue -> Sky -> Green -->
-                        <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#3b82f6" /> 
-                            <stop offset="50%" stop-color="#0ea5e9" /> 
-                            <stop offset="100%" stop-color="#10b981" /> 
-                        </linearGradient>
+            <div class="linear-scale-container">
+                
+                <div class="linear-labels">
+                    <span class="label-petrol">PETROL</span>
+                    <span class="label-cng">CNG</span>
+                </div>
+                
+                <div class="linear-track">
+                    <div class="linear-pointer" id="score-pointer">
+                        <div class="pointer-line"></div>
+                        <div class="pointer-ring"></div>
+                    </div>
+                </div>
 
-                        <!-- Invisible paths for perfectly placing text along the VERY outer circumference -->
-                        <!-- Path for PETROL (Curves smoothly up near unit 40) -->
-                        <path id="petrolCurve" d="M 15 160 A 155 155 0 0 1 170 5" fill="none" />
-                        
-                        <!-- Path for CNG (Curves smoothly down between unit 80 and 100) -->
-                        <path id="cngCurve" d="M 170 5 A 155 155 0 0 1 325 160" fill="none" />
-                    </defs>
-
-                    <!-- Background Thick Dark Band -->
-                    <path d="M 57.42 215 A 130 130 0 1 1 282.58 215" fill="none" stroke="#1f2937" stroke-width="24" stroke-linecap="round"/>
-                    
-                    <!-- Vivid Color Range Band over it -->
-                    <path d="M 57.42 215 A 130 130 0 1 1 282.58 215" fill="none" stroke="url(#score-grad)" stroke-width="24" stroke-linecap="round" opacity="1"/>
-
-                    <!-- Dynamic Ticks and Numbers injected inside the band via JS -->
-                    <g id="dial-ticks"></g>
-                    <g id="dial-labels"></g>
-                    
-                    <!-- Outer Circumference Texts -->
-                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="900" letter-spacing="3" fill="#3b82f6">
-                        <!-- Placed higher up the left arc, right near the 30-40 score mark -->
-                        <textPath href="#petrolCurve" startOffset="75%" text-anchor="middle">PETROL</textPath>
-                    </text>
-
-                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="900" letter-spacing="3" fill="#10b981">
-                        <!-- Placed perfectly between the 80-100 score mark on the right arc -->
-                        <textPath href="#cngCurve" startOffset="65%" text-anchor="middle">CNG</textPath>
-                    </text>
-
-                    <!-- Dial Subtext -->
-                    <text x="170" y="115" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
-
-                    <!-- Analog Car Needle -->
-                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <polygon points="167,160 173,160 171,60 169,60" fill="#ffffff"/>
-                        <polygon points="168,175 172,175 173,160 167,160" fill="#ffffff" opacity="0.8"/>
-                        <circle cx="170" cy="160" r="10" fill="#05080f" stroke="#ffffff" stroke-width="2"/>
-                    </g>
-                </svg>
+                <div class="linear-ticks">
+                    <span>0</span>
+                    <span>50</span>
+                    <span>100</span>
+                </div>
 
                 <div class="gauge-text-container">
                     <div class="gauge-result-badge" id="score-badge">-</div>
                 </div>
+
             </div>
         </div>
 
@@ -915,47 +944,6 @@
         }
     }
 
-    // Mathematical Ticks designed to sit perfectly inside the new Thick Band
-    function drawAnalogDial() {
-        const ticksGroup = document.getElementById('dial-ticks');
-        const labelsGroup = document.getElementById('dial-labels');
-        
-        let ticks = '';
-        let labels = '';
-        const cx = 170;
-        const cy = 160;
-        
-        for (let i = 0; i <= 100; i += 2) {
-            let angle = -120 + (i * 2.4);
-            let rad = (angle - 90) * (Math.PI / 180);
-            
-            // Outer edge of ticks sits just inside the colored band
-            let rOuter = 114;
-            let isMajor = (i % 20 === 0);
-            let isMedium = (i % 10 === 0);
-            
-            let rInner = isMajor ? 95 : (isMedium ? 102 : 108);
-            let strokeW = isMajor ? 3 : 2;
-            
-            let x1 = cx + rOuter * Math.cos(rad);
-            let y1 = cy + rOuter * Math.sin(rad);
-            let x2 = cx + rInner * Math.cos(rad);
-            let y2 = cy + rInner * Math.sin(rad);
-            
-            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${isMajor ? 1 : 0.4}" />`;
-            
-            if (isMajor) {
-                let textR = 75;
-                let tx = cx + textR * Math.cos(rad);
-                let ty = cy + textR * Math.sin(rad) + 5; 
-                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Space Mono', monospace" font-size="14" font-weight="700" text-anchor="middle">${i}</text>`;
-            }
-        }
-        
-        ticksGroup.innerHTML = ticks;
-        labelsGroup.innerHTML = labels;
-    }
-
     function animateValue(obj, start, end, duration, formatAsCurrency = false, isFloat = false) {
         let startTimestamp = null;
         const step = (timestamp) => {
@@ -1016,7 +1004,8 @@
         void part2.offsetWidth;
         part2.classList.add('fade-in');
 
-        document.getElementById('score-needle').style.transform = `rotate(-120deg)`;
+        // Reset linear pointer to 0
+        document.getElementById('score-pointer').style.left = `0%`;
         updateOdometerDisplay("0");
 
         setTimeout(() => {
@@ -1042,10 +1031,10 @@
         else if (monthlyKmEquiv <= 1500) score += 30; 
         else score += 45;
 
-        // 2. Purpose of Vehicle Utility (Max 15 points)
+        // 2. Vehicle Usage (Max 15 points)
         const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
-        if (q1 === 0) score += 5; // Personal gets base 5 pts      
-        else score += 15;         // Taxi demands CNG
+        if (q1 === 0) score += 5;       
+        else score += 15;               
 
         // 3. Boot Space (Max 15 points)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
@@ -1061,9 +1050,9 @@
 
         score = Math.round(score);
         
-        const scoreRotation = -120 + ((score / 100) * 240);
+        // Slide Linear Pointer Left to Right
         setTimeout(() => {
-            document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
+            document.getElementById('score-pointer').style.left = `${score}%`;
         }, 200);
 
         const badge = document.getElementById('score-badge');
@@ -1108,7 +1097,6 @@
                 ampersand.style.textShadow = "0 0 15px rgba(16, 185, 129, 0.4)";
             }
         }, 1200);
-
 
         // --- CALCULATE TRUE BREAK-EVEN ---
         const idxA = document.getElementById('variantA').value;
@@ -1194,7 +1182,6 @@
     window.onload = () => {
         setupOdometer();
         setupDropdowns();
-        drawAnalogDial();
         
         document.getElementById('petrolPriceInput').value = "";
         document.getElementById('cngPriceInput').value = "";
