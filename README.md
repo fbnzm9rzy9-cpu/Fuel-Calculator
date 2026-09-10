@@ -42,27 +42,31 @@
             min-height: 100vh;
         }
 
+        /* --- REPOSITORY TITLE & BRAND --- */
         .top-logo-container {
             position: absolute;
             top: 20px;
             left: 20px;
             z-index: 100;
-            font-weight: 800;
-            font-size: 1.3rem;
-            letter-spacing: 2px;
-            color: var(--nexa-blue);
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
         }
-        
-        .top-logo-container::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 20px;
-            background: var(--nexa-blue);
-            border-radius: 2px;
+
+        .repo-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--nexa-blue);
+            letter-spacing: 0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--nexa-blue);
+            letter-spacing: 2px;
+            opacity: 0.8;
         }
 
         .app-container {
@@ -71,7 +75,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px; 
-            margin-top: 60px; 
+            margin-top: 80px; /* Increased to clear the two-line header cleanly */
         }
 
         /* --- HEADER SECTION REBUILT --- */
@@ -565,7 +569,8 @@
 <body>
 
 <div class="top-logo-container">
-    NEXA-C4
+    <div class="repo-title">Fuel-Suitability-Tool</div>
+    <div class="brand-subtitle">NEXA-C4</div>
 </div>
 
 <div class="app-container">
