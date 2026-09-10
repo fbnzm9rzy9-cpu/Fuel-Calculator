@@ -35,33 +35,10 @@
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at 50% 0%, #111827 0%, transparent 100%);
             color: var(--text-main);
-            padding: 20px 15px 60px 15px; /* Reduced top padding */
+            padding: 20px 15px 60px 15px; 
             display: flex;
             justify-content: center;
             min-height: 100vh;
-        }
-
-        .top-logo-container {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            font-weight: 800;
-            font-size: 1.3rem;
-            letter-spacing: 3px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .top-logo-container::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 20px;
-            background: var(--text-main);
-            border-radius: 2px;
         }
 
         .app-container {
@@ -69,8 +46,8 @@
             max-width: 520px;
             display: flex;
             flex-direction: column;
-            gap: 20px; /* Reduced gap to bring sections closer */
-            margin-top: 40px; /* Reduced to pull content up */
+            gap: 20px; 
+            margin-top: 20px; 
         }
 
         .header-section {
@@ -91,10 +68,10 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-light);
             border-radius: 24px;
-            padding: 24px; /* Tighter inner padding */
+            padding: 24px; 
             display: flex;
             flex-direction: column;
-            gap: 20px; /* Tighter spacing inside cards */
+            gap: 20px; 
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
         }
 
@@ -159,7 +136,6 @@
             stroke-linejoin: round;
         }
 
-        /* 1. Moving Road Dash */
         @keyframes dashMove {
             0% { transform: translateY(-5px); opacity: 0; }
             50% { opacity: 1; }
@@ -167,7 +143,6 @@
         }
         .anim-dash { animation: dashMove 1.5s infinite linear; }
 
-        /* 2. Steering Wheel Animation */
         @keyframes steerWheel {
             0%, 100% { transform: rotate(0deg); }
             25% { transform: rotate(-25deg); }
@@ -178,7 +153,6 @@
             animation: steerWheel 3s infinite ease-in-out; 
         }
 
-        /* 3. Laser Scan */
         @keyframes scanBox {
             0% { transform: translateY(0); stroke: var(--nexa-green); opacity: 0.5;}
             50% { transform: translateY(12px); stroke: #ffffff; opacity: 1;}
@@ -186,7 +160,6 @@
         }
         .anim-scan { animation: scanBox 2s infinite ease-in-out; }
 
-        /* 4. Radar Pulse */
         @keyframes radarPulse {
             0% { r: 1; opacity: 1; stroke-width: 2;}
             100% { r: 10; opacity: 0; stroke-width: 0.5;}
@@ -302,13 +275,13 @@
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 10px; /* Reduced gap */
+            margin-top: 10px; 
         }
 
         .gauge-result-badge {
             padding: 12px 24px;
             border-radius: 14px;
-            font-size: 1.6rem; /* Huge font size for suggestion */
+            font-size: 1.6rem; 
             font-weight: 800;
             display: inline-block;
             letter-spacing: 0.5px;
@@ -325,7 +298,7 @@
             padding: 25px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.05);
-            gap: 10px; /* Tighter gap */
+            gap: 10px; 
         }
 
         .total-cost-label {
@@ -422,7 +395,7 @@
             font-size: 2.5rem;
             font-weight: 800;
             color: var(--border-light);
-            margin: 0; /* Removed vertical margins to pull things together */
+            margin: 0; 
             font-family: 'Outfit', sans-serif;
             opacity: 0.5;
             line-height: 1;
@@ -436,7 +409,7 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .reveal-container { display: flex; flex-direction: column; gap: 20px; } /* Tighter gap */
+        .reveal-container { display: flex; flex-direction: column; gap: 20px; }
         .reveal-1 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
         .reveal-2 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; opacity: 0; }
         .reveal-3 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; opacity: 0; }
@@ -451,10 +424,6 @@
     </style>
 </head>
 <body>
-
-<div class="top-logo-container">
-    NEXA
-</div>
 
 <div class="app-container">
 
@@ -488,17 +457,34 @@
                 </div>
             </div>
 
-            <div class="input-box">
+            <div class="input-box" style="margin-top: 5px;">
                 <!-- Animated Road Icon -->
                 <label>
                     <svg class="tech-icon" viewBox="0 0 24 24">
-                        <path d="M4 22L8 2m8 0l4 20" stroke="rgba(255,255,255,0.2)"/>
-                        <line x1="12" y1="22" x2="12" y2="16" class="anim-dash"/>
-                        <line x1="12" y1="10" x2="12" y2="2" opacity="0.3"/>
+                        <path d="M4 22L8 2m8 0l4 20" stroke="rgba(255,255,255,0.4)"/>
+                        <line x1="12" y1="22" x2="12" y2="16" class="anim-dash" stroke="#ffffff"/>
+                        <line x1="12" y1="10" x2="12" y2="2" opacity="0.3" stroke="#ffffff"/>
                     </svg>
                     Daily Running (in KMs)
                 </label>
                 <input type="number" id="dailyDrivingInput" class="custom-input" value="80">
+            </div>
+
+            <!-- New Question: Purpose of vehicle utility -->
+            <div class="question-block" style="margin-top: 5px;">
+                <label class="question-label">
+                    <!-- Animated Briefcase / Car Icon -->
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <rect x="3" y="8" width="18" height="12" rx="2" stroke="rgba(255,255,255,0.4)"/>
+                        <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="rgba(255,255,255,0.4)"/>
+                        <circle cx="12" cy="14" r="2" fill="rgba(255,255,255,0.8)" class="anim-radar"/>
+                    </svg>
+                    Purpose of vehicle utility
+                </label>
+                <div class="pill-group">
+                    <label class="pill-label"><input type="radio" name="q_purpose" value="0" checked><div class="pill-text">Personal</div></label>
+                    <label class="pill-label"><input type="radio" name="q_purpose" value="100"><div class="pill-text">Commercial</div></label>
+                </div>
             </div>
 
             <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
@@ -507,11 +493,8 @@
                     <!-- Animated Steering Wheel -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <g class="anim-steer">
-                            <!-- Outer rim -->
                             <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/>
-                            <!-- Center horn pad -->
-                            <circle cx="12" cy="12" r="2" fill="rgba(255,255,255,0.4)"/>
-                            <!-- Spokes: Left, Right, Bottom -->
+                            <circle cx="12" cy="12" r="2" fill="rgba(255,255,255,0.6)"/>
                             <path d="M2 12h8M14 12h8M12 14v8" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
                         </g>
                     </svg>
@@ -529,8 +512,8 @@
                 <label class="question-label">
                     <!-- Animated Scan Box Icon -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
-                        <rect x="4" y="6" width="16" height="12" rx="2" stroke="rgba(255,255,255,0.2)"/>
-                        <path d="M8 6V4h8v2" stroke="rgba(255,255,255,0.2)"/>
+                        <rect x="4" y="6" width="16" height="12" rx="2" stroke="rgba(255,255,255,0.4)"/>
+                        <path d="M8 6V4h8v2" stroke="rgba(255,255,255,0.4)"/>
                         <line x1="3" y1="12" x2="21" y2="12" class="anim-scan"/>
                     </svg>
                     Boot space importance
@@ -547,7 +530,7 @@
                 <label class="question-label">
                     <!-- Animated Radar/Pin Icon -->
                     <svg class="tech-icon" viewBox="0 0 24 24">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="rgba(255,255,255,0.2)"/>
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="rgba(255,255,255,0.4)"/>
                         <circle cx="12" cy="10" r="1" class="anim-radar"/>
                     </svg>
                     CNG station convenience
@@ -629,7 +612,6 @@
 
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
-                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
             </div>
         </div>
@@ -791,26 +773,31 @@
     }
 
     function runCalculations() {
-        // --- 1. CALCULATE PROFILE SCORE (Out of 100 total points) ---
+        // --- 1. CALCULATE PROFILE SCORE (Out of 100) ---
         let score = 0;
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
-        // Running - 35 Max Points
+        // 1. Daily Running (Max 30 points)
         if (monthlyKmEquiv <= 500) score += 0;
-        else if (monthlyKmEquiv <= 1000) score += 10; 
-        else if (monthlyKmEquiv <= 2000) score += 20; 
-        else score += 35;
+        else if (monthlyKmEquiv <= 1000) score += 8; 
+        else if (monthlyKmEquiv <= 2000) score += 18; 
+        else score += 30;
 
-        // Boot Space - 25 Max Points (Reversed Values compared to before)
+        // 2. Purpose of Vehicle Utility (Max 15 points)
+        const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
+        if (q1 === 0) score += 0;       // Personal
+        else score += 15;               // Commercial
+
+        // 3. Boot Space (Max 20 points)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
-        if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 25;
+        if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 20;
 
-        // Driving Preference - 20 Max Points (Reversed Values compared to before)
+        // 4. Driving Preference (Max 15 points)
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
-        if (q3 === 0) score += 0; else if (q3 === 50) score += 10; else score += 20;
+        if (q3 === 0) score += 0; else if (q3 === 50) score += 7; else score += 15;
 
-        // Station Convenience - 20 Max Points
+        // 5. Station Convenience (Max 20 points)
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
         if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 20;
 
