@@ -1,10 +1,10 @@
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>सही फ्यूल चुना क्या?</title>
     <style>
-        /* Premium Fonts Setup */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
         * {
@@ -106,6 +106,15 @@
             text-align: center;
         }
 
+        .card-title-group h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 8px;
+        }
+
         /* --- INPUTS --- */
         .input-box {
             display: flex;
@@ -117,6 +126,8 @@
             font-size: 0.9rem;
             color: var(--text-main);
             font-weight: 600;
+            display: flex;
+            align-items: center;
         }
 
         .custom-input {
@@ -153,6 +164,52 @@
             gap: 16px;
         }
 
+        /* --- TECHY ICONS & ANIMATIONS --- */
+        .tech-icon {
+            width: 22px;
+            height: 22px;
+            margin-right: 8px;
+            stroke: var(--nexa-green);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* 1. Moving Road Dash */
+        @keyframes dashMove {
+            0% { transform: translateY(-5px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(10px); opacity: 0; }
+        }
+        .anim-dash { animation: dashMove 1.5s infinite linear; }
+
+        /* 2. Revving Speedometer Needle */
+        @keyframes revNeedle {
+            0% { transform: rotate(-45deg); }
+            30% { transform: rotate(45deg); }
+            50% { transform: rotate(10deg); }
+            80% { transform: rotate(60deg); }
+            100% { transform: rotate(-45deg); }
+        }
+        .anim-rev { transform-origin: center bottom; animation: revNeedle 3s infinite ease-in-out; }
+
+        /* 3. Laser Scan */
+        @keyframes scanBox {
+            0% { transform: translateY(0); stroke: var(--nexa-green); opacity: 0.5;}
+            50% { transform: translateY(12px); stroke: #ffffff; opacity: 1;}
+            100% { transform: translateY(0); stroke: var(--nexa-green); opacity: 0.5;}
+        }
+        .anim-scan { animation: scanBox 2s infinite ease-in-out; }
+
+        /* 4. Radar Pulse */
+        @keyframes radarPulse {
+            0% { r: 1; opacity: 1; stroke-width: 2;}
+            100% { r: 10; opacity: 0; stroke-width: 0.5;}
+        }
+        .anim-radar { animation: radarPulse 1.5s infinite cubic-bezier(0.215, 0.610, 0.355, 1); transform-origin: center;}
+
+
         /* --- SEGMENTED CONTROLS (PILLS) --- */
         .question-block {
             display: flex;
@@ -164,6 +221,8 @@
             font-size: 0.95rem;
             color: var(--text-main);
             font-weight: 600;
+            display: flex;
+            align-items: center;
         }
 
         .pill-group {
@@ -253,13 +312,13 @@
 
         .gauge-svg {
             width: 100%;
-            max-width: 320px;
+            max-width: 300px;
             overflow: visible;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 25px;
         }
 
         .gauge-result-badge {
@@ -445,38 +504,69 @@
                 </div>
             </div>
 
-            <div class="input-box">
-                <label>Daily Running (in KMs)</label>
+            <div class="input-box" style="margin-top: 5px;">
+                <!-- Animated Road Icon -->
+                <label>
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <path d="M4 22L8 2m8 0l4 20" stroke="rgba(255,255,255,0.2)"/>
+                        <line x1="12" y1="22" x2="12" y2="16" class="anim-dash"/>
+                        <line x1="12" y1="10" x2="12" y2="2" opacity="0.3"/>
+                    </svg>
+                    Daily Running (in KMs)
+                </label>
                 <input type="number" id="dailyDrivingInput" class="custom-input" value="80">
             </div>
 
-            <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
+            <!-- 1. Driving Preference -->
             <div class="question-block" style="margin-top: 10px;">
-                <div class="question-label">Driving preference</div>
+                <label class="question-label">
+                    <!-- Animated Speedometer Icon -->
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <path d="M12 22v-4M4.9 19.1l2.8-2.8M2 12h4M4.9 4.9l2.8 2.8M12 2v4M19.1 4.9l-2.8 2.8M22 12h-4M19.1 19.1l-2.8-2.8" opacity="0.3"/>
+                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"/>
+                        <line x1="12" y1="12" x2="16" y2="8" class="anim-rev"/>
+                    </svg>
+                    Driving preference
+                </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_pref" value="100" checked><div class="pill-text">Economy</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="100"><div class="pill-text">Economy</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="50"><div class="pill-text">Balanced</div></label>
-                    <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="0" checked><div class="pill-text">Performance</div></label>
                 </div>
             </div>
 
-            <!-- 2. Boot Space Importance (Not important -> Somewhat -> Very) -->
+            <!-- 2. Boot Space Importance -->
             <div class="question-block">
-                <div class="question-label">Boot space importance</div>
+                <label class="question-label">
+                    <!-- Animated Scan Box Icon -->
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <rect x="4" y="6" width="16" height="12" rx="2" stroke="rgba(255,255,255,0.2)"/>
+                        <path d="M8 6V4h8v2" stroke="rgba(255,255,255,0.2)"/>
+                        <line x1="3" y1="12" x2="21" y2="12" class="anim-scan"/>
+                    </svg>
+                    Boot space importance
+                </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_boot" value="100" checked><div class="pill-text">Not<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="100"><div class="pill-text">Not<br>important</div></label>
                     <label class="pill-label"><input type="radio" name="q_boot" value="50"><div class="pill-text">Somewhat</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="0"><div class="pill-text">Very<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="0" checked><div class="pill-text">Very<br>important</div></label>
                 </div>
             </div>
 
-            <!-- 3. CNG station convenience (Inconvenient -> Manageable -> Easy) -->
+            <!-- 3. CNG station convenience -->
             <div class="question-block">
-                <div class="question-label">CNG station convenience</div>
+                <label class="question-label">
+                    <!-- Animated Radar/Pin Icon -->
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="rgba(255,255,255,0.2)"/>
+                        <circle cx="12" cy="10" r="1" class="anim-radar"/>
+                    </svg>
+                    CNG station convenience
+                </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">Inconvenient</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="0" checked><div class="pill-text">Inconvenient</div></label>
                     <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">Manageable</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="100" checked><div class="pill-text">Easy access</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="100"><div class="pill-text">Easy access</div></label>
                 </div>
             </div>
 
@@ -561,6 +651,7 @@
             <div class="serious-time-box">
                 <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
+                <div id="time-text-desc" style="font-size: 1rem; font-weight: 600; margin-top: 5px; color: var(--text-muted);">-</div>
             </div>
         </div>
 
@@ -581,11 +672,14 @@
         let cngIndex = -1, petrolIndex = -1;
 
         variantsData.forEach((variant, index) => {
+            // Strip engine details for cleaner look
+            let displayName = variant.variant.replace(" 1.2L 5MT", "").replace(" 1.5L 5MT", "");
+            
             if(!variant.variant.includes('CNG')) {
-                selectA.add(new Option(variant.variant, index));
+                selectA.add(new Option(displayName, index));
                 if(petrolIndex === -1 && variant.variant.includes('BALENO DELTA')) petrolIndex = index;
             } else {
-                selectB.add(new Option(variant.variant, index));
+                selectB.add(new Option(displayName, index));
                 if(cngIndex === -1 && variant.variant.includes('BALENO DELTA CNG')) cngIndex = index;
             }
         });
@@ -834,12 +928,22 @@
             
             setTimeout(() => {
                 animateValue(document.getElementById('time-text-val'), 0, breakEvenYears, 2000, false, true);
+                const timeDesc = document.getElementById('time-desc');
+                
+                if(breakEvenYears <= 2) { 
+                    timeDesc.innerText = "Fast recovery at this running"; 
+                } else if (breakEvenYears <= 4.5) {
+                    timeDesc.innerText = "Moderate recovery time"; 
+                } else { 
+                    timeDesc.innerText = "Slow recovery at this running"; 
+                }
             }, 800);
 
         } else {
             updateOdometerDisplay("999999");
             document.getElementById('time-text-val').innerHTML = `Never`;
-            document.getElementById('time-text-val').style.color = "var(--serious-red)";
+            document.getElementById('time-text-desc').innerText = "CNG is costlier to run";
+            document.getElementById('time-text-desc').style.color = "var(--serious-red)";
         }
         
         setTimeout(() => {
