@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sahi Fuel Chuna Kya?</title>
+    <title>सही फ्यूल चुना क्या?</title>
     <style>
-        /* Premium Fonts Setup */
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
         * {
             margin: 0;
@@ -17,17 +16,14 @@
         }
 
         :root {
-            /* Premium Dark Theme Globally */
             --bg-color: #05080f;
             --card-bg: #0f141e;
             --border-light: #1f2937;
             --input-bg: #111827;
             
-            /* Text Colors */
             --text-main: #ffffff;
             --text-muted: #8b9bb4;
             
-            /* Brand Accents */
             --nexa-green: #10b981;
             --nexa-green-bg: rgba(16, 185, 129, 0.1);
             --serious-red: #ef4444;
@@ -82,18 +78,11 @@
         }
 
         .header-section h1 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: -1px;
             margin-bottom: 8px;
-        }
-
-        .header-section p {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            letter-spacing: 0.5px;
         }
 
         /* --- CARDS --- */
@@ -142,7 +131,7 @@
         .custom-input {
             background: var(--input-bg);
             border: 1px solid var(--border-light);
-            color: var(--nexa-green); /* Green Input Data */
+            color: var(--nexa-green);
             padding: 16px;
             border-radius: 14px;
             font-size: 1.1rem;
@@ -209,7 +198,7 @@
             border: 1px solid var(--border-light);
             border-radius: 14px;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -218,7 +207,6 @@
             line-height: 1.2;
         }
 
-        /* Green Highlight for selections */
         .pill-label input:checked + .pill-text {
             background: var(--nexa-green-bg);
             border-color: var(--nexa-green);
@@ -274,13 +262,13 @@
 
         .gauge-svg {
             width: 100%;
-            max-width: 280px;
+            max-width: 300px;
             overflow: visible;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 25px;
         }
 
         .gauge-score {
@@ -293,75 +281,52 @@
         }
 
         .gauge-result-badge {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 800;
             display: inline-block;
             letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         /* --- SERIOUS FINANCIALS --- */
-        .cost-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .cost-label {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .cost-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .cost-divider {
-            border-top: 1px dashed var(--border-light);
-            margin: 20px 0;
-        }
-
         .total-cost-row {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             background: rgba(0,0,0,0.4);
-            padding: 20px;
+            padding: 30px 20px;
             border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.05);
+            gap: 15px;
         }
 
         .total-cost-label {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--text-muted);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            text-align: center;
         }
 
         .total-cost-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.6rem;
+            font-size: 3rem;
             font-weight: 800;
-            color: var(--serious-red); /* Serious Red */
+            color: var(--serious-red);
+            letter-spacing: -2px;
         }
 
-        /* --- ODOMETER (PREMIUM REALISTIC) --- */
+        /* --- ODOMETER & TIME DISPLAY --- */
         .odometer-section {
             text-align: center;
             padding: 30px 0 10px 0;
             background: #080b11; 
             border-radius: 16px;
             border: 1px inset rgba(255,255,255,0.05);
-            margin-top: 10px;
         }
 
         .odometer-display {
@@ -408,10 +373,8 @@
             justify-content: center;
         }
 
-        /* --- SERIOUS TIME TEXT --- */
         .serious-time-box {
             text-align: center;
-            margin-top: 25px;
             padding: 20px;
             border-radius: 16px;
             background: var(--serious-red-bg); 
@@ -422,10 +385,20 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 3.5rem;
             font-weight: 800;
-            color: var(--serious-red); /* Serious Red */
+            color: var(--serious-red);
             line-height: 1;
             margin: 10px 0;
             letter-spacing: -2px;
+        }
+
+        .ampersand {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--border-light);
+            margin: -5px 0;
+            font-family: 'Outfit', sans-serif;
+            opacity: 0.5;
         }
 
         /* --- UTILS & ANIMATIONS --- */
@@ -460,8 +433,7 @@
 <div class="app-container">
 
     <div class="header-section">
-        <h1>Sahi Fuel Chuna Kya?</h1>
-        <p id="sub-header-text">Configure your profile below</p>
+        <h1>सही फ्यूल चुना क्या?</h1>
     </div>
 
     <!-- ================= PART 1: INPUT QUESTIONNAIRE ================= -->
@@ -491,43 +463,37 @@
             </div>
 
             <div class="input-box">
-                <label>Daily driving (km)</label>
+                <label>Daily Running (in KMs)</label>
                 <input type="number" id="dailyDrivingInput" class="custom-input" value="80">
             </div>
 
-            <div class="question-block" style="margin-top: 5px;">
-                <div class="question-label">Boot space importance</div>
-                <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_boot" value="0"><div class="pill-text">Very<br>important</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="50"><div class="pill-text">Somewhat</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="100" checked><div class="pill-text">Not<br>important</div></label>
-                </div>
-            </div>
-
-            <div class="question-block">
+            <!-- Driving Preference (Left to Right: Economy -> Performance) -->
+            <div class="question-block" style="margin-top: 10px;">
                 <div class="question-label">Driving preference</div>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
-                    <label class="pill-label"><input type="radio" name="q_pref" value="50"><div class="pill-text">Balanced</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="100" checked><div class="pill-text">Economy</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="50"><div class="pill-text">Balanced</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
                 </div>
             </div>
 
+            <!-- Boot Space Importance (Left to Right: Not important -> Very important) -->
+            <div class="question-block">
+                <div class="question-label">Boot space importance</div>
+                <div class="pill-group">
+                    <label class="pill-label"><input type="radio" name="q_boot" value="100" checked><div class="pill-text">Not<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="50"><div class="pill-text">Somewhat</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="0"><div class="pill-text">Very<br>important</div></label>
+                </div>
+            </div>
+
+            <!-- CNG station convenience -->
             <div class="question-block">
                 <div class="question-label">CNG station convenience</div>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">Inconvenient</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">Manageable</div></label>
                     <label class="pill-label"><input type="radio" name="q_stn" value="100" checked><div class="pill-text">Easy access</div></label>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-label">Expected ownership</div>
-                <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_own" value="0"><div class="pill-text">≤ 3 years</div></label>
-                    <label class="pill-label"><input type="radio" name="q_own" value="50"><div class="pill-text">4–5 years</div></label>
-                    <label class="pill-label"><input type="radio" name="q_own" value="100" checked><div class="pill-text">6+ years</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">Manageable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">Inconvenient</div></label>
                 </div>
             </div>
 
@@ -549,20 +515,39 @@
                     <defs>
                         <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#ef4444" />
-                            <stop offset="50%" stop-color="#f59e0b" />
+                            <stop offset="50%" stop-color="#3b82f6" />
                             <stop offset="100%" stop-color="#10b981" />
                         </linearGradient>
                     </defs>
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--border-light)" stroke-width="16" stroke-linecap="round"/>
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#score-grad)" stroke-width="16" stroke-linecap="round"/>
+                    <!-- Background Arc -->
+                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#1f2937" stroke-width="14" stroke-linecap="round"/>
                     
-                    <text x="20" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">0</text>
-                    <text x="180" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle" font-weight="700">100</text>
+                    <!-- Tick Marks simulating a car dial -->
+                    <g stroke="rgba(255,255,255,0.2)" stroke-width="2">
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(0 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(18 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(36 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(54 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(72 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(90 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(108 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(126 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(144 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(162 100 100)" />
+                        <line x1="20" y1="100" x2="28" y2="100" transform="rotate(180 100 100)" />
+                    </g>
+
+                    <!-- Colored Gradient Arc -->
+                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#score-grad)" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
                     
-                    <!-- Needle -->
+                    <text x="20" y="105" fill="#8b9bb4" font-size="10" text-anchor="middle" font-weight="700">0</text>
+                    <text x="180" y="105" fill="#8b9bb4" font-size="10" text-anchor="middle" font-weight="700">100</text>
+                    
+                    <!-- Automotive Style Needle -->
                     <g id="score-needle" style="transform-origin: 100px 100px; transform: rotate(-90deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <circle cx="100" cy="100" r="8" fill="#ffffff"/>
-                        <polygon points="96,100 104,100 100,25" fill="#ffffff"/>
+                        <circle cx="100" cy="100" r="10" fill="#1f2937" stroke="#374151" stroke-width="2"/>
+                        <polygon points="97,100 103,100 100,25" fill="#ef4444"/>
+                        <circle cx="100" cy="100" r="4" fill="#ef4444"/>
                     </g>
                 </svg>
 
@@ -577,23 +562,11 @@
         <div class="card reveal-2" id="extra-cost-card">
             <div class="card-title-group">
                 <p>Investment Breakdown</p>
-                <h2>Additional Cost for CNG</h2>
             </div>
             
-            <div id="extra-cost-container" style="margin-top: 10px;">
-                <div class="cost-row">
-                    <span class="cost-label">Difference in On-Road Price</span>
-                    <span class="cost-value" id="orp-diff-val">₹0</span>
-                </div>
-                <div class="cost-row">
-                    <span class="cost-label">Additional EMI Interest (5 Yrs)</span>
-                    <span class="cost-value" id="int-diff-val">₹0</span>
-                </div>
-                
-                <div class="cost-divider"></div>
-                
+            <div id="extra-cost-container" style="margin-top: 5px;">
                 <div class="total-cost-row">
-                    <span class="total-cost-label">Total Additional Cost</span>
+                    <span class="total-cost-label">Total additional cost of purchasing a CNG vehicle</span>
                     <span class="total-cost-value" id="total-extra-val">0</span>
                 </div>
             </div>
@@ -606,7 +579,7 @@
         <!-- 3. SAVINGS START AFTER -->
         <div class="card reveal-3" id="break-even-card">
             <div class="card-title-group">
-                <p style="color: var(--serious-red);">No Savings Upto:</p>
+                <p style="color: var(--serious-red); font-size: 1.3rem; font-weight: 800; letter-spacing: 1px;">NO SAVINGS UPTO:</p>
             </div>
 
             <!-- ODOMETER -->
@@ -617,10 +590,12 @@
                 <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Kilometres</div>
             </div>
 
+            <div class="ampersand">&</div>
+
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
-                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
+                <div id="time-text-desc" style="font-size: 1rem; font-weight: 600; margin-top: 5px; color: var(--text-muted);">-</div>
             </div>
         </div>
 
@@ -684,13 +659,11 @@
         }
     }
 
-    // Elegant Number Counter Animation
     function animateValue(obj, start, end, duration, formatAsCurrency = false, isFloat = false) {
         let startTimestamp = null;
         const step = (timestamp) => {
             if (!startTimestamp) startTimestamp = timestamp;
             const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            // Ease out cubic
             const easeProgress = 1 - Math.pow(1 - progress, 3);
             const currentVal = (easeProgress * (end - start) + start);
             
@@ -716,23 +689,17 @@
     }
 
     function generateReport() {
-        // Switch views
         document.getElementById('part1').classList.add('hidden');
         
-        // Remove and re-add class to restart CSS reveal animations
         const part2 = document.getElementById('part2');
         part2.classList.remove('hidden');
         part2.classList.remove('fade-in');
-        void part2.offsetWidth; // Reflow
+        void part2.offsetWidth;
         part2.classList.add('fade-in');
 
-        document.getElementById('sub-header-text').innerText = "Matrix Analytics Report";
-        
-        // Reset gauges visually to 0 before calculating
         document.getElementById('score-needle').style.transform = `rotate(-90deg)`;
         updateOdometerDisplay("0");
 
-        // Small delay to allow display:block to render before calculating height/transitions
         setTimeout(() => {
             runCalculations();
         }, 100);
@@ -741,7 +708,6 @@
     function goBack() {
         document.getElementById('part2').classList.add('hidden');
         document.getElementById('part1').classList.remove('hidden');
-        document.getElementById('sub-header-text').innerText = "Configure your profile below";
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -751,29 +717,28 @@
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
+        // 30 Max Points
         if (monthlyKmEquiv <= 500) score += 0;
         else if (monthlyKmEquiv <= 1000) score += 5; 
-        else if (monthlyKmEquiv <= 2000) score += 12; 
-        else score += 25;
+        else if (monthlyKmEquiv <= 2000) score += 15; 
+        else score += 30;
 
+        // 20 Max Points
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
-        if (q2 === 0) score += 0; else if (q2 === 50) score += 4; else score += 15;
+        if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 20;
 
+        // 25 Max Points
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
-        if (q3 === 0) score += 0; else if (q3 === 50) score += 5; else score += 20;
+        if (q3 === 0) score += 0; else if (q3 === 50) score += 10; else score += 25;
 
+        // 25 Max Points
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
-        if (q4 === 0) score += 0; else if (q4 === 50) score += 8; else score += 25;
-
-        const q5 = parseInt(document.querySelector('input[name="q_own"]:checked').value);
-        if (q5 === 0) score += 0; else if (q5 === 50) score += 5; else score += 15;
+        if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 25;
 
         score = Math.round(score);
         
-        // Animate Score Number
         animateValue(document.getElementById('score-val'), 0, score, 1500);
         
-        // Animate Needle
         const scoreRotation = -90 + ((score / 100) * 180);
         setTimeout(() => {
             document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
@@ -782,17 +747,17 @@
         const badge = document.getElementById('score-badge');
         setTimeout(() => {
             if(score < 50) {
-                badge.innerText = "STRONG PETROL FIT";
+                badge.innerText = "पेट्रोल ही सही है";
                 badge.style.color = "#ef4444";
                 badge.style.background = "rgba(239, 68, 68, 0.1)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
             } else if (score < 80) {
-                badge.innerText = "PETROL RECOMMENDED";
+                badge.innerText = "पेट्रोल बेहतर रहेगा";
                 badge.style.color = "#3b82f6";
                 badge.style.background = "rgba(59, 130, 246, 0.1)";
                 badge.style.border = "1px solid rgba(59, 130, 246, 0.3)";
             } else {
-                badge.innerText = "CNG FEASIBLE";
+                badge.innerText = "सीएनजी (CNG) सही है";
                 badge.style.color = "#10b981";
                 badge.style.background = "rgba(16, 185, 129, 0.1)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
@@ -800,7 +765,7 @@
         }, 1200);
 
 
-        // --- 2. CALCULATE ADDITIONAL COST ---
+        // --- 2. CALCULATE ADDITIONAL COST & ROUND OFF ---
         const idxA = document.getElementById('variantA').value;
         const idxB = document.getElementById('variantB').value;
         const varA = variantsData[idxA];
@@ -826,7 +791,10 @@
         if (intA < 0) intA = 0; if (intB < 0) intB = 0;
 
         const intDiff = intB - intA;
-        const totalExtraCost = orpDiff + intDiff;
+        let totalExtraCost = orpDiff + intDiff;
+        
+        // Round off to next thousand
+        const roundedExtraCost = Math.ceil(totalExtraCost / 1000) * 1000;
 
         const costPerKmA = pPrice / varA.mileage;
         const costPerKmB = cPrice / varB.mileage;
@@ -836,7 +804,7 @@
         const noCostMsg = document.getElementById('no-cost-msg');
         const breakEvenCard = document.getElementById('break-even-card');
 
-        if(totalExtraCost <= 0) {
+        if(roundedExtraCost <= 0) {
             extraCostBox.classList.add('hidden');
             noCostMsg.classList.remove('hidden');
             breakEvenCard.classList.add('hidden');
@@ -846,33 +814,38 @@
         extraCostBox.classList.remove('hidden');
         noCostMsg.classList.add('hidden');
         breakEvenCard.classList.remove('hidden');
-
-        document.getElementById('orp-diff-val').innerText = formatCurrency(orpDiff);
-        document.getElementById('int-diff-val').innerText = formatCurrency(intDiff);
         
-        // Elegant Number Animation for Total Extra Cost
         setTimeout(() => {
-            animateValue(document.getElementById('total-extra-val'), 0, totalExtraCost, 1500, true);
+            animateValue(document.getElementById('total-extra-val'), 0, roundedExtraCost, 1500, true);
         }, 500);
 
         // --- 3. BREAK EVEN ---
         if(savingsPerKm > 0) {
-            const breakEvenKm = totalExtraCost / savingsPerKm;
+            const breakEvenKm = roundedExtraCost / savingsPerKm;
             updateOdometerDisplay(Math.round(breakEvenKm).toString());
             
             const breakEvenYears = breakEvenKm / yearlyKm;
             
             setTimeout(() => {
                 animateValue(document.getElementById('time-text-val'), 0, breakEvenYears, 2000, false, true);
+                const timeDesc = document.getElementById('time-desc');
+                
+                if(breakEvenYears <= 2) { 
+                    timeDesc.innerText = "Fast recovery at this running"; 
+                } else if (breakEvenYears <= 4.5) {
+                    timeDesc.innerText = "Moderate recovery time"; 
+                } else { 
+                    timeDesc.innerText = "Slow recovery at this running"; 
+                }
             }, 800);
 
         } else {
             updateOdometerDisplay("999999");
             document.getElementById('time-text-val').innerHTML = `Never`;
-            document.getElementById('time-text-val').style.color = "var(--serious-red)";
+            document.getElementById('time-text-desc').innerText = "CNG is costlier to run";
+            document.getElementById('time-text-desc').style.color = "var(--serious-red)";
         }
         
-        // Scroll slightly down so Results are cleanly in view
         setTimeout(() => {
             window.scrollTo({ top: document.getElementById('part2').offsetTop - 20, behavior: 'smooth' });
         }, 200);
