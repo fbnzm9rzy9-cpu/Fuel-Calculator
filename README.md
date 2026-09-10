@@ -24,8 +24,8 @@
             --text-main: #ffffff;
             --text-muted: #8b9bb4;
             
-            --nexa-green: #10b981;
-            --nexa-green-bg: rgba(16, 185, 129, 0.1);
+            --accent-green: #10b981;
+            --accent-green-bg: rgba(16, 185, 129, 0.1);
             --serious-red: #ef4444;
             --serious-red-bg: rgba(239, 68, 68, 0.1);
         }
@@ -38,29 +38,6 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-        }
-
-        .top-logo-container {
-            position: absolute;
-            top: 25px;
-            left: 30px;
-            z-index: 100;
-            font-weight: 800;
-            font-size: 1.3rem;
-            letter-spacing: 3px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .top-logo-container::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 20px;
-            background: var(--text-main);
-            border-radius: 2px;
         }
 
         .app-container {
@@ -133,7 +110,7 @@
         .custom-input {
             background: var(--input-bg);
             border: 1px solid var(--border-light);
-            color: var(--nexa-green);
+            color: var(--accent-green);
             padding: 16px;
             border-radius: 14px;
             font-size: 1.1rem;
@@ -146,9 +123,9 @@
         }
 
         .custom-input:focus {
-            border-color: var(--nexa-green);
+            border-color: var(--accent-green);
             background: #1f2937;
-            box-shadow: 0 0 0 4px var(--nexa-green-bg);
+            box-shadow: 0 0 0 4px var(--accent-green-bg);
         }
 
         select.custom-input {
@@ -169,14 +146,13 @@
             width: 22px;
             height: 22px;
             margin-right: 8px;
-            stroke: var(--nexa-green);
+            stroke: var(--accent-green);
             fill: none;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
-        /* 1. Moving Road Dash */
         @keyframes dashMove {
             0% { transform: translateY(-5px); opacity: 0; }
             50% { opacity: 1; }
@@ -184,7 +160,6 @@
         }
         .anim-dash { animation: dashMove 1.5s infinite linear; }
 
-        /* 2. Revving Speedometer Needle */
         @keyframes revNeedle {
             0% { transform: rotate(-45deg); }
             30% { transform: rotate(45deg); }
@@ -194,15 +169,13 @@
         }
         .anim-rev { transform-origin: center bottom; animation: revNeedle 3s infinite ease-in-out; }
 
-        /* 3. Laser Scan */
         @keyframes scanBox {
-            0% { transform: translateY(0); stroke: var(--nexa-green); opacity: 0.5;}
+            0% { transform: translateY(0); stroke: var(--accent-green); opacity: 0.5;}
             50% { transform: translateY(12px); stroke: #ffffff; opacity: 1;}
-            100% { transform: translateY(0); stroke: var(--nexa-green); opacity: 0.5;}
+            100% { transform: translateY(0); stroke: var(--accent-green); opacity: 0.5;}
         }
         .anim-scan { animation: scanBox 2s infinite ease-in-out; }
 
-        /* 4. Radar Pulse */
         @keyframes radarPulse {
             0% { r: 1; opacity: 1; stroke-width: 2;}
             100% { r: 10; opacity: 0; stroke-width: 0.5;}
@@ -221,8 +194,6 @@
             font-size: 0.95rem;
             color: var(--text-main);
             font-weight: 600;
-            display: flex;
-            align-items: center;
         }
 
         .pill-group {
@@ -258,16 +229,16 @@
         }
 
         .pill-label input:checked + .pill-text {
-            background: var(--nexa-green-bg);
-            border-color: var(--nexa-green);
-            color: var(--nexa-green);
+            background: var(--accent-green-bg);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
             font-weight: 700;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
         }
 
         /* --- BUTTONS --- */
         .btn-primary {
-            background: var(--nexa-green);
+            background: var(--accent-green);
             color: #000000;
             border: none;
             padding: 18px;
@@ -458,7 +429,6 @@
         .reveal-4 { animation: elegantFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards; opacity: 0; }
 
         @media (max-width: 600px) {
-            .top-logo-container { position: relative; top: 0; left: 0; display: flex; justify-content: center; margin-bottom: 5px; width: 100%;}
             .app-container { margin-top: 10px;}
             .odo-digit { width: 42px; height: 60px; font-size: 2.2rem; }
             .header-section h1 { font-size: 2.2rem; }
@@ -467,10 +437,6 @@
     </style>
 </head>
 <body>
-
-<div class="top-logo-container">
-    NEXA
-</div>
 
 <div class="app-container">
 
@@ -517,7 +483,7 @@
                 <input type="number" id="dailyDrivingInput" class="custom-input" value="80">
             </div>
 
-            <!-- 1. Driving Preference -->
+            <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
             <div class="question-block" style="margin-top: 10px;">
                 <label class="question-label">
                     <!-- Animated Speedometer Icon -->
@@ -529,13 +495,13 @@
                     Driving preference
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_pref" value="100"><div class="pill-text">Economy</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="100" checked><div class="pill-text">Economy</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="50"><div class="pill-text">Balanced</div></label>
-                    <label class="pill-label"><input type="radio" name="q_pref" value="0" checked><div class="pill-text">Performance</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
                 </div>
             </div>
 
-            <!-- 2. Boot Space Importance -->
+            <!-- 2. Boot Space Importance (Not important -> Somewhat -> Very) -->
             <div class="question-block">
                 <label class="question-label">
                     <!-- Animated Scan Box Icon -->
@@ -547,13 +513,13 @@
                     Boot space importance
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_boot" value="100"><div class="pill-text">Not<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="100" checked><div class="pill-text">Not<br>important</div></label>
                     <label class="pill-label"><input type="radio" name="q_boot" value="50"><div class="pill-text">Somewhat</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="0" checked><div class="pill-text">Very<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_boot" value="0"><div class="pill-text">Very<br>important</div></label>
                 </div>
             </div>
 
-            <!-- 3. CNG station convenience -->
+            <!-- 3. CNG station convenience (Inconvenient -> Manageable -> Easy) -->
             <div class="question-block">
                 <label class="question-label">
                     <!-- Animated Radar/Pin Icon -->
@@ -649,7 +615,6 @@
 
             <!-- SERIOUS TIME TEXT -->
             <div class="serious-time-box">
-                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Time Required</p>
                 <div class="serious-time-val" id="time-text-val">0.0 <span style="font-size: 1.2rem; font-weight: 600; color: var(--serious-red);">Yrs</span></div>
                 <div id="time-text-desc" style="font-size: 1rem; font-weight: 600; margin-top: 5px; color: var(--text-muted);">-</div>
             </div>
