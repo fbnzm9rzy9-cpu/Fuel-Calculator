@@ -136,7 +136,6 @@
             box-shadow: 0 0 0 4px var(--nexa-green-bg);
         }
 
-        /* Validation Error State */
         .input-error {
             border-color: var(--serious-red) !important;
             box-shadow: 0 0 0 4px var(--serious-red-bg) !important;
@@ -325,17 +324,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
         .gauge-svg {
             width: 100%;
-            max-width: 320px;
+            max-width: 340px; /* Slightly larger to fit text */
             overflow: visible;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 10px; 
+            margin-top: 5px; 
         }
 
         .gauge-result-badge {
@@ -405,42 +405,49 @@
             letter-spacing: -2px;
         }
 
-        /* --- ODOMETER & TIME DISPLAY --- */
+        /* --- ODOMETER (MECHANICAL REALISM & HIGHLIGHTED) --- */
         .odometer-section {
             text-align: center;
-            padding: 20px 0 5px 0;
+            padding: 25px 0 25px 0;
             background: #080b11; 
             border-radius: 16px;
-            border: 1px inset rgba(255,255,255,0.05);
+            
+            /* COMPLETE HIGHLIGHT AS REQUESTED */
+            border: 2px solid var(--nexa-green);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.4), inset 0 5px 15px rgba(0,0,0,0.8);
         }
 
         .odometer-display {
-            display: flex;
+            display: inline-flex;
             justify-content: center;
-            gap: 4px;
-            margin-bottom: 15px;
+            background: #000000; /* Black background for physical mechanical box */
+            padding: 5px;
+            border-radius: 8px;
+            border: 2px solid #334155;
+            margin-bottom: 5px;
         }
 
         .odo-digit {
-            background: linear-gradient(180deg, #111827 0%, #030712 50%, #111827 100%);
+            background: linear-gradient(180deg, #111111 0%, #2a2a2a 50%, #111111 100%);
             color: #ffffff;
             font-family: 'Space Mono', monospace;
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            width: 48px;
-            height: 68px;
-            border-radius: 6px;
-            border: 1px solid #1f2937;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,1), 0 2px 5px rgba(0,0,0,0.5);
+            width: 44px;
+            height: 64px;
+            border-right: 1px solid #000;
             overflow: hidden;
             position: relative;
         }
         
+        .odo-digit:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+        .odo-digit:last-child { border-right: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+
         .odo-digit::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; height: 40%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.6) 100%);
             pointer-events: none;
         }
 
@@ -456,6 +463,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
         .serious-time-box {
@@ -481,7 +489,7 @@
             font-size: 3rem;
             font-weight: 800;
             color: var(--nexa-green);
-            margin: 0; 
+            margin: 10px 0; 
             font-family: 'Outfit', sans-serif;
             opacity: 1;
             line-height: 1;
@@ -504,7 +512,7 @@
 
         @media (max-width: 600px) {
             .app-container { margin-top: 10px;}
-            .odo-digit { width: 40px; height: 58px; font-size: 2.2rem; }
+            .odo-digit { width: 36px; height: 56px; font-size: 2.2rem; }
             .header-section h1 { font-size: 2.2rem; }
         }
 
@@ -522,7 +530,7 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Daily Running (MOVED TO TOP) -->
+            <!-- 1. Daily Running (TOP POSITION) -->
             <div class="input-box">
                 <label>
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -535,7 +543,7 @@
                 <input type="number" id="dailyDrivingInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
             </div>
 
-            <!-- Purpose of vehicle utility -->
+            <!-- 2. Purpose of vehicle utility -->
             <div class="question-block" style="margin-top: 5px;">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -551,7 +559,7 @@
                 </div>
             </div>
 
-            <!-- Variant Selection -->
+            <!-- 3. Variant Selection -->
             <div class="input-grid" style="margin-top: 10px;">
                 <div class="input-box">
                     <label>Petrol Variant</label>
@@ -563,7 +571,7 @@
                 </div>
             </div>
 
-            <!-- Prices -->
+            <!-- 4. Prices -->
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Price (₹/L)</label>
@@ -575,7 +583,7 @@
                 </div>
             </div>
 
-            <!-- Manual Mileage -->
+            <!-- 5. Manual Mileage -->
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Mileage (km/L)</label>
@@ -587,7 +595,7 @@
                 </div>
             </div>
 
-            <!-- Live Per KM Running Cost Display -->
+            <!-- 6. Live Per KM Running Cost Display -->
             <div class="cpk-container">
                 <div class="cpk-item">
                     <span class="cpk-label">Petrol Cost / KM</span>
@@ -599,7 +607,7 @@
                 </div>
             </div>
 
-            <!-- 1. Driving Preference (Economy -> Balanced -> Performance) -->
+            <!-- 7. Driving Preference (Economy -> Balanced -> Performance) -->
             <div class="question-block" style="margin-top: 10px;">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -612,13 +620,13 @@
                     Driving preference
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_pref" value="100"><div class="pill-text">Economy</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="100" checked><div class="pill-text">Economy</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="50"><div class="pill-text">Balanced</div></label>
-                    <label class="pill-label"><input type="radio" name="q_pref" value="0" checked><div class="pill-text">Performance</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
                 </div>
             </div>
 
-            <!-- 2. Boot Space Importance (Not important -> Somewhat -> Very) -->
+            <!-- 8. Boot Space Importance (Not important -> Somewhat -> Very) -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -635,7 +643,7 @@
                 </div>
             </div>
 
-            <!-- 3. CNG station convenience (Inconvenient -> Manageable -> Easy) -->
+            <!-- 9. CNG station convenience (Inconvenient -> Manageable -> Easy) -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -661,34 +669,31 @@
         <!-- 1. SUITABILITY METER (ANALOG CAR DIAL) -->
         <div class="card reveal-1">
             <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 300 180">
+                <svg class="gauge-svg" viewBox="0 0 300 170">
                     <defs>
                         <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#3b82f6" /> 
                             <stop offset="100%" stop-color="#10b981" /> 
                         </linearGradient>
                         
-                        <!-- Invisible path for curving the text -->
-                        <path id="curvePath" d="M 50 150 A 100 100 0 0 1 250 150" fill="transparent" />
+                        <!-- Invisible path for curving text EXACTLY on outer circumference -->
+                        <path id="outerCurve" d="M 10 150 A 140 140 0 0 1 290 150" fill="transparent" />
                     </defs>
 
-                    <!-- Background Dark Arch mimicking the speedometer depth -->
+                    <!-- Background Dark Arch -->
                     <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="#111827" stroke-width="40" stroke-linecap="butt"/>
                     
                     <!-- Color Arc mapping -->
                     <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="url(#score-grad)" stroke-width="40" stroke-linecap="butt" opacity="0.15"/>
 
-                    <!-- Dynamic Ticks and Numbers injected via JS -->
+                    <!-- Dynamic Ticks and Numbers -->
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
                     
-                    <!-- Dial Subtext -->
-                    <text x="150" y="110" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
-
-                    <!-- Curved Text along circumference using textPath -->
-                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="800" letter-spacing="1">
-                        <textPath href="#curvePath" startOffset="10%" text-anchor="middle" fill="#3b82f6">PETROL</textPath>
-                        <textPath href="#curvePath" startOffset="90%" text-anchor="middle" fill="#10b981">CNG</textPath>
+                    <!-- Curved Text along outer circumference -->
+                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="800" letter-spacing="2">
+                        <textPath href="#outerCurve" startOffset="18%" text-anchor="middle" fill="#3b82f6">PETROL</textPath>
+                        <textPath href="#outerCurve" startOffset="82%" text-anchor="middle" fill="#10b981">CNG</textPath>
                     </text>
 
                     <!-- Analog Car Needle -->
@@ -707,11 +712,12 @@
 
         <!-- 2. ADDITIONAL COST -->
         <div class="card reveal-2" id="extra-cost-card">
-            <div class="card-title-group" style="margin-bottom: 5px;">
-                <h2 style="font-size: 1.3rem;">Total additional investment for CNG Car</h2>
-            </div>
-            
             <div id="extra-cost-container">
+                <div class="total-cost-row" style="margin-bottom: 20px;">
+                    <span class="total-cost-label">Total additional investment for CNG Car</span>
+                    <span class="total-cost-value" id="total-extra-val">0</span>
+                </div>
+
                 <div class="cost-row">
                     <span class="cost-label">Additional cost of CNG vehicle</span>
                     <span class="cost-value" id="orp-diff-val">₹0</span>
@@ -719,12 +725,6 @@
                 <div class="cost-row">
                     <span class="cost-label">Additional EMI Burden (@8.5% for 5 Years)</span>
                     <span class="cost-value" id="int-diff-val">₹0</span>
-                </div>
-                
-                <div class="cost-divider"></div>
-
-                <div class="total-cost-row" style="padding-top: 15px; padding-bottom: 15px;">
-                    <span class="total-cost-value" id="total-extra-val">0</span>
                 </div>
             </div>
 
@@ -735,15 +735,16 @@
 
         <!-- 3. SAVINGS START AFTER -->
         <div class="card reveal-3" id="break-even-card">
-            <div style="text-align: center; margin-bottom: 5px;">
+            <div style="text-align: center; margin-bottom: 10px;">
                 <p style="color: var(--serious-red); font-size: 1.8rem; font-weight: 800; letter-spacing: 1px;">NO SAVINGS UPTO:</p>
             </div>
 
-            <!-- ODOMETER -->
+            <!-- ODOMETER (COMPLETELY HIGHLIGHTED) -->
             <div class="odometer-section">
                 <div class="odometer-display" id="odometer">
                     <!-- Dynamically generated by setupOdometer() -->
                 </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Kilometres</div>
             </div>
 
             <div class="ampersand">&</div>
@@ -786,7 +787,7 @@
         selectA.value = petrolIndex !== -1 ? petrolIndex : 0;
         selectB.value = cngIndex !== -1 ? cngIndex : 0;
 
-        // Auto-fill mileage when dropdown changes (after initial blank state)
+        // Auto-fill mileage when dropdown changes
         selectA.addEventListener('change', () => {
             document.getElementById('petrolMileageInput').value = variantsData[selectA.value].mileage;
             updatePerKmCost();
@@ -926,8 +927,9 @@
     }
 
     function generateReport() {
-        // Stop execution if inputs are not filled
+        // Stop execution if any numerical inputs are missing or invalid
         if (!validateInputs()) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
 
@@ -1047,6 +1049,7 @@
         // 3. Total
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
+        // Calculate exact savings
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
@@ -1073,8 +1076,9 @@
             animateValue(document.getElementById('total-extra-val'), 0, totalExtraCost, 1500, true);
         }, 500);
 
-        // --- 3. BREAK EVEN ---
+        // --- 3. BREAK EVEN CALCULATION ---
         if(savingsPerKm > 0) {
+            // How many KMs are required to cover the rounded extra investment?
             const breakEvenKm = totalExtraCost / savingsPerKm;
             updateOdometerDisplay(Math.round(breakEvenKm).toString());
             
@@ -1100,6 +1104,18 @@
         setupOdometer();
         setupDropdowns();
         drawAnalogDial();
+        
+        // Clear manual inputs initially to force user to review/click them
+        document.getElementById('petrolPriceInput').value = "";
+        document.getElementById('cngPriceInput').value = "";
+        document.getElementById('petrolMileageInput').value = "";
+        document.getElementById('cngMileageInput').value = "";
+        document.getElementById('dailyDrivingInput').value = "";
+        
+        // Populate mileage inputs based on default dropdown
+        document.getElementById('petrolMileageInput').value = variantsData[document.getElementById('variantA').value].mileage;
+        document.getElementById('cngMileageInput').value = variantsData[document.getElementById('variantB').value].mileage;
+        
         updatePerKmCost();
     };
 
