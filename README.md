@@ -51,20 +51,19 @@
             margin: 0 auto;
         }
 
-        /* --- LARGE & BOLD NEXA-C4 HEADER --- */
+        /* --- CLEAN BRAND HEADER --- */
         .branding-header {
             display: flex;
             align-items: center;
             padding: 4px 0 0 2px;
         }
 
-        .brand-title-large {
-            font-size: 2.5rem;
-            font-weight: 900;
+        .brand-title-match {
+            font-size: 2.1rem;
+            font-weight: 800;
             color: #ffffff;
-            letter-spacing: 2px;
-            line-height: 1;
-            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
         /* --- TITLE WITH DUAL HORIZONTAL LINES --- */
@@ -557,7 +556,7 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
-            .brand-title-large { font-size: 2rem; }
+            .brand-title-match { font-size: 1.8rem; }
         }
 
     </style>
@@ -566,9 +565,9 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING: Large, bold NEXA-C4 only -->
+    <!-- 1. BRANDING: Only NEXA-C4 in clean white -->
     <div class="branding-header">
-        <div class="brand-title-large">NEXA-C4</div>
+        <div class="brand-title-match">NEXA-C4</div>
     </div>
 
     <!-- 2. MAIN TITLE WITH DUAL HORIZONTAL LINES -->
@@ -728,11 +727,6 @@
                             <stop offset="0%" stop-color="#3b82f6" /> 
                             <stop offset="100%" stop-color="#10b981" /> 
                         </linearGradient>
-
-                        <!-- Invisible path for PETROL near unit 40 -->
-                        <path id="petrolCurve" d="M 50 160 A 120 120 0 0 1 120 40" fill="none" />
-                        <!-- Invisible path for CNG aligned precisely in front of digit 80 on outer circumference -->
-                        <path id="cngCurve" d="M 235 55 A 125 125 0 0 1 290 145" fill="none" />
                     </defs>
 
                     <!-- Background Dark Arch -->
@@ -745,15 +739,9 @@
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
                     
-                    <!-- PETROL text placed near unit 40 on circumference -->
-                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="900" letter-spacing="2" fill="#3b82f6">
-                        <textPath href="#petrolCurve" startOffset="50%" text-anchor="middle">PETROL</textPath>
-                    </text>
-
-                    <!-- CNG text perfectly aligned in front of digit 80 on outer circumference -->
-                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="900" letter-spacing="2" fill="#10b981">
-                        <textPath href="#cngCurve" startOffset="52%" text-anchor="middle">CNG</textPath>
-                    </text>
+                    <!-- Outer Circumference Texts -->
+                    <text x="44.5" y="87.5" fill="#3b82f6" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(300 44.5 87.5)" text-anchor="middle">PETROL</text>
+                    <text x="295.5" y="87.5" fill="#10b981" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(60 295.5 87.5)" text-anchor="middle">CNG</text>
 
                     <!-- Dial Subtext -->
                     <text x="170" y="120" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
@@ -1026,21 +1014,26 @@
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
+        // 1. Daily Running (Max 30 points)
         if (monthlyKmEquiv <= 500) score += 0;
         else if (monthlyKmEquiv <= 1000) score += 8; 
         else if (monthlyKmEquiv <= 2000) score += 18; 
         else score += 30;
 
+        // 2. Purpose of Vehicle Utility (Max 15 points)
         const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
         if (q1 === 0) score += 0;       
         else score += 15;               
 
+        // 3. Boot Space (Max 20 points)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
         if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 20;
 
+        // 4. Driving Preference (Max 15 points)
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
         if (q3 === 0) score += 0; else if (q3 === 50) score += 7; else score += 15;
 
+        // 5. Station Convenience (Max 20 points)
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
         if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 20;
 
@@ -1082,6 +1075,7 @@
             }
         }, 1200);
 
+
         // --- 2. CALCULATE ADDITIONAL COST (ROUNDED TO NEXT THOUSAND) ---
         const idxA = document.getElementById('variantA').value;
         const idxB = document.getElementById('variantB').value;
@@ -1095,9 +1089,11 @@
         const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
         const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
 
+        // Difference in ORP (Rounded to next thousand)
         const orpDiffRaw = varB.on_road_price - varA.on_road_price;
         const orpDiffRounded = Math.ceil(orpDiffRaw / 1000) * 1000;
 
+        // Extra EMI Calculation
         let loanA = Math.round((varA.on_road_price * 0.8) / 100000) * 100000;
         let loanB = Math.round((varB.on_road_price * 0.8) / 100000) * 100000;
         if (loanA > varA.on_road_price) loanA = varA.on_road_price;
@@ -1115,6 +1111,7 @@
         
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
+        // Savings per KM
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
