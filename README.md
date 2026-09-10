@@ -6,7 +6,7 @@
     <title>सही फ्यूल चुना क्या?</title>
     <style>
         /* Premium Fonts Setup */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
         * {
             margin: 0;
@@ -36,7 +36,7 @@
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at 50% 0%, #111827 0%, transparent 100%);
             color: var(--text-main);
-            padding: 24px 16px 60px 16px;
+            padding: 20px 16px 60px 16px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -51,29 +51,19 @@
             margin: 0 auto;
         }
 
-        /* --- CLEAN BRAND & REPO HEADER (IN NORMAL DOCUMENT FLOW) --- */
+        /* --- CLEAN BRAND HEADER --- */
         .branding-header {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
-            padding: 0 4px;
+            align-items: center;
+            padding: 4px 0 0 2px;
         }
 
-        .repo-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--nexa-blue);
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-        }
-
-        .brand-subtitle {
-            font-size: 0.95rem;
-            font-weight: 700;
+        .brand-title-large {
+            font-size: 2.2rem;
+            font-weight: 900;
             color: var(--nexa-blue);
             letter-spacing: 2px;
-            opacity: 0.85;
+            line-height: 1;
             text-transform: uppercase;
         }
 
@@ -81,7 +71,7 @@
         .header-section {
             text-align: center;
             width: 100%;
-            margin: 5px 0 10px 0;
+            margin: 4px 0 10px 0;
         }
 
         .header-section h1 {
@@ -90,7 +80,7 @@
             color: var(--text-main);
             letter-spacing: -0.5px;
             margin: 0;
-            padding: 22px 0; 
+            padding: 20px 0; 
             border-top: 1.5px solid #ffffff; 
             border-bottom: 1.5px solid #ffffff; 
             line-height: 1.2;
@@ -567,6 +557,7 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
+            .brand-title-large { font-size: 2rem; }
         }
 
     </style>
@@ -575,10 +566,9 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING (In document flow, no absolute overlaps) -->
+    <!-- 1. BRANDING: Large, Bold NEXA-C4 (Clean, in-flow layout) -->
     <div class="branding-header">
-        <div class="repo-title">Fuel-Suitability-Tool</div>
-        <div class="brand-subtitle">NEXA-C4</div>
+        <div class="brand-title-large">NEXA-C4</div>
     </div>
 
     <!-- 2. MAIN TITLE WITH DUAL HORIZONTAL LINES -->
@@ -853,7 +843,6 @@
         selectA.value = petrolIndex !== -1 ? petrolIndex : 0;
         selectB.value = cngIndex !== -1 ? cngIndex : 0;
 
-        // Auto-fill mileage when dropdown changes
         selectA.addEventListener('change', () => {
             document.getElementById('petrolMileageInput').value = variantsData[selectA.value].mileage;
             updatePerKmCost();
@@ -1101,11 +1090,9 @@
         const pMil = parseFloat(document.getElementById('petrolMileageInput').value) || 1;
         const cMil = parseFloat(document.getElementById('cngMileageInput').value) || 1;
 
-        // Difference in ORP (Rounded to next thousand)
         const orpDiffRaw = varB.on_road_price - varA.on_road_price;
         const orpDiffRounded = Math.ceil(orpDiffRaw / 1000) * 1000;
 
-        // Extra EMI Calculation
         let loanA = Math.round((varA.on_road_price * 0.8) / 100000) * 100000;
         let loanB = Math.round((varB.on_road_price * 0.8) / 100000) * 100000;
         if (loanA > varA.on_road_price) loanA = varA.on_road_price;
@@ -1123,7 +1110,6 @@
         
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
-        // Savings per KM
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
@@ -1178,7 +1164,6 @@
         setupDropdowns();
         drawAnalogDial();
         
-        // Ensure manual inputs start completely blank
         document.getElementById('petrolPriceInput').value = "";
         document.getElementById('cngPriceInput').value = "";
         document.getElementById('petrolMileageInput').value = "";
