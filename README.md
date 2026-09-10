@@ -28,9 +28,11 @@
             --nexa-green: #10b981;
             --nexa-green-bg: rgba(16, 185, 129, 0.1);
             --nexa-blue: #3b82f6;
-            --nexa-yellow: #eab308;
             --serious-red: #ef4444;
             --serious-red-bg: rgba(239, 68, 68, 0.1);
+            --zone-red: #ef4444;
+            --zone-yellow: #eab308;
+            --zone-green: #10b981;
         }
 
         body {
@@ -381,11 +383,11 @@
 
         .gauge-text-container {
             text-align: center;
-            margin-top: 0px; 
+            margin-top: -10px; 
         }
 
         .gauge-result-badge {
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 14px;
             font-size: 1.6rem; 
             font-weight: 800;
@@ -731,7 +733,6 @@
                 </div>
             </div>
 
-            <!-- BUTTON RENAMED -->
             <button class="btn-primary" onclick="generateReport()">Check My CNG Suitability</button>
         </div>
     </div>
@@ -739,52 +740,32 @@
     <!-- ================= PART 2: RESULTS ================= -->
     <div id="part2" class="hidden reveal-container">
         
-        <!-- 1. REALISTIC 3-ZONE SPEEDOMETER -->
+        <!-- 1. REALISTIC 3-ZONE SPEEDOMETER (No "Calculating" Text) -->
         <div class="card reveal-1">
             <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 340 250">
-                    <defs>
-                        <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
-                        </filter>
-                        <radialGradient id="metal-cap" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#475569"/>
-                            <stop offset="70%" stop-color="#1e293b"/>
-                            <stop offset="100%" stop-color="#0f172a"/>
-                        </radialGradient>
-                    </defs>
-
-                    <!-- Base Dashboard Backing Plate -->
-                    <path d="M 46.75 215 A 140 140 0 0 1 293.25 215" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
-
-                    <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
-                    <!-- RED ZONE (0-50): Angle -210 to -90 -->
-                    <path d="M 61.75 212.5 A 125 125 0 0 1 170 25" fill="none" stroke="#dc2626" stroke-width="18" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
+                <svg class="gauge-svg" viewBox="0 0 340 260">
                     
-                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
-                    <path d="M 170 25 A 125 125 0 0 1 262.89 66.36" fill="none" stroke="#eab308" stroke-width="18" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
-                    
-                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
-                    <path d="M 262.89 66.36 A 125 125 0 0 1 278.25 212.5" fill="none" stroke="#10b981" stroke-width="18" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
+                    <!-- Exact 3-Zone Arcs perfectly divided -->
+                    <!-- RED ZONE (0-50) -->
+                    <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="var(--zone-red)" stroke-width="16" stroke-linecap="butt"/>
+                    <!-- YELLOW ZONE (50-70) -->
+                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="var(--zone-yellow)" stroke-width="16" stroke-linecap="butt"/>
+                    <!-- GREEN ZONE (70-100) -->
+                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="16" stroke-linecap="butt"/>
 
                     <!-- Dynamic Ticks and Numbers injected via JS -->
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
                     
-                    <!-- Clean Digital Score Output (No "CALCULATING" text) -->
-                    <text id="center-score-val" x="170" y="215" fill="#ffffff" font-size="46" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">0</text>
+                    <!-- Clean Digital Score Output directly under the needle pivot -->
+                    <text id="center-score-val" x="170" y="225" fill="#ffffff" font-size="56" font-family="'Outfit', sans-serif" font-weight="800" text-anchor="middle">0</text>
 
-                    <!-- Realistic Analog Car Needle -->
-                    <g id="score-needle" style="transform-origin: 170px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);" filter="url(#drop-shadow)">
-                        <!-- Main pointer body -->
-                        <polygon points="167,150 173,150 171,45 169,45" fill="#f8fafc"/>
-                        <!-- Red Accent line -->
-                        <polygon points="169,150 171,150 170,45 169,45" fill="#ef4444"/>
-                        <!-- Counterweight -->
-                        <polygon points="166,165 174,165 173,150 167,150" fill="#334155"/>
-                        <!-- Machined Metal Center Cap -->
-                        <circle cx="170" cy="150" r="12" fill="url(#metal-cap)" stroke="#94a3b8" stroke-width="1.5"/>
-                        <circle cx="170" cy="150" r="3" fill="#0f172a"/>
+                    <!-- Realistic Analog Car Needle with Hollow Center -->
+                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                        <!-- Hollow Pivot Ring -->
+                        <circle cx="170" cy="160" r="12" fill="#0f141e" stroke="#ffffff" stroke-width="4"/>
+                        <!-- White Pointer Line -->
+                        <line x1="170" y1="148" x2="170" y2="45" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
                     </g>
                 </svg>
 
@@ -929,7 +910,6 @@
         }
     }
 
-    // Mathematical Ticks designed to fit cleanly inside the new 3-zone arcs
     function drawAnalogDial() {
         const ticksGroup = document.getElementById('dial-ticks');
         const labelsGroup = document.getElementById('dial-labels');
@@ -937,32 +917,33 @@
         let ticks = '';
         let labels = '';
         const cx = 170;
-        const cy = 150;
+        const cy = 160;
         
         for (let i = 0; i <= 100; i += 2) {
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            // Adjust inner/outer to match the new 18px stroke on the bands
-            let rOuter = 110;
+            // Adjust to sit crisply inside the 16px colored arc
+            let rOuter = 112; 
             let isMajor = (i % 20 === 0);
-            let isMedium = (i % 10 === 0);
+            let isMinor = (i % 10 === 0);
             
-            let rInner = isMajor ? 95 : (isMedium ? 100 : 104);
+            let rInner = isMajor ? 97 : (isMinor ? 104 : 108);
             let strokeW = isMajor ? 3 : 2;
+            let tickOpacity = isMajor ? 1 : 0.6;
             
             let x1 = cx + rOuter * Math.cos(rad);
             let y1 = cy + rOuter * Math.sin(rad);
             let x2 = cx + rInner * Math.cos(rad);
             let y2 = cy + rInner * Math.sin(rad);
             
-            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${isMajor ? 1 : 0.4}" />`;
+            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${tickOpacity}" />`;
             
             if (isMajor) {
                 let textR = 75;
                 let tx = cx + textR * Math.cos(rad);
                 let ty = cy + textR * Math.sin(rad) + 5; 
-                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Space Mono', monospace" font-size="14" font-weight="700" text-anchor="middle">${i}</text>`;
+                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="15" font-weight="700" text-anchor="middle">${i}</text>`;
             }
         }
         
@@ -1098,37 +1079,37 @@
             // RED BAND 1: 0 - 49
             if(score < 50) {
                 badge.innerText = "पेट्रोल ही सही है";
-                badge.style.color = "#ef4444";
+                badge.style.color = "var(--zone-red)";
                 badge.style.background = "rgba(239, 68, 68, 0.1)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
                 
-                odoSection.style.borderColor = "#ef4444";
+                odoSection.style.borderColor = "var(--zone-red)";
                 odoSection.style.boxShadow = "0 0 25px rgba(239, 68, 68, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "#ef4444";
+                ampersand.style.color = "var(--zone-red)";
                 ampersand.style.textShadow = "0 0 15px rgba(239, 68, 68, 0.4)";
             } 
             // YELLOW BAND 2: 50 - 69
             else if (score < 70) {
                 badge.innerText = "पेट्रोल बेहतर रहेगा";
-                badge.style.color = "#eab308";
+                badge.style.color = "var(--zone-yellow)";
                 badge.style.background = "rgba(234, 179, 8, 0.1)";
                 badge.style.border = "1px solid rgba(234, 179, 8, 0.3)";
 
-                odoSection.style.borderColor = "#eab308";
+                odoSection.style.borderColor = "var(--zone-yellow)";
                 odoSection.style.boxShadow = "0 0 25px rgba(234, 179, 8, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "#eab308";
+                ampersand.style.color = "var(--zone-yellow)";
                 ampersand.style.textShadow = "0 0 15px rgba(234, 179, 8, 0.4)";
             } 
             // GREEN BAND 3: 70 - 100
             else {
                 badge.innerText = "सीएनजी (CNG) सही है";
-                badge.style.color = "#10b981";
+                badge.style.color = "var(--zone-green)";
                 badge.style.background = "rgba(16, 185, 129, 0.1)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
-
-                odoSection.style.borderColor = "#10b981";
+                
+                odoSection.style.borderColor = "var(--zone-green)";
                 odoSection.style.boxShadow = "0 0 25px rgba(16, 185, 129, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "#10b981";
+                ampersand.style.color = "var(--zone-green)";
                 ampersand.style.textShadow = "0 0 15px rgba(16, 185, 129, 0.4)";
             }
         }, 1200);
