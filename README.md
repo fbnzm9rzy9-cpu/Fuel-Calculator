@@ -71,7 +71,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px; 
-            margin-top: 60px; /* Pushed down slightly to clear the NEXA logo */
+            margin-top: 60px; 
         }
 
         /* --- HEADER SECTION REBUILT --- */
@@ -87,9 +87,9 @@
             color: var(--text-main);
             letter-spacing: -1px;
             margin: 0;
-            padding: 24px 0; /* Exact vertical centering between borders */
-            border-top: 1.5px solid #ffffff; /* Top alignment line */
-            border-bottom: 1.5px solid #ffffff; /* Bottom alignment line */
+            padding: 24px 0; 
+            border-top: 1.5px solid #ffffff; 
+            border-bottom: 1.5px solid #ffffff; 
             line-height: 1.2;
         }
 
@@ -441,7 +441,7 @@
             padding: 25px 0 25px 0;
             background: #080b11; 
             border-radius: 16px;
-            border: 2px solid transparent; /* Controlled dynamically via JS */
+            border: 2px solid transparent; 
             transition: all 0.5s ease-in-out;
         }
 
@@ -563,7 +563,19 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Daily Running (TOP POSITION) -->
+            <!-- 1. Variant Selection -->
+            <div class="input-grid">
+                <div class="input-box">
+                    <label>Petrol Variant</label>
+                    <select id="variantA" class="custom-input"></select>
+                </div>
+                <div class="input-box">
+                    <label>CNG Variant</label>
+                    <select id="variantB" class="custom-input"></select>
+                </div>
+            </div>
+            
+            <!-- 2. Daily Running -->
             <div class="input-box">
                 <label>
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -576,35 +588,7 @@
                 <input type="number" id="dailyDrivingInput" class="custom-input" placeholder="Enter Value" oninput="updatePerKmCost()">
             </div>
 
-            <!-- 2. Purpose of vehicle utility -->
-            <div class="question-block" style="margin-top: 5px;">
-                <label class="question-label">
-                    <svg class="tech-icon" viewBox="0 0 24 24">
-                        <rect x="3" y="8" width="18" height="12" rx="2" stroke="rgba(255,255,255,0.4)"/>
-                        <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="rgba(255,255,255,0.4)"/>
-                        <circle cx="12" cy="14" r="2" fill="rgba(255,255,255,0.8)" class="anim-radar"/>
-                    </svg>
-                    Purpose of vehicle utility
-                </label>
-                <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_purpose" value="0" checked><div class="pill-text">Personal</div></label>
-                    <label class="pill-label"><input type="radio" name="q_purpose" value="100"><div class="pill-text">Taxi</div></label>
-                </div>
-            </div>
-
-            <!-- 3. Variant Selection -->
-            <div class="input-grid" style="margin-top: 10px;">
-                <div class="input-box">
-                    <label>Petrol Variant</label>
-                    <select id="variantA" class="custom-input"></select>
-                </div>
-                <div class="input-box">
-                    <label>CNG Variant</label>
-                    <select id="variantB" class="custom-input"></select>
-                </div>
-            </div>
-
-            <!-- 4. Prices -->
+            <!-- 3. Prices -->
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Price (₹/L)</label>
@@ -616,7 +600,7 @@
                 </div>
             </div>
 
-            <!-- 5. Manual Mileage -->
+            <!-- 4. Manual Mileage -->
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Mileage (km/L)</label>
@@ -628,7 +612,7 @@
                 </div>
             </div>
 
-            <!-- 6. Live Per KM Running Cost Display -->
+            <!-- 5. Live Per KM Running Cost Display -->
             <div class="cpk-container">
                 <div class="cpk-item">
                     <span class="cpk-label">Petrol Cost / KM</span>
@@ -640,8 +624,24 @@
                 </div>
             </div>
 
+            <!-- 6. Vehicle Usage (Formerly Purpose of vehicle utility) -->
+            <div class="question-block" style="margin-top: 5px;">
+                <label class="question-label">
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <rect x="3" y="8" width="18" height="12" rx="2" stroke="rgba(255,255,255,0.4)"/>
+                        <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="rgba(255,255,255,0.4)"/>
+                        <circle cx="12" cy="14" r="2" fill="rgba(255,255,255,0.8)" class="anim-radar"/>
+                    </svg>
+                    Vehicle Usage
+                </label>
+                <div class="pill-group">
+                    <label class="pill-label"><input type="radio" name="q_purpose" value="0" checked><div class="pill-text">Personal</div></label>
+                    <label class="pill-label"><input type="radio" name="q_purpose" value="100"><div class="pill-text">Taxi</div></label>
+                </div>
+            </div>
+
             <!-- 7. Driving Preference (Economy -> Balanced -> Performance) -->
-            <div class="question-block" style="margin-top: 10px;">
+            <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <g class="anim-steer">
@@ -1106,7 +1106,7 @@
         // 3. Total
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
-        // Calculate exact savings per KM using manual inputs
+        // Calculate exact savings using manual inputs
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
