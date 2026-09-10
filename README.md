@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -329,7 +330,7 @@
 
         .gauge-svg {
             width: 100%;
-            max-width: 340px; /* Slightly larger to fit text */
+            max-width: 340px; 
             overflow: visible;
         }
 
@@ -408,23 +409,23 @@
         /* --- ODOMETER (MECHANICAL REALISM & HIGHLIGHTED) --- */
         .odometer-section {
             text-align: center;
-            padding: 25px 0 25px 0;
+            padding: 25px 0 20px 0;
             background: #080b11; 
             border-radius: 16px;
-            
-            /* COMPLETE HIGHLIGHT AS REQUESTED */
-            border: 2px solid var(--nexa-green);
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.4), inset 0 5px 15px rgba(0,0,0,0.8);
+            /* Border and glow are controlled dynamically by JS based on result */
+            border: 2px solid transparent;
+            transition: all 0.5s ease-in-out;
         }
 
         .odometer-display {
             display: inline-flex;
             justify-content: center;
-            background: #000000; /* Black background for physical mechanical box */
-            padding: 5px;
-            border-radius: 8px;
+            background: #000000; 
+            padding: 6px;
+            border-radius: 10px;
             border: 2px solid #334155;
             margin-bottom: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
         .odo-digit {
@@ -433,21 +434,21 @@
             font-family: 'Space Mono', monospace;
             font-size: 2.8rem;
             font-weight: 700;
-            width: 44px;
-            height: 64px;
+            width: 46px;
+            height: 66px;
             border-right: 1px solid #000;
             overflow: hidden;
             position: relative;
         }
         
-        .odo-digit:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
-        .odo-digit:last-child { border-right: none; border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+        .odo-digit:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+        .odo-digit:last-child { border-right: none; border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
 
         .odo-digit::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.6) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%);
             pointer-events: none;
         }
 
@@ -512,7 +513,7 @@
 
         @media (max-width: 600px) {
             .app-container { margin-top: 10px;}
-            .odo-digit { width: 36px; height: 56px; font-size: 2.2rem; }
+            .odo-digit { width: 38px; height: 58px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
         }
 
@@ -669,38 +670,37 @@
         <!-- 1. SUITABILITY METER (ANALOG CAR DIAL) -->
         <div class="card reveal-1">
             <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 300 170">
+                <svg class="gauge-svg" viewBox="0 0 340 260">
                     <defs>
+                        <!-- Vibrant Solid Gradient for the Scale Highlight -->
                         <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#3b82f6" /> 
                             <stop offset="100%" stop-color="#10b981" /> 
                         </linearGradient>
-                        
-                        <!-- Invisible path for curving text EXACTLY on outer circumference -->
-                        <path id="outerCurve" d="M 10 150 A 140 140 0 0 1 290 150" fill="transparent" />
                     </defs>
 
-                    <!-- Background Dark Arch -->
-                    <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="#111827" stroke-width="40" stroke-linecap="butt"/>
-                    
-                    <!-- Color Arc mapping -->
-                    <path d="M 20 150 A 130 130 0 0 1 280 150" fill="none" stroke="url(#score-grad)" stroke-width="40" stroke-linecap="butt" opacity="0.15"/>
+                    <!-- Thick Scale Highlight Track -->
+                    <path d="M 57.42 225 A 130 130 0 1 1 282.58 225" fill="none" stroke="#1f2937" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M 57.42 225 A 130 130 0 1 1 282.58 225" fill="none" stroke="url(#score-grad)" stroke-width="12" stroke-linecap="round" opacity="1"/>
 
-                    <!-- Dynamic Ticks and Numbers -->
+                    <!-- Dynamic Ticks and Numbers injected via JS -->
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
                     
-                    <!-- Curved Text along outer circumference -->
-                    <text font-family="'Outfit', sans-serif" font-size="16" font-weight="800" letter-spacing="2">
-                        <textPath href="#outerCurve" startOffset="18%" text-anchor="middle" fill="#3b82f6">PETROL</textPath>
-                        <textPath href="#outerCurve" startOffset="82%" text-anchor="middle" fill="#10b981">CNG</textPath>
-                    </text>
+                    <!-- Curved Outer Texts via Absolute Trigonometry -->
+                    <!-- PETROL at ~210 degrees -->
+                    <text x="44.5" y="87.5" fill="#3b82f6" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(300 44.5 87.5)" text-anchor="middle">PETROL</text>
+                    <!-- CNG at ~330 degrees -->
+                    <text x="295.5" y="87.5" fill="#10b981" font-size="16" font-weight="800" letter-spacing="2" transform="rotate(60 295.5 87.5)" text-anchor="middle">CNG</text>
+
+                    <!-- Dial Subtext -->
+                    <text x="170" y="120" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
 
                     <!-- Analog Car Needle -->
-                    <g id="score-needle" style="transform-origin: 150px 150px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                        <polygon points="147,150 153,150 151,35 149,35" fill="#ffffff"/>
-                        <polygon points="148,165 152,165 153,150 147,150" fill="#ffffff" opacity="0.8"/>
-                        <circle cx="150" cy="150" r="10" fill="#05080f" stroke="#ffffff" stroke-width="2"/>
+                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                        <polygon points="167,160 173,160 171,60 169,60" fill="#ffffff"/>
+                        <polygon points="168,175 172,175 173,160 167,160" fill="#ffffff" opacity="0.8"/>
+                        <circle cx="170" cy="160" r="10" fill="#05080f" stroke="#ffffff" stroke-width="2"/>
                     </g>
                 </svg>
 
@@ -712,12 +712,11 @@
 
         <!-- 2. ADDITIONAL COST -->
         <div class="card reveal-2" id="extra-cost-card">
+            <div class="card-title-group" style="margin-bottom: 5px;">
+                <h2 style="font-size: 1.3rem;">Total additional investment for CNG Car</h2>
+            </div>
+            
             <div id="extra-cost-container">
-                <div class="total-cost-row" style="margin-bottom: 20px;">
-                    <span class="total-cost-label">Total additional investment for CNG Car</span>
-                    <span class="total-cost-value" id="total-extra-val">0</span>
-                </div>
-
                 <div class="cost-row">
                     <span class="cost-label">Additional cost of CNG vehicle</span>
                     <span class="cost-value" id="orp-diff-val">₹0</span>
@@ -725,6 +724,12 @@
                 <div class="cost-row">
                     <span class="cost-label">Additional EMI Burden (@8.5% for 5 Years)</span>
                     <span class="cost-value" id="int-diff-val">₹0</span>
+                </div>
+                
+                <div class="cost-divider"></div>
+
+                <div class="total-cost-row" style="padding-top: 15px; padding-bottom: 15px;">
+                    <span class="total-cost-value" id="total-extra-val">0</span>
                 </div>
             </div>
 
@@ -735,12 +740,12 @@
 
         <!-- 3. SAVINGS START AFTER -->
         <div class="card reveal-3" id="break-even-card">
-            <div style="text-align: center; margin-bottom: 10px;">
+            <div style="text-align: center; margin-bottom: 5px;">
                 <p style="color: var(--serious-red); font-size: 1.8rem; font-weight: 800; letter-spacing: 1px;">NO SAVINGS UPTO:</p>
             </div>
 
-            <!-- ODOMETER (COMPLETELY HIGHLIGHTED) -->
-            <div class="odometer-section">
+            <!-- ODOMETER (DYNAMICALLY HIGHLIGHTED) -->
+            <div class="odometer-section" id="odometer-section">
                 <div class="odometer-display" id="odometer">
                     <!-- Dynamically generated by setupOdometer() -->
                 </div>
@@ -841,24 +846,25 @@
         }
     }
 
+    // Function to draw the realistic analog car dial ticks and numbers spanning 240 degrees
     function drawAnalogDial() {
         const ticksGroup = document.getElementById('dial-ticks');
         const labelsGroup = document.getElementById('dial-labels');
         
         let ticks = '';
         let labels = '';
-        const cx = 150;
-        const cy = 150;
+        const cx = 170;
+        const cy = 160;
         
         for (let i = 0; i <= 100; i += 2) {
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            let rOuter = 130;
+            let rOuter = 115;
             let isMajor = (i % 20 === 0);
             let isMedium = (i % 10 === 0);
             
-            let rInner = isMajor ? 112 : (isMedium ? 118 : 124);
+            let rInner = isMajor ? 95 : (isMedium ? 102 : 108);
             let strokeW = isMajor ? 3 : 2;
             
             let x1 = cx + rOuter * Math.cos(rad);
@@ -866,13 +872,13 @@
             let x2 = cx + rInner * Math.cos(rad);
             let y2 = cy + rInner * Math.sin(rad);
             
-            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${isMajor ? 1 : 0.6}" />`;
+            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${isMajor ? 1 : 0.5}" />`;
             
             if (isMajor) {
-                let textR = 92;
+                let textR = 75;
                 let tx = cx + textR * Math.cos(rad);
-                let ty = cy + textR * Math.sin(rad) + 6; 
-                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Space Mono', monospace" font-size="16" font-weight="700" text-anchor="middle">${i}</text>`;
+                let ty = cy + textR * Math.sin(rad) + 5; 
+                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Space Mono', monospace" font-size="14" font-weight="700" text-anchor="middle">${i}</text>`;
             }
         }
         
@@ -993,22 +999,36 @@
         }, 200);
 
         const badge = document.getElementById('score-badge');
+        const odoSection = document.getElementById('odometer-section');
+
         setTimeout(() => {
             if(score < 50) {
                 badge.innerText = "पेट्रोल ही सही है";
                 badge.style.color = "#ef4444";
                 badge.style.background = "rgba(239, 68, 68, 0.1)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
+                
+                // Highlight Odometer Completely
+                odoSection.style.borderColor = "#ef4444";
+                odoSection.style.boxShadow = "0 0 25px rgba(239, 68, 68, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
             } else if (score < 70) {
                 badge.innerText = "पेट्रोल बेहतर रहेगा";
                 badge.style.color = "#3b82f6";
                 badge.style.background = "rgba(59, 130, 246, 0.1)";
                 badge.style.border = "1px solid rgba(59, 130, 246, 0.3)";
+                
+                // Highlight Odometer Completely
+                odoSection.style.borderColor = "#3b82f6";
+                odoSection.style.boxShadow = "0 0 25px rgba(59, 130, 246, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
             } else {
                 badge.innerText = "सीएनजी (CNG) सही है";
                 badge.style.color = "#10b981";
                 badge.style.background = "rgba(16, 185, 129, 0.1)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
+                
+                // Highlight Odometer Completely
+                odoSection.style.borderColor = "#10b981";
+                odoSection.style.boxShadow = "0 0 25px rgba(16, 185, 129, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
             }
         }, 1200);
 
@@ -1049,7 +1069,7 @@
         // 3. Total
         const totalExtraCost = orpDiffRounded + intDiffRounded;
 
-        // Calculate exact savings
+        // Calculate exact savings per KM using manual inputs
         const costPerKmA = pPrice / pMil;
         const costPerKmB = cPrice / cMil;
         const savingsPerKm = costPerKmA - costPerKmB;
@@ -1112,7 +1132,7 @@
         document.getElementById('cngMileageInput').value = "";
         document.getElementById('dailyDrivingInput').value = "";
         
-        // Populate mileage inputs based on default dropdown
+        // Populate mileage inputs based on default dropdown silently
         document.getElementById('petrolMileageInput').value = variantsData[document.getElementById('variantA').value].mileage;
         document.getElementById('cngMileageInput').value = variantsData[document.getElementById('variantB').value].mileage;
         
