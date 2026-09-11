@@ -197,6 +197,13 @@
             gap: 16px;
         }
 
+        /* Stacked grid specifically to give long variant names full width */
+        .variant-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
         /* --- PRICE PER KM BOX --- */
         .cpk-container {
             display: flex;
@@ -604,12 +611,19 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Single CNG Variant Selection (Full Width to accommodate long text) -->
-            <div class="input-box">
-                <label>Select CNG Vehicle</label>
-                <select id="variantB" class="custom-input"></select>
-                <!-- Hidden input to store auto-selected petrol variant's index -->
-                <input type="hidden" id="hiddenPetrolIndex" value="0">
+            <!-- 1. Variant Selection (Stacked Vertically to ensure Full Visibility of Long Names) -->
+            <div class="variant-grid">
+                <!-- Hidden auto-matched petrol dropdown -->
+                <div class="input-box hidden">
+                    <label>Petrol Variant</label>
+                    <select id="variantA" class="custom-input"></select>
+                </div>
+                <div class="input-box">
+                    <label>Select CNG Vehicle</label>
+                    <select id="variantB" class="custom-input"></select>
+                    <!-- Hidden input to store auto-selected petrol variant's index -->
+                    <input type="hidden" id="hiddenPetrolIndex" value="0">
+                </div>
             </div>
 
             <!-- 2. Daily Running -->
@@ -690,9 +704,9 @@
                     Refuelling Convenience and time taken (min waiting)
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="10" checked><div class="pill-text">30 mins</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0" checked><div class="pill-text">30 mins</div></label>
                     <label class="pill-label"><input type="radio" name="q_refuel_time" value="5"><div class="pill-text">30-45 Mins</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0"><div class="pill-text">More than<br>45 mins</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="10"><div class="pill-text">More than<br>45 mins</div></label>
                 </div>
             </div>
 
@@ -766,36 +780,26 @@
 
                         <!-- Flawless mathematical paths defining the exact outer circumference (r=142) to perfectly hug the arcs -->
                         <path id="textPathOut" d="M 47 231 A 142 142 0 1 1 293 231" fill="transparent" />
-                        <!-- Inner path just for "RECOMMENDED" to cleanly stack inside the Yellow zone -->
-                        <path id="textPathInner" d="M 46 225 A 132 132 0 1 1 294 225" fill="transparent" />
                     </defs>
 
                     <!-- Base Dashboard Backing Plate -->
                     <path d="M 48.75 230 A 140 140 0 0 1 291.25 230" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
 
-                    <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
+                    <!-- Exact 3-Zone Arcs updated dynamically (Red 0-50, Yellow 50-75, Green 75-100) -->
                     <!-- RED ZONE (0-50): Angle -210 to -90 -->
                     <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="var(--zone-red)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
                     
-                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
-                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
+                    <!-- YELLOW ZONE (50-75): Angle -90 to -30 -->
+                    <path d="M 170 35 A 125 125 0 0 1 278.25 97.5" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
                     
-                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
-                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
+                    <!-- GREEN ZONE (75-100): Angle -30 to +30 -->
+                    <path d="M 278.25 97.5 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
 
                     <!-- Outer Circumference Texts perfectly contoured and cleanly mapped without clipping -->
                     <text font-family="'Outfit', sans-serif" font-size="10.5" font-weight="800" letter-spacing="1">
-                        <textPath href="#textPathOut" startOffset="24%" text-anchor="middle" fill="var(--zone-red)">PETROL FIT</textPath>
-                        
-                        <!-- Stacked Text over Yellow Band: PETROL (outer), RECOMMENDED (inner) -->
-                        <textPath href="#textPathOut" startOffset="60%" text-anchor="middle" fill="var(--zone-yellow)">PETROL</textPath>
-                        
-                        <textPath href="#textPathOut" startOffset="86%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
-                    </text>
-
-                    <text font-family="'Outfit', sans-serif" font-size="8.5" font-weight="800" letter-spacing="0.5">
-                        <!-- Precise inner path alignment for RECOMMENDED -->
-                        <textPath href="#textPathInner" startOffset="60%" text-anchor="middle" fill="var(--zone-yellow)">RECOMMENDED</textPath>
+                        <textPath href="#textPathOut" startOffset="25%" text-anchor="middle" fill="var(--zone-red)">100% PETROL</textPath>
+                        <textPath href="#textPathOut" startOffset="62.5%" text-anchor="middle" fill="var(--zone-yellow)">PETROL FIT</textPath>
+                        <textPath href="#textPathOut" startOffset="87.5%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
                     </text>
 
                     <!-- Dynamic Ticks and Numbers injected via JS -->
@@ -979,7 +983,6 @@
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            // Adjust to sit crisply inside the colored arc
             let rOuter = 108; 
             let isMajor = (i % 20 === 0);
             let isMinor = (i % 10 === 0);
@@ -1083,14 +1086,14 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- NEW PERFECT 100-POINT ALGORITHM ---
+    // --- RE-WEIGHTED EXACT 100 PT ALGORITHM ---
     function runCalculations() {
         let score = 0;
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         
         // 1. Daily Running (Max 50 points based precisely on new metric limits)
         if (dailyKm <= 30) score += 0;
-        else if (dailyKm <= 60) score += 20; 
+        else if (dailyKm <= 59) score += 20; 
         else if (dailyKm <= 70) score += 35; 
         else score += 50;
 
@@ -1125,9 +1128,9 @@
         const ampersand = document.getElementById('ampersand-sign');
 
         setTimeout(() => {
-            // RED BAND 1: 0 - 49
-            if(score < 50) {
-                badge.innerText = "पेट्रोल ही सही है";
+            // RED BAND 1: 0 - 50
+            if(score <= 50) {
+                badge.innerText = "100% Petrol";
                 badge.style.color = "var(--zone-red)";
                 badge.style.background = "rgba(239, 68, 68, 0.1)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
@@ -1137,9 +1140,9 @@
                 ampersand.style.color = "var(--zone-red)";
                 ampersand.style.textShadow = "0 0 15px rgba(239, 68, 68, 0.4)";
             } 
-            // YELLOW BAND 2: 50 - 69
-            else if (score < 70) {
-                badge.innerText = "पेट्रोल बेहतर रहेगा";
+            // YELLOW BAND 2: 51 - 75
+            else if (score <= 75) {
+                badge.innerText = "Petrol Fit";
                 badge.style.color = "var(--zone-yellow)";
                 badge.style.background = "rgba(234, 179, 8, 0.1)";
                 badge.style.border = "1px solid rgba(234, 179, 8, 0.3)";
@@ -1149,9 +1152,9 @@
                 ampersand.style.color = "var(--zone-yellow)";
                 ampersand.style.textShadow = "0 0 15px rgba(234, 179, 8, 0.4)";
             } 
-            // GREEN BAND 3: 70 - 100
+            // GREEN BAND 3: 76 - 100
             else {
-                badge.innerText = "सीएनजी (CNG) सही है";
+                badge.innerText = "CNG Fit";
                 badge.style.color = "var(--zone-green)";
                 badge.style.background = "rgba(16, 185, 129, 0.1)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
