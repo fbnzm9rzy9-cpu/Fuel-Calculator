@@ -103,24 +103,6 @@
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
         }
 
-        .card-title-group p {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .card-title-group h2 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            text-align: center;
-            margin-top: 8px;
-        }
-
         /* --- INPUTS --- */
         .input-box {
             display: flex;
@@ -714,14 +696,14 @@
                 </div>
             </div>
 
-            <!-- 9. Do You/Your family prefer coming outside -->
+            <!-- 9. Do You/Your family feel comfortable coming out -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="rgba(255,255,255,0.4)"/>
                         <circle cx="9" cy="7" r="4" stroke="rgba(255,255,255,0.4)"/>
                     </svg>
-                    Do You/Your family prefer coming outside the vehicle during refuelling? (Incl. Night)
+                    Do You/Your family feel comfortable coming out of the car during refuelling ? ( Incl. Night)
                 </label>
                 <div class="pill-group">
                     <label class="pill-label"><input type="radio" name="q_get_out" value="10" checked><div class="pill-text">Ok with<br>the hustle</div></label>
@@ -746,7 +728,6 @@
                 </div>
             </div>
 
-            <!-- BUTTON -->
             <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
         </div>
     </div>
@@ -899,7 +880,7 @@
 
         selectB.addEventListener('change', onVariantChange);
         
-        // Trigger initial data load
+        // Trigger initial data load but DO NOT auto-fill mileages
         onVariantChange();
     }
 
@@ -914,6 +895,7 @@
         
         document.getElementById('hiddenPetrolIndex').value = petrolIndex !== -1 ? petrolIndex : 0;
         
+        // Removed auto-filling of mileage inputs so user has full freedom to enter manually
         updatePerKmCost();
     }
 
