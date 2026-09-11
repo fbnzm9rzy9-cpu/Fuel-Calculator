@@ -30,9 +30,6 @@
             --nexa-blue: #3b82f6;
             --serious-red: #ef4444;
             --serious-red-bg: rgba(239, 68, 68, 0.1);
-            --zone-red: #ef4444;
-            --zone-yellow: #eab308;
-            --zone-green: #10b981;
         }
 
         body {
@@ -57,21 +54,11 @@
         /* --- LARGE & BOLD NEXA-C4 HEADER --- */
         .branding-header {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
+            align-items: center;
             padding: 4px 0 0 2px;
         }
 
-        .repo-title {
-            font-size: 2.1rem;
-            font-weight: 800;
-            color: var(--nexa-blue);
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-        }
-
-        .brand-title-match {
+        .brand-title-large {
             font-size: 2.5rem;
             font-weight: 900;
             color: #ffffff;
@@ -109,6 +96,24 @@
             flex-direction: column;
             gap: 20px; 
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+        }
+
+        .card-title-group p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .card-title-group h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 8px;
         }
 
         /* --- INPUTS --- */
@@ -164,14 +169,6 @@
             background-repeat: no-repeat;
             background-position: right 16px center;
             cursor: pointer;
-            font-size: 1rem; /* Slightly smaller to ensure full display */
-        }
-
-        /* Variant block styled differently so it stacks full-width */
-        .variant-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
         }
 
         .input-grid {
@@ -367,7 +364,7 @@
             color: var(--text-main);
         }
 
-        /* --- DIAGNOSTIC GAUGE (REALISTIC SPEEDOMETER) --- */
+        /* --- DIAGNOSTIC GAUGE (ANALOG DIAL) --- */
         .gauge-container {
             display: flex;
             flex-direction: column;
@@ -377,13 +374,13 @@
 
         .gauge-svg {
             width: 100%;
-            max-width: 360px; 
+            max-width: 340px; 
             overflow: visible;
         }
 
         .gauge-text-container {
             text-align: center;
-            margin-top: -5px; 
+            margin-top: 5px; 
         }
 
         .gauge-result-badge {
@@ -394,7 +391,6 @@
             display: inline-block;
             letter-spacing: 0.5px;
             margin-top: 5px;
-            transition: all 0.5s ease;
         }
 
         /* --- SERIOUS FINANCIALS --- */
@@ -542,7 +538,6 @@
             opacity: 1;
             line-height: 1;
             text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-            transition: all 0.5s ease;
         }
 
         /* --- UTILS & ANIMATIONS --- */
@@ -562,6 +557,7 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
+            .brand-title-large { font-size: 2rem; }
         }
 
     </style>
@@ -570,10 +566,9 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING: Fuel-Suitability-Tool & NEXA-C4 -->
+    <!-- 1. BRANDING: Large, bold NEXA-C4 only -->
     <div class="branding-header">
-        <div class="repo-title">Fuel-Suitability-Tool</div>
-        <div class="brand-title-match">NEXA-C4</div>
+        <div class="brand-title-large">NEXA-C4</div>
     </div>
 
     <!-- 2. MAIN TITLE WITH DUAL HORIZONTAL LINES -->
@@ -585,8 +580,8 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Variant Selection (Stacked for Full Visibility) -->
-            <div class="variant-grid">
+            <!-- 1. Variant Selection -->
+            <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Variant</label>
                     <select id="variantA" class="custom-input"></select>
@@ -711,79 +706,63 @@
                     CNG station convenience
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_stn" value="100" checked><div class="pill-text">2-5 KMs</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">5-7 KMs</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">More than<br>7 KMs</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="0" checked><div class="pill-text">Inconvenient</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">Manageable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="100"><div class="pill-text">Easy access</div></label>
                 </div>
             </div>
 
-            <!-- 10. Refueling Convenience and Time Importance -->
-            <div class="question-block">
-                <label class="question-label">
-                    <svg class="tech-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)"/>
-                        <polyline points="12 6 12 12 16 14" stroke="rgba(255,255,255,0.4)"/>
-                    </svg>
-                    Refueling convenience and time importance
-                </label>
-                <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0" checked><div class="pill-text">Very important</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="50"><div class="pill-text">Manageable</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="100"><div class="pill-text">Not important</div></label>
-                </div>
-            </div>
-
-            <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
+            <button class="btn-primary" onclick="generateReport()">Generate Report</button>
         </div>
     </div>
 
     <!-- ================= PART 2: RESULTS ================= -->
     <div id="part2" class="hidden reveal-container">
         
-        <!-- 1. REALISTIC 3-ZONE SPEEDOMETER -->
+        <!-- 1. SUITABILITY METER (ANALOG CAR DIAL) -->
         <div class="card reveal-1">
             <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 340 260">
                     <defs>
-                        <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
-                        </filter>
+                        <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#3b82f6" /> 
+                            <stop offset="100%" stop-color="#10b981" /> 
+                        </linearGradient>
 
-                        <!-- Invisible mathematical paths completely wrapping the exact outer circumference -->
-                        <path id="textPathOut" d="M 47 231 A 142 142 0 1 1 293 231" fill="transparent" />
+                        <!-- Invisible path for PETROL near unit 40 -->
+                        <path id="petrolCurve" d="M 50 160 A 120 120 0 0 1 120 40" fill="none" />
+                        <!-- Invisible path for CNG aligned precisely in front of digit 80 on outer circumference -->
+                        <path id="cngCurve" d="M 235 55 A 125 125 0 0 1 290 145" fill="none" />
                     </defs>
 
-                    <!-- Base Dashboard Backing Plate -->
-                    <path d="M 48.75 230 A 140 140 0 0 1 291.25 230" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
-
-                    <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
-                    <!-- RED ZONE (0-50): Angle -210 to -90 -->
-                    <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="var(--zone-red)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
+                    <!-- Background Dark Arch -->
+                    <path d="M 57.42 225 A 130 130 0 1 1 282.58 225" fill="none" stroke="#1f2937" stroke-width="12" stroke-linecap="round"/>
                     
-                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
-                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
-                    
-                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
-                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
-
-                    <!-- Outer Circumference Texts perfectly contoured -->
-                    <text font-family="'Outfit', sans-serif" font-size="10.5" font-weight="800" letter-spacing="1">
-                        <textPath href="#textPathOut" startOffset="25%" text-anchor="middle" fill="var(--zone-red)">PETROL FIT</textPath>
-                        <textPath href="#textPathOut" startOffset="60%" text-anchor="middle" fill="var(--zone-yellow)">PETROL RECOMMENDED</textPath>
-                        <textPath href="#textPathOut" startOffset="85%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
-                    </text>
+                    <!-- Color Arc mapping -->
+                    <path d="M 57.42 225 A 130 130 0 1 1 282.58 225" fill="none" stroke="url(#score-grad)" stroke-width="12" stroke-linecap="round" opacity="1"/>
 
                     <!-- Dynamic Ticks and Numbers injected via JS -->
                     <g id="dial-ticks"></g>
                     <g id="dial-labels"></g>
                     
-                    <!-- Clean Digital Score Output directly under the needle pivot -->
-                    <text id="center-score-val" x="170" y="220" fill="#ffffff" font-size="56" font-family="'Outfit', sans-serif" font-weight="800" text-anchor="middle">0</text>
+                    <!-- PETROL text placed near unit 40 on circumference -->
+                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="900" letter-spacing="2" fill="#3b82f6">
+                        <textPath href="#petrolCurve" startOffset="50%" text-anchor="middle">PETROL</textPath>
+                    </text>
 
-                    <!-- Realistic Analog Car Needle with Hollow Center -->
-                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);" filter="url(#drop-shadow)">
-                        <circle cx="170" cy="160" r="12" fill="#0f141e" stroke="#ffffff" stroke-width="4"/>
-                        <line x1="170" y1="148" x2="170" y2="45" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                    <!-- CNG text perfectly aligned in front of digit 80 on outer circumference -->
+                    <text font-family="'Outfit', sans-serif" font-size="15" font-weight="900" letter-spacing="2" fill="#10b981">
+                        <textPath href="#cngCurve" startOffset="52%" text-anchor="middle">CNG</textPath>
+                    </text>
+
+                    <!-- Dial Subtext -->
+                    <text x="170" y="120" fill="#8b9bb4" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="2">SCORE</text>
+
+                    <!-- Analog Car Needle -->
+                    <g id="score-needle" style="transform-origin: 170px 160px; transform: rotate(-120deg); transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                        <polygon points="167,160 173,160 171,60 169,60" fill="#ffffff"/>
+                        <polygon points="168,175 172,175 173,160 167,160" fill="#ffffff" opacity="0.8"/>
+                        <circle cx="170" cy="160" r="10" fill="#05080f" stroke="#ffffff" stroke-width="2"/>
                     </g>
                 </svg>
 
@@ -835,7 +814,7 @@
                 <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Kilometres</div>
             </div>
 
-            <div class="ampersand" id="ampersand-sign">&</div>
+            <div class="ampersand">&</div>
 
             <!-- RECOVERY PERIOD -->
             <div class="serious-time-box">
@@ -941,26 +920,25 @@
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            let rOuter = 110; 
+            let rOuter = 115;
             let isMajor = (i % 20 === 0);
-            let isMinor = (i % 10 === 0);
+            let isMedium = (i % 10 === 0);
             
-            let rInner = isMajor ? 95 : (isMinor ? 101 : 105);
+            let rInner = isMajor ? 95 : (isMedium ? 102 : 108);
             let strokeW = isMajor ? 3 : 2;
-            let tickOpacity = isMajor ? 1 : 0.6;
             
             let x1 = cx + rOuter * Math.cos(rad);
             let y1 = cy + rOuter * Math.sin(rad);
             let x2 = cx + rInner * Math.cos(rad);
             let y2 = cy + rInner * Math.sin(rad);
             
-            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${tickOpacity}" />`;
+            ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffffff" stroke-width="${strokeW}" opacity="${isMajor ? 1 : 0.5}" />`;
             
             if (isMajor) {
                 let textR = 75;
                 let tx = cx + textR * Math.cos(rad);
                 let ty = cy + textR * Math.sin(rad) + 5; 
-                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="15" font-weight="700" text-anchor="middle">${i}</text>`;
+                labels += `<text x="${tx}" y="${ty}" fill="#ffffff" font-family="'Space Mono', monospace" font-size="14" font-weight="700" text-anchor="middle">${i}</text>`;
             }
         }
         
@@ -1029,8 +1007,6 @@
         part2.classList.add('fade-in');
 
         document.getElementById('score-needle').style.transform = `rotate(-120deg)`;
-        document.getElementById('center-score-val').innerText = "0";
-
         updateOdometerDisplay("0");
 
         setTimeout(() => {
@@ -1044,94 +1020,69 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- RE-WEIGHTED EXACT 100 PT ALGORITHM ---
     function runCalculations() {
+        // --- 1. CALCULATE PROFILE SCORE (Out of 100) ---
         let score = 0;
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
         const monthlyKmEquiv = dailyKm * 30; 
         
-        // 1. Daily Running (Max 35 points)
-        if (monthlyKmEquiv < 500) score += 0;
-        else if (monthlyKmEquiv <= 1000) score += 10; 
-        else if (monthlyKmEquiv <= 1500) score += 20; 
-        else score += 35;
+        if (monthlyKmEquiv <= 500) score += 0;
+        else if (monthlyKmEquiv <= 1000) score += 8; 
+        else if (monthlyKmEquiv <= 2000) score += 18; 
+        else score += 30;
 
-        // 2. Vehicle Usage (Max 15 points)
         const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
-        if (q1 === 0) score += 5;       
+        if (q1 === 0) score += 0;       
         else score += 15;               
 
-        // 3. Boot Space (Max 10 points)
         const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
-        if (q2 === 0) score += 0; else if (q2 === 50) score += 5; else score += 10;
+        if (q2 === 0) score += 0; else if (q2 === 50) score += 10; else score += 20;
 
-        // 4. Driving Preference (Max 10 points)
         const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
-        if (q3 === 0) score += 0; else if (q3 === 50) score += 5; else score += 10;
+        if (q3 === 0) score += 0; else if (q3 === 50) score += 7; else score += 15;
 
-        // 5. Station Convenience (Max 15 points)
         const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
-        if (q4 === 0) score += 0; else if (q4 === 50) score += 8; else score += 15;
-
-        // 6. Refueling Convenience and Time (Max 15 points)
-        const q5 = parseInt(document.querySelector('input[name="q_refuel_time"]:checked').value);
-        if (q5 === 0) score += 0; else if (q5 === 50) score += 8; else score += 15;
+        if (q4 === 0) score += 0; else if (q4 === 50) score += 10; else score += 20;
 
         score = Math.round(score);
         
-        // Needle Sweep
         const scoreRotation = -120 + ((score / 100) * 240);
         setTimeout(() => {
             document.getElementById('score-needle').style.transform = `rotate(${scoreRotation}deg)`;
         }, 200);
 
-        // Center Digital Score Animation
-        animateValue(document.getElementById('center-score-val'), 0, score, 2000, false, false);
-
         const badge = document.getElementById('score-badge');
         const odoSection = document.getElementById('odometer-section');
-        const ampersand = document.getElementById('ampersand-sign');
 
         setTimeout(() => {
-            // RED BAND 1: 0 - 49
             if(score < 50) {
                 badge.innerText = "पेट्रोल ही सही है";
-                badge.style.color = "var(--zone-red)";
+                badge.style.color = "#ef4444";
                 badge.style.background = "rgba(239, 68, 68, 0.1)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
                 
-                odoSection.style.borderColor = "var(--zone-red)";
+                odoSection.style.borderColor = "#ef4444";
                 odoSection.style.boxShadow = "0 0 25px rgba(239, 68, 68, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "var(--zone-red)";
-                ampersand.style.textShadow = "0 0 15px rgba(239, 68, 68, 0.4)";
-            } 
-            // YELLOW BAND 2: 50 - 69
-            else if (score < 70) {
+            } else if (score < 70) {
                 badge.innerText = "पेट्रोल बेहतर रहेगा";
-                badge.style.color = "var(--zone-yellow)";
-                badge.style.background = "rgba(234, 179, 8, 0.1)";
-                badge.style.border = "1px solid rgba(234, 179, 8, 0.3)";
-
-                odoSection.style.borderColor = "var(--zone-yellow)";
-                odoSection.style.boxShadow = "0 0 25px rgba(234, 179, 8, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "var(--zone-yellow)";
-                ampersand.style.textShadow = "0 0 15px rgba(234, 179, 8, 0.4)";
-            } 
-            // GREEN BAND 3: 70 - 100
-            else {
+                badge.style.color = "#3b82f6";
+                badge.style.background = "rgba(59, 130, 246, 0.1)";
+                badge.style.border = "1px solid rgba(59, 130, 246, 0.3)";
+                
+                odoSection.style.borderColor = "#3b82f6";
+                odoSection.style.boxShadow = "0 0 25px rgba(59, 130, 246, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
+            } else {
                 badge.innerText = "सीएनजी (CNG) सही है";
-                badge.style.color = "var(--zone-green)";
+                badge.style.color = "#10b981";
                 badge.style.background = "rgba(16, 185, 129, 0.1)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
                 
-                odoSection.style.borderColor = "var(--zone-green)";
+                odoSection.style.borderColor = "#10b981";
                 odoSection.style.boxShadow = "0 0 25px rgba(16, 185, 129, 0.4), inset 0 5px 15px rgba(0,0,0,0.8)";
-                ampersand.style.color = "var(--zone-green)";
-                ampersand.style.textShadow = "0 0 15px rgba(16, 185, 129, 0.4)";
             }
         }, 1200);
 
-        // --- CALCULATE TRUE BREAK-EVEN ---
+        // --- 2. CALCULATE ADDITIONAL COST (ROUNDED TO NEXT THOUSAND) ---
         const idxA = document.getElementById('variantA').value;
         const idxB = document.getElementById('variantB').value;
         const varA = variantsData[idxA];
@@ -1190,6 +1141,7 @@
             animateValue(document.getElementById('total-extra-val'), 0, totalExtraCost, 1500, true);
         }, 500);
 
+        // --- 3. BREAK EVEN CALCULATION ---
         if(savingsPerKm > 0) {
             const breakEvenKm = totalExtraCost / savingsPerKm;
             updateOdometerDisplay(Math.round(breakEvenKm).toString());
