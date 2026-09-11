@@ -103,24 +103,6 @@
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
         }
 
-        .card-title-group p {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .card-title-group h2 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            text-align: center;
-            margin-top: 8px;
-        }
-
         /* --- INPUTS --- */
         .input-box {
             display: flex;
@@ -579,7 +561,6 @@
         @media (max-width: 600px) {
             .odo-digit { width: 36px; height: 56px; font-size: 2.3rem; }
             .header-section h1 { font-size: 2.2rem; }
-            .brand-title-match { font-size: 2rem; }
         }
 
     </style>
@@ -637,7 +618,7 @@
                 </div>
             </div>
 
-            <!-- 4. Petrol and CNG Mileage -->
+            <!-- 4. Petrol and CNG Mileage (Manual Entry Only) -->
             <div class="input-grid">
                 <div class="input-box">
                     <label>Petrol Mileage (km/L)</label>
@@ -722,7 +703,7 @@
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="rgba(255,255,255,0.4)"/>
                         <circle cx="9" cy="7" r="4" stroke="rgba(255,255,255,0.4)"/>
                     </svg>
-                    Do you/Your family prefer coming outside the vehicle during refuelling?
+                    Do you/Your family prefer coming outside the vehicle during refuelling? (Incl. Night)
                 </label>
                 <div class="pill-group">
                     <label class="pill-label"><input type="radio" name="q_get_out" value="10" checked><div class="pill-text">Ok with<br>the hustle</div></label>
@@ -741,7 +722,7 @@
                     CNG station convenience
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_stn" value="10" checked><div class="pill-text">2-5 KMs</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="10" checked><div class="pill-text">Less than<br>5 KMs</div></label>
                     <label class="pill-label"><input type="radio" name="q_stn" value="5"><div class="pill-text">5-7 KMs</div></label>
                     <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">More than<br>7 KMs</div></label>
                 </div>
@@ -874,7 +855,7 @@
 </div>
 
 <script>
-    // Cleaned Array with no suffixes as requested
+    // Cleaned Array with no suffixes
     const variantsData = [{"variant": "BALENO SIGMA", "on_road_price": 681390, "mileage": 22.35}, {"variant": "BALENO DELTA", "on_road_price": 785420, "mileage": 22.35}, {"variant": "BALENO ZETA", "on_road_price": 892854, "mileage": 22.35}, {"variant": "BALENO ALPHA", "on_road_price": 1014079, "mileage": 22.35}, {"variant": "BALENO DELTA CNG", "on_road_price": 891054, "mileage": 30.61}, {"variant": "BALENO ZETA CNG", "on_road_price": 998923, "mileage": 30.61}, {"variant": "FRONX SIGMA", "on_road_price": 776637, "mileage": 21.79}, {"variant": "FRONX DELTA", "on_road_price": 875783, "mileage": 21.79}, {"variant": "FRONX SIGMA CNG", "on_road_price": 891941, "mileage": 28.51}, {"variant": "FRONX DELTA CNG", "on_road_price": 985637, "mileage": 28.51}, {"variant": "GRAND VITARA DELTA", "on_road_price": 1398900, "mileage": 21.11}, {"variant": "GRAND VITARA DELTA CNG", "on_road_price": 1496002, "mileage": 26.6}, {"variant": "XL6 ZETA", "on_road_price": 1336091, "mileage": 20.97}, {"variant": "XL6 ZETA CNG", "on_road_price": 1447048, "mileage": 26.32}];
 
     const formatCurrency = (val) => '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val);
@@ -899,7 +880,7 @@
 
         selectB.addEventListener('change', onVariantChange);
         
-        // Trigger initial data load
+        // Trigger initial data load but DO NOT auto-fill mileages
         onVariantChange();
     }
 
@@ -914,12 +895,7 @@
         
         document.getElementById('hiddenPetrolIndex').value = petrolIndex !== -1 ? petrolIndex : 0;
         
-        // Auto-fill mileages based on detected variants
-        document.getElementById('cngMileageInput').value = cngVariant.mileage;
-        if(petrolIndex !== -1) {
-            document.getElementById('petrolMileageInput').value = variantsData[petrolIndex].mileage;
-        }
-        
+        // Removed auto-filling of mileage inputs so user has full freedom to enter manually
         updatePerKmCost();
     }
 
