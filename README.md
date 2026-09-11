@@ -103,6 +103,24 @@
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
         }
 
+        .card-title-group p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .card-title-group h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 8px;
+        }
+
         /* --- INPUTS --- */
         .input-box {
             display: flex;
@@ -668,12 +686,12 @@
                         <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)"/>
                         <polyline points="12 6 12 12 16 14" stroke="rgba(255,255,255,0.4)"/>
                     </svg>
-                    Refuelling Convenience and time taken (min waiting)
+                    Are you comfortable with possible queues &amp; waiting time (upto 45 mins) while refuelling CNG?
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="10" checked><div class="pill-text">30 mins</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="5"><div class="pill-text">30-45 Mins</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0"><div class="pill-text">More than<br>45 mins</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="10" checked><div class="pill-text">Comfortable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="5"><div class="pill-text">Manageable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0"><div class="pill-text">Not<br>comfortable</div></label>
                 </div>
             </div>
 
@@ -696,14 +714,14 @@
                 </div>
             </div>
 
-            <!-- 9. Do you/Your family prefer coming outside -->
+            <!-- 9. Do You/Your family prefer coming outside -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="rgba(255,255,255,0.4)"/>
                         <circle cx="9" cy="7" r="4" stroke="rgba(255,255,255,0.4)"/>
                     </svg>
-                    Do you/Your family prefer coming outside the vehicle during refuelling? (Incl. Night)
+                    Do You/Your family prefer coming outside the vehicle during refuelling? (Incl. Night)
                 </label>
                 <div class="pill-group">
                     <label class="pill-label"><input type="radio" name="q_get_out" value="10" checked><div class="pill-text">Ok with<br>the hustle</div></label>
@@ -719,7 +737,7 @@
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="rgba(255,255,255,0.4)"/>
                         <circle cx="12" cy="10" r="1" class="anim-radar"/>
                     </svg>
-                    CNG station convenience
+                    How convenient is access to CNG station?
                 </label>
                 <div class="pill-group">
                     <label class="pill-label"><input type="radio" name="q_stn" value="10" checked><div class="pill-text">Less than<br>5 KMs</div></label>
@@ -728,6 +746,7 @@
                 </div>
             </div>
 
+            <!-- BUTTON -->
             <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
         </div>
     </div>
@@ -880,7 +899,7 @@
 
         selectB.addEventListener('change', onVariantChange);
         
-        // Trigger initial data load but DO NOT auto-fill mileages
+        // Trigger initial data load
         onVariantChange();
     }
 
@@ -895,7 +914,6 @@
         
         document.getElementById('hiddenPetrolIndex').value = petrolIndex !== -1 ? petrolIndex : 0;
         
-        // Removed auto-filling of mileage inputs so user has full freedom to enter manually
         updatePerKmCost();
     }
 
