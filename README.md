@@ -63,14 +63,6 @@
             padding: 4px 0 0 2px;
         }
 
-        .repo-title {
-            font-size: 2.1rem;
-            font-weight: 800;
-            color: var(--nexa-blue);
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-        }
-
         .brand-title-match {
             font-size: 2.5rem;
             font-weight: 900;
@@ -109,6 +101,24 @@
             flex-direction: column;
             gap: 20px; 
             box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+        }
+
+        .card-title-group p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .card-title-group h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 8px;
         }
 
         /* --- INPUTS --- */
@@ -578,9 +588,8 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING: Fuel-Suitability-Tool & NEXA-C4 -->
+    <!-- 1. BRANDING: Large, bold NEXA-C4 only -->
     <div class="branding-header">
-        <div class="repo-title">Fuel-Suitability-Tool</div>
         <div class="brand-title-match">NEXA-C4</div>
     </div>
 
@@ -738,7 +747,6 @@
                 </div>
             </div>
 
-            <!-- BUTTON -->
             <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
         </div>
     </div>
@@ -755,29 +763,38 @@
                             <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
                         </filter>
 
-                        <!-- Flawless mathematical path defining the exact outer circumference (r=142) to perfectly hug the arcs -->
-                        <path id="textPathOut" d="M 47 231 A 142 142 0 1 1 293 231" fill="transparent" />
+                        <!-- Mathematical paths spanning the exact outer circumference for flawless text curving -->
+                        <path id="textPathOut" d="M 40 220 A 142 142 0 1 1 300 220" fill="transparent" />
+                        <!-- Slightly inner path strictly for the word "RECOMMENDED" to avoid overlapping "PETROL" -->
+                        <path id="textPathInner" d="M 46 225 A 132 132 0 1 1 294 225" fill="transparent" />
                     </defs>
 
                     <!-- Base Dashboard Backing Plate -->
                     <path d="M 48.75 230 A 140 140 0 0 1 291.25 230" fill="#080b11" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
 
                     <!-- Exact 3-Zone Arcs using absolute mathematical paths -->
-                    <!-- RED ZONE (0-50): Angle -120 to 0 (SVG format: -120 to -90, -90 to Top) -->
-                    <!-- Using Start: -120 deg (cx-108.25, cy+62.5), End: 0 deg (Top Center) -->
+                    <!-- RED ZONE (0-50): Angle -210 to -90 -->
                     <path d="M 61.75 222.5 A 125 125 0 0 1 170 35" fill="none" stroke="var(--zone-red)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(220,38,38,0.4))"/>
                     
-                    <!-- YELLOW ZONE (50-75): Top Center to +60 deg -->
-                    <path d="M 170 35 A 125 125 0 0 1 278.25 97.5" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
+                    <!-- YELLOW ZONE (50-70): Angle -90 to -42 -->
+                    <path d="M 170 35 A 125 125 0 0 1 262.89 76.36" fill="none" stroke="var(--zone-yellow)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(234,179,8,0.4))"/>
                     
-                    <!-- GREEN ZONE (75-100): +60 deg to +120 deg -->
-                    <path d="M 278.25 97.5 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
+                    <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
+                    <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
 
-                    <!-- Outer Circumference Texts perfectly contoured without clipping -->
+                    <!-- Outer Circumference Texts, perfectly centered and contoured -->
                     <text font-family="'Outfit', sans-serif" font-size="10.5" font-weight="800" letter-spacing="1">
-                        <textPath href="#textPathOut" startOffset="25%" text-anchor="middle" fill="var(--zone-red)">100% PETROL</textPath>
-                        <textPath href="#textPathOut" startOffset="62.5%" text-anchor="middle" fill="var(--zone-yellow)">PETROL FIT</textPath>
-                        <textPath href="#textPathOut" startOffset="87.5%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
+                        <textPath href="#textPathOut" startOffset="24%" text-anchor="middle" fill="var(--zone-red)">100% PETROL</textPath>
+                        
+                        <!-- Stacked Text over Yellow Band: PETROL (outer), RECOMMENDED (inner) -->
+                        <textPath href="#textPathOut" startOffset="60%" text-anchor="middle" fill="var(--zone-yellow)">PETROL</textPath>
+                        
+                        <textPath href="#textPathOut" startOffset="86%" text-anchor="middle" fill="var(--zone-green)">CNG FIT</textPath>
+                    </text>
+
+                    <text font-family="'Outfit', sans-serif" font-size="8.5" font-weight="800" letter-spacing="0.5">
+                        <!-- Precise inner path alignment for RECOMMENDED -->
+                        <textPath href="#textPathInner" startOffset="60%" text-anchor="middle" fill="var(--zone-yellow)">RECOMMENDED</textPath>
                     </text>
 
                     <!-- Dynamic Ticks and Numbers injected via JS -->
@@ -961,11 +978,11 @@
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
-            let rOuter = 110; 
+            let rOuter = 108; 
             let isMajor = (i % 20 === 0);
             let isMinor = (i % 10 === 0);
             
-            let rInner = isMajor ? 95 : (isMinor ? 101 : 105);
+            let rInner = isMajor ? 92 : (isMinor ? 100 : 104);
             let strokeW = isMajor ? 3 : 2;
             let tickOpacity = isMajor ? 1 : 0.6;
             
@@ -1108,7 +1125,7 @@
         setTimeout(() => {
             // RED BAND 1: 0 - 49
             if(score < 50) {
-                badge.innerText = "100% Petrol";
+                badge.innerText = "पेट्रोल ही सही है";
                 badge.style.color = "var(--zone-red)";
                 badge.style.background = "rgba(239, 68, 68, 0.1)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.3)";
@@ -1120,7 +1137,7 @@
             } 
             // YELLOW BAND 2: 50 - 74
             else if (score < 75) {
-                badge.innerText = "Petrol Fit";
+                badge.innerText = "पेट्रोल बेहतर रहेगा";
                 badge.style.color = "var(--zone-yellow)";
                 badge.style.background = "rgba(234, 179, 8, 0.1)";
                 badge.style.border = "1px solid rgba(234, 179, 8, 0.3)";
@@ -1132,7 +1149,7 @@
             } 
             // GREEN BAND 3: 75 - 100
             else {
-                badge.innerText = "CNG Fit";
+                badge.innerText = "सीएनजी (CNG) सही है";
                 badge.style.color = "var(--zone-green)";
                 badge.style.background = "rgba(16, 185, 129, 0.1)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.3)";
