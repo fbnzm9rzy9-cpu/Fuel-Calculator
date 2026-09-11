@@ -57,8 +57,18 @@
         /* --- LARGE & BOLD NEXA-C4 HEADER --- */
         .branding-header {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
             padding: 4px 0 0 2px;
+        }
+
+        .repo-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--nexa-blue);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
         .brand-title-match {
@@ -124,6 +134,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            width: 100%;
         }
 
         .input-box label {
@@ -167,28 +178,22 @@
             box-shadow: 0 0 0 4px var(--serious-red-bg) !important;
         }
 
-        /* Specifically tailored for Select Dropdowns to avoid text overlap */
+        /* Select Dropdown */
         select.custom-input {
             background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238b9bb4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
             cursor: pointer;
-            padding-right: 40px; /* Protects text from hitting the arrow */
+            padding-right: 40px; 
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            font-size: 1.05rem;
         }
 
         .input-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        /* Stacked grid specifically to give long variant names full width */
-        .variant-grid {
-            display: flex;
-            flex-direction: column;
             gap: 16px;
         }
 
@@ -299,6 +304,7 @@
             font-weight: 600;
             display: flex;
             align-items: center;
+            line-height: 1.3;
         }
 
         .pill-group {
@@ -324,13 +330,13 @@
             border: 1px solid var(--border-light);
             border-radius: 12px;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
-            padding: 0 8px;
-            line-height: 1.2;
+            padding: 0 4px;
+            line-height: 1.15;
         }
 
         .pill-label input:checked + .pill-text {
@@ -583,8 +589,9 @@
 
 <div class="app-container">
 
-    <!-- 1. BRANDING: Large, bold NEXA-C4 only -->
+    <!-- 1. BRANDING: Fuel-Suitability-Tool & NEXA-C4 -->
     <div class="branding-header">
+        <div class="repo-title">Fuel-Suitability-Tool</div>
         <div class="brand-title-match">NEXA-C4</div>
     </div>
 
@@ -597,16 +604,12 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Variant Selection (Stacked Vertically to ensure Full Visibility of Long Names) -->
-            <div class="variant-grid">
-                <div class="input-box">
-                    <label>Petrol Variant</label>
-                    <select id="variantA" class="custom-input"></select>
-                </div>
-                <div class="input-box">
-                    <label>CNG Variant</label>
-                    <select id="variantB" class="custom-input"></select>
-                </div>
+            <!-- 1. Single CNG Variant Selection (Full Width to accommodate long text) -->
+            <div class="input-box">
+                <label>Select CNG Vehicle</label>
+                <select id="variantB" class="custom-input"></select>
+                <!-- Hidden input to store auto-selected petrol variant's index -->
+                <input type="hidden" id="hiddenPetrolIndex" value="0">
             </div>
 
             <!-- 2. Daily Running -->
@@ -673,11 +676,27 @@
                 </label>
                 <div class="pill-group">
                     <label class="pill-label"><input type="radio" name="q_purpose" value="0" checked><div class="pill-text">Personal</div></label>
-                    <label class="pill-label"><input type="radio" name="q_purpose" value="100"><div class="pill-text">Taxi</div></label>
+                    <label class="pill-label"><input type="radio" name="q_purpose" value="10"><div class="pill-text">Taxi</div></label>
                 </div>
             </div>
 
-            <!-- 7. Driving Preference -->
+            <!-- 7. Refueling Convenience and Time Importance -->
+            <div class="question-block">
+                <label class="question-label">
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)"/>
+                        <polyline points="12 6 12 12 16 14" stroke="rgba(255,255,255,0.4)"/>
+                    </svg>
+                    Refuelling Convenience and time taken (min waiting)
+                </label>
+                <div class="pill-group">
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="10" checked><div class="pill-text">30 mins</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="5"><div class="pill-text">30-45 Mins</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0"><div class="pill-text">More than<br>45 mins</div></label>
+                </div>
+            </div>
+
+            <!-- 8. Driving Preference -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -690,30 +709,29 @@
                     Driving preference
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_pref" value="100" checked><div class="pill-text">Economy</div></label>
-                    <label class="pill-label"><input type="radio" name="q_pref" value="50"><div class="pill-text">Balanced</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="10" checked><div class="pill-text">Economy</div></label>
+                    <label class="pill-label"><input type="radio" name="q_pref" value="5"><div class="pill-text">Balanced</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
                 </div>
             </div>
 
-            <!-- 8. Boot Space Importance -->
+            <!-- 9. Do you/Your family prefer coming outside -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
-                        <rect x="4" y="6" width="16" height="12" rx="2" stroke="rgba(255,255,255,0.4)"/>
-                        <path d="M8 6V4h8v2" stroke="rgba(255,255,255,0.4)"/>
-                        <line x1="3" y1="12" x2="21" y2="12" class="anim-scan"/>
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="rgba(255,255,255,0.4)"/>
+                        <circle cx="9" cy="7" r="4" stroke="rgba(255,255,255,0.4)"/>
                     </svg>
-                    Boot space importance
+                    Do you/Your family prefer coming outside the vehicle during refuelling?
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_boot" value="100" checked><div class="pill-text">Not<br>important</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="50"><div class="pill-text">Somewhat</div></label>
-                    <label class="pill-label"><input type="radio" name="q_boot" value="0"><div class="pill-text">Very<br>important</div></label>
+                    <label class="pill-label"><input type="radio" name="q_get_out" value="10" checked><div class="pill-text">Ok with<br>the hustle</div></label>
+                    <label class="pill-label"><input type="radio" name="q_get_out" value="5"><div class="pill-text">Manageable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_get_out" value="0"><div class="pill-text">Not<br>preferred</div></label>
                 </div>
             </div>
 
-            <!-- 9. CNG Station Convenience -->
+            <!-- 10. CNG Station Convenience -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -723,28 +741,13 @@
                     CNG station convenience
                 </label>
                 <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_stn" value="100" checked><div class="pill-text">2-5 KMs</div></label>
-                    <label class="pill-label"><input type="radio" name="q_stn" value="50"><div class="pill-text">5-7 KMs</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="10" checked><div class="pill-text">2-5 KMs</div></label>
+                    <label class="pill-label"><input type="radio" name="q_stn" value="5"><div class="pill-text">5-7 KMs</div></label>
                     <label class="pill-label"><input type="radio" name="q_stn" value="0"><div class="pill-text">More than<br>7 KMs</div></label>
                 </div>
             </div>
 
-            <!-- 10. Refueling Convenience and Time Importance -->
-            <div class="question-block">
-                <label class="question-label">
-                    <svg class="tech-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)"/>
-                        <polyline points="12 6 12 12 16 14" stroke="rgba(255,255,255,0.4)"/>
-                    </svg>
-                    Refueling convenience and time importance
-                </label>
-                <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0" checked><div class="pill-text">Very important</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="50"><div class="pill-text">Manageable</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="100"><div class="pill-text">Not important</div></label>
-                </div>
-            </div>
-
+            <!-- BUTTON -->
             <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
         </div>
     </div>
@@ -761,9 +764,9 @@
                             <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
                         </filter>
 
-                        <!-- Mathematical paths spanning the exact outer circumference for flawless text curving -->
-                        <path id="textPathOut" d="M 40 220 A 142 142 0 1 1 300 220" fill="transparent" />
-                        <!-- Slightly inner path strictly for the word "RECOMMENDED" to avoid overlapping "PETROL" -->
+                        <!-- Flawless mathematical paths defining the exact outer circumference (r=142) to perfectly hug the arcs -->
+                        <path id="textPathOut" d="M 47 231 A 142 142 0 1 1 293 231" fill="transparent" />
+                        <!-- Inner path just for "RECOMMENDED" to cleanly stack inside the Yellow zone -->
                         <path id="textPathInner" d="M 46 225 A 132 132 0 1 1 294 225" fill="transparent" />
                     </defs>
 
@@ -780,7 +783,7 @@
                     <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
                     <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
 
-                    <!-- Outer Circumference Texts, perfectly centered and contoured -->
+                    <!-- Outer Circumference Texts perfectly contoured and cleanly mapped without clipping -->
                     <text font-family="'Outfit', sans-serif" font-size="10.5" font-weight="800" letter-spacing="1">
                         <textPath href="#textPathOut" startOffset="24%" text-anchor="middle" fill="var(--zone-red)">PETROL FIT</textPath>
                         
@@ -876,35 +879,48 @@
 
     const formatCurrency = (val) => '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val);
 
+    // Backend Logic: Only show CNG in dropdown, auto-select corresponding Petrol.
     function setupDropdowns() {
-        const selectA = document.getElementById('variantA');
         const selectB = document.getElementById('variantB');
         
-        let cngIndex = -1, petrolIndex = -1;
+        let cngIndex = -1;
 
         variantsData.forEach((variant, index) => {
-            let displayName = variant.variant.replace(" 1.2L 5MT", "").replace(" 1.5L 5MT", "");
-            
-            if(!variant.variant.includes('CNG')) {
-                selectA.add(new Option(displayName, index));
-                if(petrolIndex === -1 && variant.variant.includes('BALENO DELTA')) petrolIndex = index;
-            } else {
+            if(variant.variant.includes('CNG')) {
+                let displayName = variant.variant; 
                 selectB.add(new Option(displayName, index));
                 if(cngIndex === -1 && variant.variant.includes('BALENO DELTA CNG')) cngIndex = index;
             }
         });
 
-        selectA.value = petrolIndex !== -1 ? petrolIndex : 0;
-        selectB.value = cngIndex !== -1 ? cngIndex : 0;
+        // Set default selected option
+        let defaultOption = Array.from(selectB.options).find(opt => opt.value == cngIndex);
+        if(defaultOption) defaultOption.selected = true;
 
-        selectA.addEventListener('change', () => {
-            document.getElementById('petrolMileageInput').value = variantsData[selectA.value].mileage;
-            updatePerKmCost();
-        });
-        selectB.addEventListener('change', () => {
-            document.getElementById('cngMileageInput').value = variantsData[selectB.value].mileage;
-            updatePerKmCost();
-        });
+        selectB.addEventListener('change', onVariantChange);
+        
+        // Trigger initial data load
+        onVariantChange();
+    }
+
+    function onVariantChange() {
+        const selectB = document.getElementById('variantB');
+        const cngIndex = selectB.value;
+        const cngVariant = variantsData[cngIndex];
+        
+        // Find matching Petrol Variant internally
+        const petrolName = cngVariant.variant.replace(" CNG", "");
+        const petrolIndex = variantsData.findIndex(v => v.variant === petrolName);
+        
+        document.getElementById('hiddenPetrolIndex').value = petrolIndex !== -1 ? petrolIndex : 0;
+        
+        // Auto-fill mileages based on detected variants
+        document.getElementById('cngMileageInput').value = cngVariant.mileage;
+        if(petrolIndex !== -1) {
+            document.getElementById('petrolMileageInput').value = variantsData[petrolIndex].mileage;
+        }
+        
+        updatePerKmCost();
     }
 
     function updatePerKmCost() {
@@ -963,6 +979,7 @@
             let angle = -120 + (i * 2.4);
             let rad = (angle - 90) * (Math.PI / 180);
             
+            // Adjust to sit crisply inside the colored arc
             let rOuter = 108; 
             let isMajor = (i % 20 === 0);
             let isMinor = (i % 10 === 0);
@@ -1066,38 +1083,31 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- RE-WEIGHTED EXACT 100 PT ALGORITHM ---
+    // --- NEW PERFECT 100-POINT ALGORITHM ---
     function runCalculations() {
         let score = 0;
         const dailyKm = parseFloat(document.getElementById('dailyDrivingInput').value) || 0;
-        const monthlyKmEquiv = dailyKm * 30; 
         
-        // 1. Daily Running (Max 35 points)
-        if (monthlyKmEquiv < 500) score += 0;
-        else if (monthlyKmEquiv <= 1000) score += 10; 
-        else if (monthlyKmEquiv <= 1500) score += 20; 
-        else score += 35;
+        // 1. Daily Running (Max 50 points based precisely on new metric limits)
+        if (dailyKm <= 30) score += 0;
+        else if (dailyKm <= 60) score += 20; 
+        else if (dailyKm <= 70) score += 35; 
+        else score += 50;
 
-        // 2. Vehicle Usage (Max 15 points)
-        const q1 = parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
-        if (q1 === 0) score += 5;       
-        else score += 15;               
+        // 2. Vehicle Usage (Max 10 points)
+        score += parseInt(document.querySelector('input[name="q_purpose"]:checked').value);
 
-        // 3. Boot Space (Max 10 points)
-        const q2 = parseInt(document.querySelector('input[name="q_boot"]:checked').value);
-        if (q2 === 0) score += 0; else if (q2 === 50) score += 5; else score += 10;
-
+        // 3. Refueling Convenience and Time (Max 10 points)
+        score += parseInt(document.querySelector('input[name="q_refuel_time"]:checked').value);
+        
         // 4. Driving Preference (Max 10 points)
-        const q3 = parseInt(document.querySelector('input[name="q_pref"]:checked').value);
-        if (q3 === 0) score += 0; else if (q3 === 50) score += 5; else score += 10;
+        score += parseInt(document.querySelector('input[name="q_pref"]:checked').value);
 
-        // 5. Station Convenience (Max 15 points)
-        const q4 = parseInt(document.querySelector('input[name="q_stn"]:checked').value);
-        if (q4 === 0) score += 0; else if (q4 === 50) score += 8; else score += 15;
+        // 5. Prefer coming outside the vehicle (Max 10 points)
+        score += parseInt(document.querySelector('input[name="q_get_out"]:checked').value);
 
-        // 6. Refueling Convenience and Time (Max 15 points)
-        const q5 = parseInt(document.querySelector('input[name="q_refuel_time"]:checked').value);
-        if (q5 === 0) score += 0; else if (q5 === 50) score += 8; else score += 15;
+        // 6. Station Convenience (Max 10 points)
+        score += parseInt(document.querySelector('input[name="q_stn"]:checked').value);
 
         score = Math.round(score);
         
@@ -1154,8 +1164,8 @@
         }, 1200);
 
         // --- CALCULATE TRUE BREAK-EVEN ---
-        const idxA = document.getElementById('variantA').value;
         const idxB = document.getElementById('variantB').value;
+        const idxA = document.getElementById('hiddenPetrolIndex').value;
         const varA = variantsData[idxA];
         const varB = variantsData[idxB];
         
@@ -1245,7 +1255,6 @@
         document.getElementById('cngMileageInput').value = "";
         document.getElementById('dailyDrivingInput').value = "";
         
-        updatePerKmCost();
     };
 
 </script>
