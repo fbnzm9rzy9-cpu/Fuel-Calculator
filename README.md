@@ -782,7 +782,7 @@
                     <!-- GREEN ZONE (70-100): Angle -42 to +30 -->
                     <path d="M 262.89 76.36 A 125 125 0 0 1 278.25 222.5" fill="none" stroke="var(--zone-green)" stroke-width="24" stroke-linecap="butt" filter="drop-shadow(0px 0px 4px rgba(16,185,129,0.4))"/>
 
-                    <!-- Outer Circumference Texts, perfectly centered and contoured -->
+                    <!-- Outer Circumference Texts perfectly contoured and cleanly mapped without clipping -->
                     <text font-family="'Outfit', sans-serif" font-size="10.5" font-weight="800" letter-spacing="1">
                         <textPath href="#textPathOut" startOffset="24%" text-anchor="middle" fill="var(--zone-red)">100% PETROL</textPath>
                         
@@ -874,7 +874,8 @@
 </div>
 
 <script>
-    const variantsData = [{"variant": "BALENO SIGMA 1.2L 5MT", "on_road_price": 681390, "mileage": 22.35}, {"variant": "BALENO DELTA 1.2L 5MT", "on_road_price": 785420, "mileage": 22.35}, {"variant": "BALENO ZETA 1.2L 5MT", "on_road_price": 892854, "mileage": 22.35}, {"variant": "BALENO ALPHA 1.2L 5MT", "on_road_price": 1014079, "mileage": 22.35}, {"variant": "BALENO DELTA CNG 1.2L 5MT", "on_road_price": 891054, "mileage": 30.61}, {"variant": "BALENO ZETA CNG 1.2L 5MT", "on_road_price": 998923, "mileage": 30.61}, {"variant": "FRONX SIGMA 1.2L 5MT", "on_road_price": 776637, "mileage": 21.79}, {"variant": "FRONX DELTA 1.2L 5MT", "on_road_price": 875783, "mileage": 21.79}, {"variant": "FRONX SIGMA CNG 1.2L 5MT", "on_road_price": 891941, "mileage": 28.51}, {"variant": "FRONX DELTA CNG 1.2L 5MT", "on_road_price": 985637, "mileage": 28.51}, {"variant": "GRAND VITARA DELTA 1.5L 5MT", "on_road_price": 1398900, "mileage": 21.11}, {"variant": "GRAND VITARA DELTA CNG 1.5L 5MT", "on_road_price": 1496002, "mileage": 26.6}, {"variant": "XL6 ZETA 1.5L 5MT", "on_road_price": 1336091, "mileage": 20.97}, {"variant": "XL6 ZETA CNG 1.5L 5MT", "on_road_price": 1447048, "mileage": 26.32}];
+    // Cleaned Array with no suffixes as requested
+    const variantsData = [{"variant": "BALENO SIGMA", "on_road_price": 681390, "mileage": 22.35}, {"variant": "BALENO DELTA", "on_road_price": 785420, "mileage": 22.35}, {"variant": "BALENO ZETA", "on_road_price": 892854, "mileage": 22.35}, {"variant": "BALENO ALPHA", "on_road_price": 1014079, "mileage": 22.35}, {"variant": "BALENO DELTA CNG", "on_road_price": 891054, "mileage": 30.61}, {"variant": "BALENO ZETA CNG", "on_road_price": 998923, "mileage": 30.61}, {"variant": "FRONX SIGMA", "on_road_price": 776637, "mileage": 21.79}, {"variant": "FRONX DELTA", "on_road_price": 875783, "mileage": 21.79}, {"variant": "FRONX SIGMA CNG", "on_road_price": 891941, "mileage": 28.51}, {"variant": "FRONX DELTA CNG", "on_road_price": 985637, "mileage": 28.51}, {"variant": "GRAND VITARA DELTA", "on_road_price": 1398900, "mileage": 21.11}, {"variant": "GRAND VITARA DELTA CNG", "on_road_price": 1496002, "mileage": 26.6}, {"variant": "XL6 ZETA", "on_road_price": 1336091, "mileage": 20.97}, {"variant": "XL6 ZETA CNG", "on_road_price": 1447048, "mileage": 26.32}];
 
     const formatCurrency = (val) => '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val);
 
@@ -1167,7 +1168,7 @@
         const varA = variantsData[idxA];
         const varB = variantsData[idxB];
         
-        const yearlyKm = Math.max(dailyKm * 365, 365);
+        const yearlyKm = Math.max((dailyKm > 0 ? dailyKm : 1) * 365, 365);
         const pPrice = parseFloat(document.getElementById('petrolPriceInput').value) || 104;
         const cPrice = parseFloat(document.getElementById('cngPriceInput').value) || 89;
 
