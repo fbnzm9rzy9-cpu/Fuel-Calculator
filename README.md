@@ -583,7 +583,7 @@
     <div id="part1">
         <div class="card">
             
-            <!-- 1. Single CNG Variant Selection (Full Width to accommodate long text) -->
+            <!-- 1. Single CNG Variant Selection -->
             <div class="variant-grid">
                 <div class="input-box">
                     <label>Select CNG Vehicle</label>
@@ -661,23 +661,7 @@
                 </div>
             </div>
 
-            <!-- 7. Refueling Convenience and Time Importance -->
-            <div class="question-block">
-                <label class="question-label">
-                    <svg class="tech-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)"/>
-                        <polyline points="12 6 12 12 16 14" stroke="rgba(255,255,255,0.4)"/>
-                    </svg>
-                    Are you comfortable with possible queues &amp; waiting time (upto 45 mins) while refuelling CNG?
-                </label>
-                <div class="pill-group">
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="10" checked><div class="pill-text">Comfortable</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="5"><div class="pill-text">Manageable</div></label>
-                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0"><div class="pill-text">Not<br>comfortable</div></label>
-                </div>
-            </div>
-
-            <!-- 8. Driving Preference -->
+            <!-- 7. Driving Preference (Moved after Vehicle Usage) -->
             <div class="question-block">
                 <label class="question-label">
                     <svg class="tech-icon" viewBox="0 0 24 24">
@@ -693,6 +677,22 @@
                     <label class="pill-label"><input type="radio" name="q_pref" value="10" checked><div class="pill-text">Economy</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="5"><div class="pill-text">Balanced</div></label>
                     <label class="pill-label"><input type="radio" name="q_pref" value="0"><div class="pill-text">Performance</div></label>
+                </div>
+            </div>
+
+            <!-- 8. Refueling Convenience and Time Importance -->
+            <div class="question-block">
+                <label class="question-label">
+                    <svg class="tech-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)"/>
+                        <polyline points="12 6 12 12 16 14" stroke="rgba(255,255,255,0.4)"/>
+                    </svg>
+                    Are you comfortable with possible queues &amp; waiting time (upto 45 mins) while refuelling CNG?
+                </label>
+                <div class="pill-group">
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="10" checked><div class="pill-text">Comfortable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="5"><div class="pill-text">Manageable</div></label>
+                    <label class="pill-label"><input type="radio" name="q_refuel_time" value="0"><div class="pill-text">Not<br>comfortable</div></label>
                 </div>
             </div>
 
@@ -728,6 +728,7 @@
                 </div>
             </div>
 
+            <!-- BUTTON -->
             <button class="btn-primary" onclick="generateReport()">Check My Fuel Suitability</button>
         </div>
     </div>
